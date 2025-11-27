@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Kimi-wa-Melody — Final (Bravura-like clef)</title>
+<title>Kimi-wa-Melody — Staff + Clef Updated</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -58,6 +58,8 @@ select,input,button{padding:8px 12px;border-radius:10px;border:1px solid rgba(0,
 
 /* responsive */
 @media(max-width:980px){.container{grid-template-columns:1fr;}.sidebar{order:2}.landing .card{width:92%;}}
+/* small cosmetic for SVG */
+svg { width:100%; height:auto; display:block; }
 </style>
 </head>
 <body>
@@ -130,6 +132,7 @@ select,input,button{padding:8px 12px;border-radius:10px;border:1px solid rgba(0,
 
     <div class="staff-area" id="staffArea">
       <div class="staff card" id="staffCard">
+        <!-- SVG staff area -->
         <svg id="staffSVG" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" aria-label="staff" role="img">
           <g id="staffLines" stroke="#000" stroke-width="4" stroke-linecap="round"></g>
           <g id="clefGroup" aria-hidden="true"></g>
@@ -157,7 +160,7 @@ select,input,button{padding:8px 12px;border-radius:10px;border:1px solid rgba(0,
 
   <div class="sidebar">
     <div class="teacher-card card">
-      <strong>ใครกันนะ? ใส่ชื่อกันด้วยนะจ๊ะ</strong>
+      <strong>ข้อมูลนักเรียน (ครู)</strong>
       <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
         <input id="stuName" class="input" placeholder="ชื่อ-สกุล นักเรียน (หรือ ชื่อกลุ่ม)" />
         <input id="stuNo" class="input" placeholder="เลขที่" />
@@ -261,55 +264,54 @@ const pinCancel = document.getElementById('pinCancel');
 const leaderboardEl = document.getElementById('leaderboard');
 const staffCard = document.getElementById('staffCard');
 
-/* -------------- Draw staff & high-fidelity clef -------------- */
-staffLines.innerHTML = '';
-            clefGroup.innerHTML = '';
-            noteGroup.innerHTML = '';
-            ledgerGroup.innerHTML = '';
+/* -------------- Draw staff & clef (replaced with your updated code) -------------- */
+function drawStaffAndClef(){
+    // 1. ล้างข้อมูลเก่า
+    staffLines.innerHTML = '';
+    clefGroup.innerHTML = '';
+    noteGroup.innerHTML = '';
+    ledgerGroup.innerHTML = '';
 
-            const left = 110, right = 760, bottomY = 170, gap = 20;
-            const svgNS = 'http://www.w3.org/2000/svg';
+    const left = 110, right = 760, bottomY = 170, gap = 20;
+    const svgNS = 'http://www.w3.org/2000/svg';
 
-            // 2. วาดบรรทัดห้าเส้น
-            for(let i=0;i<5;i++){
-                const y = bottomY - i*gap;
-                const line = document.createElementNS(svgNS, 'line');
-                line.setAttribute('x1', left);
-                line.setAttribute('y1', y);
-                line.setAttribute('x2', right);
-                line.setAttribute('y2', y);
-                line.setAttribute('stroke', '#000');
-                line.setAttribute('stroke-width', 4);
-                line.setAttribute('stroke-linecap', 'round');
-                staffLines.appendChild(line);
-            }
+    // 2. วาดบรรทัดห้าเส้น
+    for(let i=0;i<5;i++){
+        const y = bottomY - i*gap;
+        const line = document.createElementNS(svgNS, 'line');
+        line.setAttribute('x1', left);
+        line.setAttribute('y1', y);
+        line.setAttribute('x2', right);
+        line.setAttribute('y2', y);
+        line.setAttribute('stroke', '#000');
+        line.setAttribute('stroke-width', 4);
+        line.setAttribute('stroke-linecap', 'round');
+        staffLines.appendChild(line);
+    }
 
-            // 3. ข้อมูล Path สำหรับกุญแจซอล
-            const clefPathD =
-                "M115.9,19.6c-3.1,1.6-6.8,4.8-9.9,8.6c-6.0,7.6-8.5,16.8-6.3,24.0c2.1,6.9,8.5,11.8,16.3,13.4c5.8,1.1,11.6,0.7,16.3-1.3c8.6-3.6,13.8-11.3,14.9-20.3c1.2-9.9-2.9-20.6-12.2-30.9c-2.9-3.0-6.0-5.6-9.3-7.7c-4.1-2.6-8.0-4.6-11.8-6.1z " +
-                "M111.4,46.8c2.6-0.9,5.9-0.6,9.4,0.8c6.1,2.4,9.6,6.7,10.0,11.0c0.6,6.7-3.7,13.3-11.8,17.4c-4.5,2.4-9.6,3.4-14.8,2.9c-6.2-0.6-11.3-3.7-14.6-8.4c-3.0-4.2-3.8-9.5-2.2-14.1c1.1-3.1,3.5-6.0,6.6-8.4C98.1,50.9,104.6,48.3,111.4,46.8z " +
-                "M121.0,95.3c-0.3,1.3-0.7,2.5-1.3,3.7c-2.8,6.4-8.9,11.6-17.6,15.0c-3.9,1.5-8.0,2.5-12.0,3.2c-6.6,1.0-12.2,2.6-16.1,4.6c-6.2,3.2-9.6,7.6-9.7,12.9c-0.2,6.2,4.0,11.8,12.4,16.5c7.8,4.3,17.9,6.5,28.7,6.5c9.6,0,19.1-1.9,26.5-6.4c6.2-3.8,9.7-8.5,10.6-13.2c0.9-4.8-0.6-9.5-4.1-13.4c-3.8-4.2-9.9-6.8-18.0-7.9c-1.9-0.2-4.0-0.2-6.1,0.0c-4.3,0.4-7.9,1.3-10.6,2.7c-2.6,1.3-4.5,3.0-5.6,5.1c-1.2,2.3-1.5,5.0-0.6,7.9c1.3,4.1,5.0,7.6,10.8,10.8c5.6,3.0,12.0,4.5,18.6,4.5c5.6,0,11.2-0.9,15.7-2.6c3.5-1.3,6.6-3.0,9.2-5.1c2.5-2.0,4.6-4.4,6.1-7.1c1.5-2.8,2.3-5.7,2.4-8.6c0.1-3.3-0.9-6.6-2.9-9.9c-3.3-5.3-9.5-9.3-18.4-11.6c-3.9-1.0-8.3-1.8-13.1-2.2c-0.6-0.0-1.1-0.0-1.7-0.0C123.3,94.9,122.1,95.1,121.0,95.3z";
+    // 3. ข้อมูล Path สำหรับกุญแจซอล (จากรูปที่คุณให้)
+    const clefPathD =
+        "M115.9,19.6c-3.1,1.6-6.8,4.8-9.9,8.6c-6.0,7.6-8.5,16.8-6.3,24.0c2.1,6.9,8.5,11.8,16.3,13.4c5.8,1.1,11.6,0.7,16.3-1.3c8.6-3.6,13.8-11.3,14.9-20.3c1.2-9.9-2.9-20.6-12.2-30.9c-2.9-3.0-6.0-5.6-9.3-7.7c-4.1-2.6-8.0-4.6-11.8-6.1z " +
+        "M111.4,46.8c2.6-0.9,5.9-0.6,9.4,0.8c6.1,2.4,9.6,6.7,10.0,11.0c0.6,6.7-3.7,13.3-11.8,17.4c-4.5,2.4-9.6,3.4-14.8,2.9c-6.2-0.6-11.3-3.7-14.6-8.4c-3.0-4.2-3.8-9.5-2.2-14.1c1.1-3.1,3.5-6.0,6.6-8.4C98.1,50.9,104.6,48.3,111.4,46.8z " +
+        "M121.0,95.3c-0.3,1.3-0.7,2.5-1.3,3.7c-2.8,6.4-8.9,11.6-17.6,15.0c-3.9,1.5-8.0,2.5-12.0,3.2c-6.6,1.0-12.2,2.6-16.1,4.6c-6.2,3.2-9.6,7.6-9.7,12.9c-0.2,6.2,4.0,11.8,12.4,16.5c7.8,4.3,17.9,6.5,28.7,6.5c9.6,0,19.1-1.9,26.5-6.4c6.2-3.8,9.7-8.5,10.6-13.2c0.9-4.8-0.6-9.5-4.1-13.4c-3.8-4.2-9.9-6.8-18.0-7.9c-1.9-0.2-4.0-0.2-6.1,0.0c-4.3,0.4-7.9,1.3-10.6,2.7c-2.6,1.3-4.5,3.0-5.6,5.1c-1.2,2.3-1.5,5.0-0.6,7.9c1.3,4.1,5.0,7.6,10.8,10.8c5.6,3.0,12.0,4.5,18.6,4.5c5.6,0,11.2-0.9,15.7-2.6c3.5-1.3,6.6-3.0,9.2-5.1c2.5-2.0,4.6-4.4,6.1-7.1c1.5-2.8,2.3-5.7,2.4-8.6c0.1-3.3-0.9-6.6-2.9-9.9c-3.3-5.3-9.5-9.3-18.4-11.6c-3.9-1.0-8.3-1.8-13.1-2.2c-0.6-0.0-1.1-0.0-1.7-0.0C123.3,94.9,122.1,95.1,121.0,95.3z";
 
-            const g = document.createElementNS(svgNS, 'g');
-            
-            const clefPath = document.createElementNS(svgNS, 'path');
-            clefPath.setAttribute('d', clefPathD);
-            clefPath.setAttribute('fill', '#000');
-            
-            // ปรับตำแหน่งกุญแจซอลให้เหมาะสมกับ Staff Lines ที่วาดไว้
-            // ในที่นี้คือเลื่อนกุญแจซอลลงมา (Y) และปรับ scale
-            g.setAttribute('transform', 'translate(0, 35)'); 
-            
-            g.appendChild(clefPath);
-            clefGroup.appendChild(g);
-        }
+    // 4. วาดกุญแจซอล
+    const g = document.createElementNS(svgNS, 'g');
 
-        // เรียกใช้ฟังก์ชันเมื่อหน้าเว็บโหลดเสร็จ
-        window.onload = drawStaffAndClef;
-    </script>
+    const clefPath = document.createElementNS(svgNS, 'path');
+    clefPath.setAttribute('d', clefPathD);
+    clefPath.setAttribute('fill', '#000');
 
-</body>
-</html>
+    // ปรับตำแหน่งกุญแจซอลให้เหมาะสมกับ Staff Lines ที่วาดไว้
+    // default transform — ปรับค่า translate(x,y) และ scale(...) ถ้าต้องการ
+    g.setAttribute('transform', 'translate(52, -68) scale(0.21)');
+
+    g.appendChild(clefPath);
+    clefGroup.appendChild(g);
+
+    // ให้ตำแหน่งสำหรับการวาดโน้ตใช้งานต่อ
+    staffSVG.dataset.bottomY = bottomY;
+    staffSVG.dataset.gap = gap;
 }
 drawStaffAndClef();
 
@@ -539,5 +541,6 @@ document.addEventListener('DOMContentLoaded', ()=> {
   if(saved){ landingName.value = saved.name || ''; landingNo.value = saved.no || ''; landingClass.value = saved.class || ''; stuName.value = saved.name || ''; stuNo.value = saved.no || ''; stuClass.value = saved.class || ''; state.student = saved; }
 });
 </script>
+
 </body>
 </html>
