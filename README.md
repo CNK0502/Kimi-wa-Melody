@@ -262,35 +262,54 @@ const leaderboardEl = document.getElementById('leaderboard');
 const staffCard = document.getElementById('staffCard');
 
 /* -------------- Draw staff & high-fidelity clef -------------- */
-function drawStaffAndClef(){
-  staffLines.innerHTML=''; clefGroup.innerHTML=''; noteGroup.innerHTML=''; ledgerGroup.innerHTML='';
-  const left=110, right=760, bottomY=170, gap=20;
-  for(let i=0;i<5;i++){
-    const y = bottomY - i*gap;
-    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
-    line.setAttribute('x1',left); line.setAttribute('y1',y); line.setAttribute('x2',right); line.setAttribute('y2',y);
-    line.setAttribute('stroke','#000'); line.setAttribute('stroke-width',4); line.setAttribute('stroke-linecap','round');
-    staffLines.appendChild(line);
-  }
+staffLines.innerHTML = '';
+            clefGroup.innerHTML = '';
+            noteGroup.innerHTML = '';
+            ledgerGroup.innerHTML = '';
 
-  // Treble clef path (high-fidelity; based on your provided image)
-  const clefPathD = "M256.3,11.2c-24.8,0-48,5.2-68.9,15.5c-20.9,10.3-39:0,25.4-53.4,45.1c-14.4,19.7-24,42.2-28.3,66.8c-4.3,24.6-2.9,49.4,4.3,73c7.2,23.6,19.5,45.1,36.1,63.3c16.6,18.2,37.4,32.6,61,42.3c23.6,9.7,49.4,14.6,76,14.6c26.7,0,52.5-4.9,76.1-14.6c23.6-9.7,44.4-24.1,61.1-42.3c16.7-18.2,29-39.7,36.1-63.3c7.2-23.6,8.6-48.4,4.3-73c-4.3-24.6-13.9-47.1-28.3-66.8c-14.4-19.7-32.5-34.8-53.4-45.1C304.3,16.4,281.1,11.2,256.3,11.2z M259.3,469.8c-9.3,0-17.3-1.1-23.7-3.2c-6.4-2.1-11.6-5.1-15.4-8.9c-3.8-3.8-6.7-8.5-8.7-13.9c-1.9-5.4-2.9-11.5-2.9-18c0-13.8,3.8-26.8,11.3-38.9c7.5-12.1,20.4-23.1,38.4-33c-11.4-14.8-20.8-29.7-28-44.4c-7.2-14.7-12.9-29.9-17.1-45.3c-4.2-15.4-7.3-31.1-9.1-46.9c-1.9-15.8-2.8-32-2.8-48.4c0-22.9,2.1-44.9,6.4-66c4.3-21.1,10.2-41.1,17.8-60c7.6-18.9,16.8-36.3,27.8-52c11-15.7,23.4-29.3,37.3-40.8c13.9-11.5,29.2-20.4,45.5-26.6c16.3-6.2,33.3-9.4,50.7-9.4c16.9,0,32.3,2.5,45.7,7.5c13.4,5,24.8,12.1,33.9,21.2c9.1,9.1,16:0,20.6,32.5c4.6,12.5,6.9,25.9,6.9,40.1c0,17.8-3.6,34.4-10.7,49.5c-7.2,15.1-17.7,28.1-31.3,38.5c-13.6,10.5-30.2,18.3-49.2,23.3c-19,5-40,7.5-62.4,7.5v281.3z";
+            const left = 110, right = 760, bottomY = 170, gap = 20;
+            const svgNS = 'http://www.w3.org/2000/svg';
 
-  // Create path and place it
-  const svgNS = "http://www.w3.org/2000/svg";
-  const g = document.createElementNS(svgNS,'g');
-  const p = document.createElementNS(svgNS,'path');
-  p.setAttribute('d', clefPathD);
-  p.setAttribute('fill', '#000');
+            // 2. วาดบรรทัดห้าเส้น
+            for(let i=0;i<5;i++){
+                const y = bottomY - i*gap;
+                const line = document.createElementNS(svgNS, 'line');
+                line.setAttribute('x1', left);
+                line.setAttribute('y1', y);
+                line.setAttribute('x2', right);
+                line.setAttribute('y2', y);
+                line.setAttribute('stroke', '#000');
+                line.setAttribute('stroke-width', 4);
+                line.setAttribute('stroke-linecap', 'round');
+                staffLines.appendChild(line);
+            }
 
-  // Recommended transform so inner loop circles the 2nd line (G line)
-  g.setAttribute('transform', 'translate(52, -68) scale(0.21)');
+            // 3. ข้อมูล Path สำหรับกุญแจซอล
+            const clefPathD =
+                "M115.9,19.6c-3.1,1.6-6.8,4.8-9.9,8.6c-6.0,7.6-8.5,16.8-6.3,24.0c2.1,6.9,8.5,11.8,16.3,13.4c5.8,1.1,11.6,0.7,16.3-1.3c8.6-3.6,13.8-11.3,14.9-20.3c1.2-9.9-2.9-20.6-12.2-30.9c-2.9-3.0-6.0-5.6-9.3-7.7c-4.1-2.6-8.0-4.6-11.8-6.1z " +
+                "M111.4,46.8c2.6-0.9,5.9-0.6,9.4,0.8c6.1,2.4,9.6,6.7,10.0,11.0c0.6,6.7-3.7,13.3-11.8,17.4c-4.5,2.4-9.6,3.4-14.8,2.9c-6.2-0.6-11.3-3.7-14.6-8.4c-3.0-4.2-3.8-9.5-2.2-14.1c1.1-3.1,3.5-6.0,6.6-8.4C98.1,50.9,104.6,48.3,111.4,46.8z " +
+                "M121.0,95.3c-0.3,1.3-0.7,2.5-1.3,3.7c-2.8,6.4-8.9,11.6-17.6,15.0c-3.9,1.5-8.0,2.5-12.0,3.2c-6.6,1.0-12.2,2.6-16.1,4.6c-6.2,3.2-9.6,7.6-9.7,12.9c-0.2,6.2,4.0,11.8,12.4,16.5c7.8,4.3,17.9,6.5,28.7,6.5c9.6,0,19.1-1.9,26.5-6.4c6.2-3.8,9.7-8.5,10.6-13.2c0.9-4.8-0.6-9.5-4.1-13.4c-3.8-4.2-9.9-6.8-18.0-7.9c-1.9-0.2-4.0-0.2-6.1,0.0c-4.3,0.4-7.9,1.3-10.6,2.7c-2.6,1.3-4.5,3.0-5.6,5.1c-1.2,2.3-1.5,5.0-0.6,7.9c1.3,4.1,5.0,7.6,10.8,10.8c5.6,3.0,12.0,4.5,18.6,4.5c5.6,0,11.2-0.9,15.7-2.6c3.5-1.3,6.6-3.0,9.2-5.1c2.5-2.0,4.6-4.4,6.1-7.1c1.5-2.8,2.3-5.7,2.4-8.6c0.1-3.3-0.9-6.6-2.9-9.9c-3.3-5.3-9.5-9.3-18.4-11.6c-3.9-1.0-8.3-1.8-13.1-2.2c-0.6-0.0-1.1-0.0-1.7-0.0C123.3,94.9,122.1,95.1,121.0,95.3z";
 
-  g.appendChild(p);
-  clefGroup.appendChild(g);
+            const g = document.createElementNS(svgNS, 'g');
+            
+            const clefPath = document.createElementNS(svgNS, 'path');
+            clefPath.setAttribute('d', clefPathD);
+            clefPath.setAttribute('fill', '#000');
+            
+            // ปรับตำแหน่งกุญแจซอลให้เหมาะสมกับ Staff Lines ที่วาดไว้
+            // ในที่นี้คือเลื่อนกุญแจซอลลงมา (Y) และปรับ scale
+            g.setAttribute('transform', 'translate(0, 35)'); 
+            
+            g.appendChild(clefPath);
+            clefGroup.appendChild(g);
+        }
 
-  staffSVG.dataset.bottomY = bottomY;
-  staffSVG.dataset.gap = gap;
+        // เรียกใช้ฟังก์ชันเมื่อหน้าเว็บโหลดเสร็จ
+        window.onload = drawStaffAndClef;
+    </script>
+
+</body>
+</html>
 }
 drawStaffAndClef();
 
