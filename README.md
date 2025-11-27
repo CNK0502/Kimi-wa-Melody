@@ -103,6 +103,12 @@
       transform: translateY(0);
     }
 
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .btn-primary {
       background: linear-gradient(135deg, #8b7355 0%, #6d5a45 100%);
       color: white;
@@ -393,32 +399,32 @@
     <div class="mascot-tag" id="mascotTag">
      🐱 MelodyCat 🎵
     </div>
-    <div class="form-group"><label for="studentName">ชื่อ-สกุล (หรือชื่อกลุ่ม)</label> <input type="text" id="studentName" placeholder="กรอกชื่อของคุณ" required>
+    <div class="form-group"><label for="studentName">Name (or Group Name)</label> <input type="text" id="studentName" placeholder="Enter your name" required>
     </div>
-    <div class="form-group"><label for="studentNo">เลขที่</label> <input type="text" id="studentNo" placeholder="กรอกเลขที่" required>
+    <div class="form-group"><label for="studentNo">Student Number</label> <input type="text" id="studentNo" placeholder="Enter student number" required>
     </div>
-    <div class="form-group"><label for="studentClass">ห้อง</label> <input type="text" id="studentClass" placeholder="กรอกห้อง" required>
+    <div class="form-group"><label for="studentClass">Class</label> <input type="text" id="studentClass" placeholder="Enter class" required>
     </div>
-    <div class="form-group"><label for="gameMode">เลือกโหมด</label> <select id="gameMode"> <option value="practice">โหมดฝึกฝน (Practice)</option> <option value="time_challenge">โหมดชิงเวลา (Time Challenge - 60 วินาที)</option> </select>
+    <div class="form-group"><label for="gameMode">Select Mode</label> <select id="gameMode"> <option value="practice">Practice Mode</option> <option value="time_challenge">Time Challenge Mode (60 seconds)</option> </select>
     </div>
-    <div class="controls"><button class="btn btn-primary" onclick="startGame()">เริ่มเกม</button> <button class="btn btn-info" onclick="showLeaderboard()">ดูกระดานคะแนน</button> <button class="btn btn-warning" onclick="showExportModal()">ส่งออกข้อมูล (ครู)</button>
+    <div class="controls"><button class="btn btn-primary" onclick="startGame()">Start Game</button> <button class="btn btn-info" onclick="showLeaderboard()">View Leaderboard</button> <button class="btn btn-warning" onclick="showExportModal()">Export Data (Teacher)</button>
     </div>
    </div><!-- Level Selection Page -->
    <div id="levelPage" class="card hidden"><button class="back-btn" onclick="backToLanding()">←</button>
-    <h1>เลือกด่าน</h1>
-    <p style="text-align: center; color: #5c4a3a; font-size: 1.1rem;" id="instructionText">ฟังโน้ตและเลือกคำตอบที่ถูกต้อง</p>
+    <h1>Select Level</h1>
+    <p style="text-align: center; color: #5c4a3a; font-size: 1.1rem;" id="instructionText">Listen to the notes and choose the correct answer</p>
     <div class="level-select" id="levelSelect"></div>
    </div><!-- Game Page -->
    <div id="gamePage" class="card hidden"><button class="back-btn" onclick="backToLevelSelect()">←</button>
     <div class="info-bar">
      <div>
-      <span id="levelDisplay">ด่าน 1</span>
+      <span id="levelDisplay">Level 1</span>
      </div>
      <div>
-      <span id="questionDisplay">ข้อ 1/10</span>
+      <span id="questionDisplay">Question 1/10</span>
      </div>
      <div>
-      <span id="scoreDisplay">คะแนน: 0/0</span>
+      <span id="scoreDisplay">Score: 0/0</span>
      </div>
      <div id="timerContainer" class="hidden"><span class="timer-display" id="timerDisplay">60</span>
      </div>
@@ -427,29 +433,29 @@
      <svg id="musicStaff" viewbox="0 0 900 250" xmlns="http://www.w3.org/2000/svg"><!-- Staff and notes will be drawn here -->
      </svg>
     </div>
-    <div class="controls"><button class="btn btn-info" onclick="playQuestion()" id="playBtn">🔊 ฟัง</button> <button class="btn btn-warning" onclick="showAnswer()" id="answerBtn">👁️ ดูคำตอบ</button> <button class="btn btn-success hidden" onclick="nextQuestion()" id="nextBtn">➡️ ถัดไป</button>
+    <div class="controls"><button class="btn btn-info" onclick="playQuestion()" id="playBtn">🔊 ฟัง</button> <button class="btn btn-warning" onclick="showAnswer()" id="answerBtn">👁️ ดูคำตอบ</button> <button class="btn btn-success hidden" onclick="nextQuestion()" id="nextBtn">➡️ ต่อไป</button>
     </div>
     <div id="feedback" class="feedback"></div>
     <div id="choicesContainer" class="choices-grid"></div>
-    <div class="controls"><button class="btn btn-primary" onclick="saveScore()" id="saveScoreBtn">💾 บันทึกคะแนน</button>
+    <div class="controls"><button class="btn btn-primary" onclick="saveScore()" id="saveScoreBtn">💾 บันทึกคะแน��</button>
     </div>
    </div><!-- Leaderboard Page -->
    <div id="leaderboardPage" class="card hidden"><button class="back-btn" onclick="backToLanding()">←</button>
-    <h1>🏆 กระดานคะแนน Time Challenge</h1>
+    <h1>🏆 Time Challenge Leaderboard</h1>
     <table class="leaderboard-table">
      <thead>
       <tr>
-       <th>อันดับ</th>
-       <th>ชื่อ</th>
-       <th>ห้อง</th>
-       <th>เลขที่</th>
-       <th>คะแนนสะสม</th>
-       <th>วันที่</th>
+       <th>Rank</th>
+       <th>Name</th>
+       <th>Class</th>
+       <th>Number</th>
+       <th>Score</th>
+       <th>Date</th>
       </tr>
      </thead>
      <tbody id="leaderboardBody"></tbody>
     </table>
-    <div class="controls"><button class="btn btn-secondary" onclick="backToLanding()">กลับ</button>
+    <div class="controls"><button class="btn btn-secondary" onclick="backToLanding()">Back</button>
     </div>
    </div>
   </div><!-- PIN Modal -->
@@ -458,7 +464,7 @@
     <h2>🔒 กรอกรหัส PIN ครู</h2>
     <div class="form-group"><label for="pinInput">รหัส PIN</label> <input type="password" id="pinInput" placeholder="กรอกรหัส PIN">
     </div>
-    <div class="controls"><button class="btn btn-primary" onclick="verifyPIN()">ยืนยันตัวตน</button> <button class="btn btn-secondary" onclick="closePINModal()">ยกเลิก</button>
+    <div class="controls"><button class="btn btn-primary" onclick="verifyPIN()">ยืนยัน</button> <button class="btn btn-secondary" onclick="closePINModal()">ยกเลิ���</button>
     </div>
     <div id="pinError" style="color: #c47a6f; text-align: center; margin-top: 10px; display: none;">
      รหัส PIN ไม่ถูกต้อง
@@ -471,14 +477,14 @@
       app_title: "Kimi-wa-Melody",
       mascot_name: "MelodyCat",
       teacher_pin: "Teacherversion5791",
-      instruction_text: "ฟังโน้ตและเลือกคำตอบที่ถูกต้อง"
+      instruction_text: "Listen to the notes and choose the correct answer"
     };
 
     // ========== Note Configuration ==========
     const NOTES = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
     const NOTE_NAMES_TH = {
-      'C': 'โด', 'D': 'เร', 'E': 'มี', 'F': 'ฟา',
-      'G': 'ซอล', 'A': 'ลา', 'B': 'ที'
+      'C': 'Do', 'D': 'Re', 'E': 'Mi', 'F': 'Fa',
+      'G': 'Sol', 'A': 'La', 'B': 'Ti'
     };
 
     const NOTE_FREQUENCIES = {
@@ -487,20 +493,14 @@
     };
 
     // Staff positions (y-coordinate) - Treble Clef Standard
-    // Staff lines from bottom to top (line 1-5): Line1(170), Line2(150), Line3(130), Line4(110), Line5(90)
     const NOTE_POSITIONS = {
-      'C': 190, // Middle C - Below staff with leger line (gap of 20 from line 1)
+      'C': 190, // Middle C - Below staff with leger line
       'D': 180, // Below line 1 (space below staff)
       'E': 170, // On line 1 (bottom staff line)
       'F': 160, // Space between line 1 and 2
       'G': 150, // On line 2
       'A': 140, // Space between line 2 and 3
-      'B': 130, // On line 3 (middle line)
-      'C5': 120, // Space between line 3 and 4
-      'D5': 110, // On line 4
-      'E5': 100, // Space between line 4 and 5
-      'F5': 90, // On line 5 (top staff line)
-      'G5': 80 // Space above line 5
+      'B': 130  // On line 3 (middle line)
     };
 
     // Staff configuration
@@ -535,6 +535,7 @@
     let audioContext = null;
     let timerInterval = null;
     let timeRemaining = 60;
+    let dataSdkReady = false;
 
     // ========== Audio Context ==========
     function initAudio() {
@@ -578,37 +579,6 @@
     }
 
     // ========== SVG Drawing Functions ==========
-    function drawStaffAndClef() {
-      const svg = document.getElementById('musicStaff');
-      svg.innerHTML = '';
-      
-      // Draw 5 staff lines
-      for (let i = 0; i < 5; i++) {
-        const y = STAFF_CONFIG.bottomY - (i * STAFF_CONFIG.gap);
-        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        line.setAttribute('x1', STAFF_CONFIG.left);
-        line.setAttribute('y1', y);
-        line.setAttribute('x2', STAFF_CONFIG.right);
-        line.setAttribute('y2', y);
-        line.setAttribute('stroke', '#5c4a3a');
-        line.setAttribute('stroke-width', STAFF_CONFIG.strokeWidth);
-        line.setAttribute('stroke-linecap', 'round');
-        svg.appendChild(line);
-      }
-      
-      // Add clef instruction text above staff
-      const clefText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      clefText.setAttribute('x', '450');
-      clefText.setAttribute('y', '30');
-      clefText.setAttribute('fill', '#5c4a3a');
-      clefText.setAttribute('font-size', '18');
-      clefText.setAttribute('font-weight', '600');
-      clefText.setAttribute('text-anchor', 'middle');
-      clefText.setAttribute('font-family', 'Kanit, Sarabun, Arial, sans-serif');
-      clefText.textContent = 'กุญแจเสียงคือ Treble Clef (กุญแจซอล)';
-      svg.appendChild(clefText);
-    }
-
     function drawNote(note, index) {
       const svg = document.getElementById('musicStaff');
       const x = NOTE_CONFIG.startX + (index * NOTE_CONFIG.stepX);
@@ -675,7 +645,7 @@
       clefText.setAttribute('font-weight', '600');
       clefText.setAttribute('text-anchor', 'middle');
       clefText.setAttribute('font-family', 'Kanit, Sarabun, Arial, sans-serif');
-      clefText.textContent = 'กุญแจเสียงคือ Treble Clef (กุญแจซอล)';
+      clefText.textContent = 'Treble Clef (G Clef)';
       svg.appendChild(clefText);
       
       // Draw new notes
@@ -746,7 +716,7 @@
       drawSequence(currentSequence);
       renderChoices();
       
-      document.getElementById('questionDisplay').textContent = `ข้อ ${currentQuestion}/10`;
+      document.getElementById('questionDisplay').textContent = `Question ${currentQuestion}/10`;
       document.getElementById('answerBtn').disabled = false;
       document.getElementById('nextBtn').classList.add('hidden');
       document.getElementById('feedback').classList.remove('show');
@@ -774,7 +744,7 @@
       if (answered) return;
       
       const feedback = document.getElementById('feedback');
-      feedback.textContent = `คำตอบที่ถูกต้อง: ${seqToLabel(currentSequence)}`;
+      feedback.textContent = `Correct Answer: ${seqToLabel(currentSequence)}`;
       feedback.className = 'feedback show incorrect';
       
       document.getElementById('answerBtn').disabled = true;
@@ -805,12 +775,12 @@
       if (isCorrect) {
         currentScore++;
         btn.classList.add('correct');
-        feedback.textContent = '✅ ถูกต้อง!';
+        feedback.textContent = '✅ Correct!';
         feedback.className = 'feedback show correct';
         playCorrect();
       } else {
         btn.classList.add('incorrect');
-        feedback.textContent = `❌ ผิด! คำตอบที่ถูกต้อง: ${seqToLabel(currentSequence)}`;
+        feedback.textContent = `❌ ผิด! คำตอบท��่ถูกต้อง: ${seqToLabel(currentSequence)}`;
         feedback.className = 'feedback show incorrect';
         playWrong();
         
@@ -833,7 +803,7 @@
     }
 
     function updateScore() {
-      document.getElementById('scoreDisplay').textContent = `คะแนน: ${currentScore}/${totalAnswered}`;
+      document.getElementById('scoreDisplay').textContent = `Score: ${currentScore}/${totalAnswered}`;
     }
 
     function nextQuestion() {
@@ -855,7 +825,7 @@
 
     function endLevel() {
       const feedback = document.getElementById('feedback');
-      feedback.textContent = `จบด่าน ${currentLevel}! คะแนน: ${currentScore}/${totalAnswered}`;
+      feedback.textContent = `Level ${currentLevel} Complete! Score: ${currentScore}/${totalAnswered}`;
       feedback.className = 'feedback show correct';
       
       document.getElementById('nextBtn').classList.add('hidden');
@@ -908,7 +878,7 @@
       stopTimer();
       
       const feedback = document.getElementById('feedback');
-      feedback.textContent = `⏰ หมดเวลา! คะแนนของคุณ: ${currentScore}/${totalAnswered}`;
+      feedback.textContent = `⏰ Time's Up! Your Score: ${currentScore}/${totalAnswered}`;
       feedback.className = 'feedback show correct';
       
       document.getElementById('nextBtn').classList.add('hidden');
@@ -942,6 +912,19 @@
       localStorage.setItem('kimi_time_leaderboard', JSON.stringify(leaderboard.slice(0, 50)));
     }
 
+    // ========== Feedback Helper ==========
+    function showFeedbackMessage(message, isSuccess) {
+      const feedback = document.createElement('div');
+      feedback.className = `feedback show ${isSuccess ? 'correct' : 'incorrect'}`;
+      feedback.textContent = message;
+      
+      const gamePage = document.getElementById('gamePage');
+      const choicesContainer = document.getElementById('choicesContainer');
+      gamePage.insertBefore(feedback, choicesContainer);
+      
+      setTimeout(() => feedback.remove(), 3000);
+    }
+
     // ========== Navigation Functions ==========
     function startGame() {
       const name = document.getElementById('studentName').value.trim();
@@ -952,7 +935,7 @@
       if (!name || !no || !classRoom) {
         const msg = document.createElement('div');
         msg.className = 'feedback show incorrect';
-        msg.textContent = 'กรุณากรอกข้อมูลให้ครบถ้วน';
+        msg.textContent = 'Please fill in all fields';
         document.getElementById('landingPage').appendChild(msg);
         setTimeout(() => msg.remove(), 3000);
         return;
@@ -973,7 +956,7 @@
         document.getElementById('gamePage').classList.remove('hidden');
         document.getElementById('levelDisplay').textContent = 'Time Challenge';
         
-        drawStaffAndClef();
+        drawSequence([]);
         generateQuestion();
         startTimer();
         playQuestion();
@@ -997,7 +980,7 @@
         if (completed.includes(i)) {
           btn.classList.add('completed');
         }
-        btn.textContent = `ด่าน ${i}`;
+        btn.textContent = `Level ${i}`;
         btn.onclick = () => startLevel(i);
         container.appendChild(btn);
       }
@@ -1011,10 +994,10 @@
       
       document.getElementById('levelPage').classList.add('hidden');
       document.getElementById('gamePage').classList.remove('hidden');
-      document.getElementById('levelDisplay').textContent = `ด่าน ${level}`;
+      document.getElementById('levelDisplay').textContent = `Level ${level}`;
       document.getElementById('timerContainer').classList.add('hidden');
       
-      drawStaffAndClef();
+      drawSequence([]);
       generateQuestion();
     }
 
@@ -1045,7 +1028,7 @@
         const row = tbody.insertRow();
         const cell = row.insertCell();
         cell.colSpan = 6;
-        cell.textContent = 'ยังไม่มีข้อมูลคะแนน';
+        cell.textContent = 'No scores yet';
         cell.style.textAlign = 'center';
         cell.style.color = '#8b7355';
         return;
@@ -1065,47 +1048,44 @@
     // ========== Data Persistence ==========
     async function saveScore() {
       if (!currentStudent) {
-        const feedback = document.createElement('div');
-        feedback.className = 'feedback show incorrect';
-        feedback.textContent = 'ไม่พบข้อมูลนักเรียน';
-        document.getElementById('gamePage').insertBefore(feedback, document.getElementById('choicesContainer'));
-        setTimeout(() => feedback.remove(), 3000);
+        showFeedbackMessage('Student information not found', false);
+        return;
+      }
+
+      if (!dataSdkReady) {
+        showFeedbackMessage('❌ Save system not ready, please wait', false);
         return;
       }
 
       const saveBtn = document.getElementById('saveScoreBtn');
       saveBtn.disabled = true;
-      saveBtn.textContent = '⏳ กำลังบันทึก...';
+      saveBtn.textContent = '⏳ Saving...';
 
-      const record = {
-        student_name: currentStudent.name,
-        class_room: currentStudent.class,
-        student_no: currentStudent.no,
-        mode: currentMode,
-        level: currentLevel,
-        score: currentScore,
-        total: totalAnswered,
-        timestamp: new Date().toISOString()
-      };
+      try {
+        const record = {
+          student_name: currentStudent.name,
+          class_room: currentStudent.class,
+          student_no: currentStudent.no,
+          mode: currentMode,
+          level: currentLevel,
+          score: currentScore,
+          total: totalAnswered,
+          timestamp: new Date().toISOString()
+        };
 
-      const result = await window.dataSdk.create(record);
+        const result = await window.dataSdk.create(record);
 
-      if (result.isOk) {
-        const feedback = document.createElement('div');
-        feedback.className = 'feedback show correct';
-        feedback.textContent = '✅ บันทึกคะแนนเรียบร้อย!';
-        document.getElementById('gamePage').insertBefore(feedback, document.getElementById('choicesContainer'));
-        setTimeout(() => feedback.remove(), 3000);
-      } else {
-        const feedback = document.createElement('div');
-        feedback.className = 'feedback show incorrect';
-        feedback.textContent = '❌ เกิดข้อผิดพลาดในการบันทึก';
-        document.getElementById('gamePage').insertBefore(feedback, document.getElementById('choicesContainer'));
-        setTimeout(() => feedback.remove(), 3000);
+        if (result.isOk) {
+          showFeedbackMessage('✅ Score saved successfully!', true);
+        } else {
+          showFeedbackMessage(`❌ Error: ${result.error?.message || 'Unable to save'}`, false);
+        }
+      } catch (error) {
+        showFeedbackMessage(`❌ Error: ${error.message}`, false);
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = '💾 Save Score';
       }
-
-      saveBtn.disabled = false;
-      saveBtn.textContent = '💾 บันทึกคะแนน';
     }
 
     // ========== Export Functions ==========
@@ -1133,14 +1113,12 @@
     }
 
     function exportToCSV() {
-      // This will be called after successful Data SDK initialization
-      // We'll use the data from onDataChanged
       const records = window.kimiRecords || [];
       
       if (records.length === 0) {
         const msg = document.createElement('div');
         msg.className = 'feedback show incorrect';
-        msg.textContent = 'ไม่มีข้อมูลสำหรับส่งออก';
+        msg.textContent = 'No data to export';
         document.getElementById('landingPage').appendChild(msg);
         setTimeout(() => msg.remove(), 3000);
         return;
@@ -1149,7 +1127,7 @@
       let csv = 'name,class,no,mode,level,score,total,date\n';
       
       records.forEach(record => {
-        const date = new Date(record.timestamp).toLocaleDateString('th-TH');
+        const date = new Date(record.timestamp).toLocaleDateString('en-US');
         csv += `"${record.student_name}","${record.class_room}","${record.student_no}","${record.mode}",${record.level},${record.score},${record.total},"${date}"\n`;
       });
       
@@ -1161,7 +1139,7 @@
       
       const msg = document.createElement('div');
       msg.className = 'feedback show correct';
-      msg.textContent = '✅ ส่งออกข้อมูลเรียบร้อย!';
+      msg.textContent = '✅ Data exported successfully!';
       document.getElementById('landingPage').appendChild(msg);
       setTimeout(() => msg.remove(), 3000);
     }
@@ -1169,7 +1147,6 @@
     // ========== Data SDK Integration ==========
     const dataHandler = {
       onDataChanged(data) {
-        // Store records globally for export
         window.kimiRecords = data;
       }
     };
@@ -1206,15 +1183,16 @@
           ])
         });
 
-        // Apply initial config
         await onConfigChange(window.elementSdk.config);
       }
 
       // Initialize Data SDK
       if (window.dataSdk) {
         const result = await window.dataSdk.init(dataHandler);
-        if (!result.isOk) {
-          console.error('Failed to initialize Data SDK');
+        if (result.isOk) {
+          dataSdkReady = true;
+        } else {
+          console.error('Failed to initialize Data SDK:', result.error);
         }
       }
 
@@ -1231,5 +1209,5 @@
     // Start initialization
     init();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a52482eb069d036',t:'MTc2NDI1MzM5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a526d1f2035d02f',t:'MTc2NDI1NDkwNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
