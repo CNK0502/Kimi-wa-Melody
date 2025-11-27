@@ -1046,47 +1046,72 @@
     }
 
     // ========== Data Persistence ==========
-    async function saveScore() {
-      if (!currentStudent) {
-        showFeedbackMessage('Student information not found', false);
-        return;
+async function saveScore() {
+  // If student data missing -> warn
+  if (!currentStudent) {
+    showFeedbackMessage('Student information not found', false);
+    return;
+  }
+
+  const saveBtn = document.getElementById('saveScoreBtn');
+  saveBtn.disabled = true;
+  const origText = saveBtn.textContent;
+  saveBtn.textContent = '⏳ Saving...';
+
+  // Build record
+  const record = {
+    student_name: currentStudent.name,
+    class_room: currentStudent.class,
+    student_no: currentStudent.no,
+    mode: currentMode,
+    level: currentLevel,
+    score: currentScore,
+    total: totalAnswered,
+    timestamp: new Date().toISOString()
+  };
+
+  try {
+    // Prefer server Data SDK if available & ready
+    if (window.dataSdk && typeof window.dataSdk.create === 'function' && (typeof dataSdkReady === 'undefined' || dataSdkReady)) {
+      const result = await window.dataSdk.create(record);
+      if (result && result.isOk) {
+        showFeedbackMessage('✅ Score saved successfully!', true);
+        // also append to local export store for safety
+        const store = JSON.parse(localStorage.getItem('kimi_records_all') || '[]');
+        store.push(record);
+        localStorage.setItem('kimi_records_all', JSON.stringify(store));
+      } else {
+        // If Data SDK returned an error, fallback to local store
+        const errMsg = (result && result.error && result.error.message) ? result.error.message : 'Unable to save to server';
+        console.warn('Data SDK error, falling back to local store:', errMsg);
+        const store = JSON.parse(localStorage.getItem('kimi_records_all') || '[]');
+        store.push(record);
+        localStorage.setItem('kimi_records_all', JSON.stringify(store));
+        showFeedbackMessage('⚠️ Saved locally (server failed).', false);
       }
-
-      if (!dataSdkReady) {
-        showFeedbackMessage('❌ Save system not ready, please wait', false);
-        return;
-      }
-
-      const saveBtn = document.getElementById('saveScoreBtn');
-      saveBtn.disabled = true;
-      saveBtn.textContent = '⏳ Saving...';
-
-      try {
-        const record = {
-          student_name: currentStudent.name,
-          class_room: currentStudent.class,
-          student_no: currentStudent.no,
-          mode: currentMode,
-          level: currentLevel,
-          score: currentScore,
-          total: totalAnswered,
-          timestamp: new Date().toISOString()
-        };
-
-        const result = await window.dataSdk.create(record);
-
-        if (result.isOk) {
-          showFeedbackMessage('✅ Score saved successfully!', true);
-        } else {
-          showFeedbackMessage(`❌ Error: ${result.error?.message || 'Unable to save'}`, false);
-        }
-      } catch (error) {
-        showFeedbackMessage(`❌ Error: ${error.message}`, false);
-      } finally {
-        saveBtn.disabled = false;
-        saveBtn.textContent = '💾 Save Score';
-      }
+    } else {
+      // No Data SDK or not ready -> save locally
+      const store = JSON.parse(localStorage.getItem('kimi_records_all') || '[]');
+      store.push(record);
+      localStorage.setItem('kimi_records_all', JSON.stringify(store));
+      showFeedbackMessage('✅ Score saved locally!', true);
     }
+  } catch (err) {
+    console.error('saveScore error:', err);
+    // Ensure local fallback
+    try {
+      const store = JSON.parse(localStorage.getItem('kimi_records_all') || '[]');
+      store.push(record);
+      localStorage.setItem('kimi_records_all', JSON.stringify(store));
+      showFeedbackMessage('⚠️ Error saving to server — saved locally.', false);
+    } catch (e) {
+      showFeedbackMessage('❌ Failed to save score.', false);
+    }
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.textContent = origText;
+  }
+}
 
     // ========== Export Functions ==========
     function showExportModal() {
@@ -1113,36 +1138,67 @@
     }
 
     function exportToCSV() {
-      const records = window.kimiRecords || [];
-      
-      if (records.length === 0) {
-        const msg = document.createElement('div');
-        msg.className = 'feedback show incorrect';
-        msg.textContent = 'No data to export';
-        document.getElementById('landingPage').appendChild(msg);
-        setTimeout(() => msg.remove(), 3000);
-        return;
-      }
-      
-      let csv = 'name,class,no,mode,level,score,total,date\n';
-      
-      records.forEach(record => {
-        const date = new Date(record.timestamp).toLocaleDateString('en-US');
-        csv += `"${record.student_name}","${record.class_room}","${record.student_no}","${record.mode}",${record.level},${record.score},${record.total},"${date}"\n`;
-      });
-      
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `kimi-melody-records-${new Date().toISOString().split('T')[0]}.csv`;
-      link.click();
-      
-      const msg = document.createElement('div');
-      msg.className = 'feedback show correct';
-      msg.textContent = '✅ Data exported successfully!';
-      document.getElementById('landingPage').appendChild(msg);
-      setTimeout(() => msg.remove(), 3000);
-    }
+  // Prefer records from window.kimiRecords (Data SDK) then local storage
+  let records = window.kimiRecords;
+  if (!records || !Array.isArray(records) || records.length === 0) {
+    // fallback to local store
+    records = JSON.parse(localStorage.getItem('kimi_records_all') || '[]');
+  }
+  if (!records || records.length === 0) {
+    const msg = document.createElement('div');
+    msg.className = 'feedback show incorrect';
+    msg.textContent = 'No data to export';
+    document.getElementById('landingPage').appendChild(msg);
+    setTimeout(() => msg.remove(), 3000);
+    return;
+  }
+
+  // Build CSV (escape quotes)
+  let csv = 'Name,Class,Number,Mode,Level,Score,Total,Date\n';
+  records.forEach(record => {
+    const date = record.timestamp ? new Date(record.timestamp).toLocaleString('en-US') : '';
+    const name = (record.student_name || '').replace(/"/g, '""');
+    const classRoom = (record.class_room || '').replace(/"/g, '""');
+    const studentNo = (record.student_no || '').replace(/"/g, '""');
+    const mode = (record.mode || '').replace(/"/g, '""');
+    csv += `"${name}","${classRoom}","${studentNo}","${mode}",${record.level || ''},${record.score || 0},${record.total || 0},"${date}"\n`;
+  });
+
+  // Add BOM for Excel UTF-8 compatibility
+  const BOM = '\uFEFF';
+  const blob = new Blob([BOM + csv], { type: 'text/csv;charset=utf-8;' });
+
+  // Create download link and click it in a user-gesture-safe way
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `kimi-melody-records-${new Date().toISOString().split('T')[0]}.csv`;
+  // ensure it's not visible and added to DOM
+  link.style.display = 'none';
+  document.body.appendChild(link);
+
+  // Try to trigger click; use MouseEvent for compatibility
+  try {
+    const evt = new MouseEvent('click', { view: window, bubbles: true, cancelable: true });
+    link.dispatchEvent(evt);
+  } catch (e) {
+    // fallback
+    link.click();
+  }
+
+  // cleanup after a short delay to ensure download started
+  setTimeout(() => {
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }, 500);
+
+  // show success message in UI
+  const msg = document.createElement('div');
+  msg.className = 'feedback show correct';
+  msg.textContent = '✅ Data exported successfully!';
+  document.getElementById('landingPage').appendChild(msg);
+  setTimeout(() => msg.remove(), 3000);
+}
 
     // ========== Data SDK Integration ==========
     const dataHandler = {
