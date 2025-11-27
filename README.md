@@ -1,1212 +1,594 @@
 <html....>
 <html lang="th">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kimi-wa-Melody - MelodyCat</title>
-  <script src="/_sdk/data_sdk.js"></script>
-  <script src="/_sdk/element_sdk.js"></script>
-  <style>
-    body {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Kanit', 'Sarabun', Arial, sans-serif;
-      background: linear-gradient(135deg, #d4c5a9 0%, #b8a58a 100%);
-      min-height: 100%;
-      width: 100%;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    .app-container {
-      width: 100%;
-      min-height: 100%;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .card {
-      background: #f5ede0;
-      border-radius: 20px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-      padding: 30px;
-      margin: 15px 0;
-      width: 100%;
-      max-width: 900px;
-    }
-
-    h1 {
-      color: #5c4a3a;
-      text-align: center;
-      font-size: 2.5rem;
-      margin: 0 0 10px 0;
-    }
-
-    .mascot-tag {
-      text-align: center;
-      color: #8b7355;
-      font-size: 1.1rem;
-      margin-bottom: 20px;
-    }
-
-    .form-group {
-      margin: 15px 0;
-    }
-
-    label {
-      display: block;
-      color: #5c4a3a;
-      font-weight: 600;
-      margin-bottom: 8px;
-      font-size: 1rem;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 12px 15px;
-      border: 2px solid #c4b5a0;
-      border-radius: 10px;
-      font-size: 1rem;
-      background: white;
-      transition: all 0.3s;
-    }
-
-    input:focus, select:focus {
-      outline: none;
-      border-color: #8b7355;
-      box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
-    }
-
-    .btn {
-      padding: 14px 28px;
-      border: none;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      font-family: inherit;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-    }
-
-    .btn:active {
-      transform: translateY(0);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #8b7355 0%, #6d5a45 100%);
-      color: white;
-    }
-
-    .btn-success {
-      background: linear-gradient(135deg, #7a9b6f 0%, #5d7a52 100%);
-      color: white;
-    }
-
-    .btn-info {
-      background: linear-gradient(135deg, #9bb3c4 0%, #7a96aa 100%);
-      color: white;
-    }
-
-    .btn-warning {
-      background: linear-gradient(135deg, #c4a569 0%, #a68a52 100%);
-      color: white;
-    }
-
-    .btn-secondary {
-      background: linear-gradient(135deg, #a89f91 0%, #8a8175 100%);
-      color: white;
-    }
-
-    .staff-container {
-      background: white;
-      border-radius: 15px;
-      padding: 40px 20px;
-      margin: 20px 0;
-      box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
-      overflow-x: auto;
-    }
-
-    #musicStaff {
-      display: block;
-      margin: 0 auto;
-      max-width: 100%;
-      height: auto;
-    }
-
-    .controls {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 20px 0;
-    }
-
-    .info-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(135deg, #8b7355 0%, #6d5a45 100%);
-      color: white;
-      padding: 15px 25px;
-      border-radius: 12px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin: 15px 0;
-    }
-
-    .choices-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 15px;
-      margin: 20px 0;
-    }
-
-    .choice-btn {
-      padding: 20px;
-      background: white;
-      border: 3px solid #c4b5a0;
-      border-radius: 12px;
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #5c4a3a;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .choice-btn:hover {
-      background: #f0e8d8;
-      border-color: #8b7355;
-      transform: scale(1.05);
-    }
-
-    .choice-btn.correct {
-      background: #7a9b6f;
-      color: white;
-      border-color: #5d7a52;
-    }
-
-    .choice-btn.incorrect {
-      background: #c47a6f;
-      color: white;
-      border-color: #a65d52;
-    }
-
-    .feedback {
-      text-align: center;
-      font-size: 1.3rem;
-      font-weight: 600;
-      padding: 15px;
-      border-radius: 10px;
-      margin: 15px 0;
-      display: none;
-    }
-
-    .feedback.show {
-      display: block;
-    }
-
-    .feedback.correct {
-      background: #e8f5e4;
-      color: #5d7a52;
-      border: 2px solid #7a9b6f;
-    }
-
-    .feedback.incorrect {
-      background: #f5e4e4;
-      color: #a65d52;
-      border: 2px solid #c47a6f;
-    }
-
-    .level-select {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-      gap: 10px;
-      margin: 20px 0;
-    }
-
-    .level-btn {
-      padding: 15px;
-      background: white;
-      border: 2px solid #c4b5a0;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: 600;
-      color: #5c4a3a;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .level-btn:hover {
-      background: #f0e8d8;
-      transform: scale(1.05);
-    }
-
-    .level-btn.completed {
-      background: #7a9b6f;
-      color: white;
-      border-color: #5d7a52;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .leaderboard-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-    }
-
-    .leaderboard-table th {
-      background: #8b7355;
-      color: white;
-      padding: 12px;
-      text-align: left;
-      font-weight: 600;
-    }
-
-    .leaderboard-table td {
-      padding: 10px 12px;
-      border-bottom: 1px solid #c4b5a0;
-    }
-
-    .leaderboard-table tr:nth-child(even) {
-      background: #f9f6f0;
-    }
-
-    .leaderboard-table tr:hover {
-      background: #f0e8d8;
-    }
-
-    .modal-backdrop {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-
-    .modal-backdrop.show {
-      display: flex;
-    }
-
-    .modal {
-      background: #f5ede0;
-      border-radius: 20px;
-      padding: 30px;
-      max-width: 500px;
-      width: 90%;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
-    }
-
-    .modal h2 {
-      color: #5c4a3a;
-      margin-top: 0;
-    }
-
-    .timer-display {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #5c4a3a;
-    }
-
-    .timer-display.warning {
-      color: #c47a6f;
-      animation: pulse 1s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
-    }
-
-    .back-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background: rgba(139, 115, 85, 0.9);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      transition: all 0.3s;
-      z-index: 100;
-    }
-
-    .back-btn:hover {
-      background: rgba(109, 90, 69, 0.9);
-      transform: scale(1.1);
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 1.8rem;
-      }
-
-      .btn {
-        padding: 12px 20px;
-        font-size: 1rem;
-      }
-
-      .controls {
-        flex-direction: column;
-      }
-
-      .info-bar {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-      }
-
-      .choices-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-  </style>
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
- </head>
- <body>
-  <div class="app-container"><!-- Landing Page -->
-   <div id="landingPage" class="card">
-    <h1 id="appTitle">Kimi-wa-Melody</h1>
-    <div class="mascot-tag" id="mascotTag">
-     🐱 MelodyCat 🎵
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Kimi-wa-Melody — Final</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#efe7d7; --card:#fff7ee; --accent:#7C5A3A; --muted:#765b44; --good:#2E8B57; --bad:#C03B3B;
+  --timegreen-start:#E6F7ED; --timegreen-accent:#4B8A5A;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Kanit',system-ui,Segoe UI,Roboto,'Noto Sans',Arial;color:#2b2b2b;background:linear-gradient(135deg,#d4c5a9 0%,#b8a58a 100%)}
+.app-container{max-width:1100px;margin:22px auto;padding:18px}
+.card{background:var(--card);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 12px 36px rgba(0,0,0,0.12)}
+.header{display:flex;align-items:center;gap:12px}
+.header h1{margin:0;font-size:26px;color:var(--muted)}
+.mascot{font-size:34px}
+.form-row{display:flex;gap:12px;flex-wrap:wrap}
+.input,select,button{font-family:inherit}
+.input{padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);width:100%}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+.btn-primary{background:var(--accent);color:white;box-shadow:0 8px 20px rgba(124,90,58,0.15)}
+.btn-info{background:linear-gradient(135deg,#9bb3c4,#7a96aa);color:white}
+.btn-success{background:linear-gradient(135deg,#7a9b6f,#5d7a52);color:white}
+.small{color:var(--muted);font-size:13px}
+.staff-card{padding:12px;border-radius:12px;background:white;box-shadow:0 10px 30px rgba(0,0,0,0.06)}
+#staffSVG{width:100%;height:auto;display:block}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:12px}
+.choice{padding:12px;border-radius:10px;background:#fff;border:1px solid rgba(0,0,0,0.06);cursor:pointer;font-weight:700;text-align:center}
+.choice.correct{background:var(--good);color:white;border-color:rgba(46,139,87,0.9)}
+.choice.wrong{background:var(--bad);color:white}
+.feedback{margin-top:12px;padding:10px;border-radius:10px;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:#e8f6ea;color:var(--good);border:1px solid rgba(46,139,87,0.12)}
+.feedback.incorrect{background:#fff0f0;color:var(--bad);border:1px solid rgba(192,59,59,0.12)}
+.level-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px}
+.level-btn{padding:10px;border-radius:8px;background:#fff;border:1px solid #e6d9c7;cursor:pointer}
+.level-btn.completed{background:var(--good);color:#fff}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:60}
+.modal{background:var(--card);padding:16px;border-radius:12px;min-width:320px}
+.leaderboard{max-height:320px;overflow:auto}
+.timer{font-weight:900;color:var(--muted)}
+@media(max-width:720px){.form-row{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="app-container">
+  <div class="card header">
+    <div class="mascot">🐱</div>
+    <div>
+      <h1>Kimi-wa-Melody</h1>
+      <div class="small">โปรโตไทป์ฝึกอ่านโน้ต — MelodyCat</div>
     </div>
-    <div class="form-group"><label for="studentName">ชื่อ-สกุล (หรือชื่อกลุ่ม)</label> <input type="text" id="studentName" placeholder="กรอกชื่อของคุณ" required>
-    </div>
-    <div class="form-group"><label for="studentNo">เลขที่</label> <input type="text" id="studentNo" placeholder="กรอก���ลขที่" required>
-    </div>
-    <div class="form-group"><label for="studentClass">ห้อง</label> <input type="text" id="studentClass" placeholder="กรอกห้อง" required>
-    </div>
-    <div class="form-group"><label for="gameMode">เลือกโหมด</label> <select id="gameMode"> <option value="practice">โหมดฝึกฝน (Practice)</option> <option value="time_challenge">โหมดชิงเวลา (Time Challenge - 60 วินาที)</option> </select>
-    </div>
-    <div class="controls"><button class="btn btn-primary" onclick="startGame()">เริ่มเกม</button> <button class="btn btn-info" onclick="showLeaderboard()">ดูกระดานคะแนน</button> <button class="btn btn-warning" onclick="showExportModal()">ส่งออกข้อมูล (��รู)</button>
-    </div>
-   </div><!-- Level Selection Page -->
-   <div id="levelPage" class="card hidden"><button class="back-btn" onclick="backToLanding()">←</button>
-    <h1>เลือกด่าน</h1>
-    <p style="text-align: center; color: #5c4a3a; font-size: 1.1rem;" id="instructionText">ฟังโน้ตแล��เลือกคำตอบที่ถูกต้อง</p>
-    <div class="level-select" id="levelSelect"></div>
-   </div><!-- Game Page -->
-   <div id="gamePage" class="card hidden"><button class="back-btn" onclick="backToLevelSelect()">←</button>
-    <div class="info-bar">
-     <div>
-      <span id="levelDisplay">ด่าน 1</span>
-     </div>
-     <div>
-      <span id="questionDisplay">ข้อ 1/10</span>
-     </div>
-     <div>
-      <span id="scoreDisplay">คะแนน: 0/0</span>
-     </div>
-     <div id="timerContainer" class="hidden"><span class="timer-display" id="timerDisplay">60</span>
-     </div>
-    </div>
-    <div class="staff-container">
-     <svg id="musicStaff" viewbox="0 0 900 250" xmlns="http://www.w3.org/2000/svg"><!-- Staff and notes will be drawn here -->
-     </svg>
-    </div>
-    <div class="controls"><button class="btn btn-info" onclick="playQuestion()" id="playBtn">🔊 ฟัง</button> <button class="btn btn-warning" onclick="showAnswer()" id="answerBtn">👁️ ดูคำตอบ</button> <button class="btn btn-success hidden" onclick="nextQuestion()" id="nextBtn">➡️ ถัดไป</button>
-    </div>
-    <div id="feedback" class="feedback"></div>
-    <div id="choicesContainer" class="choices-grid"></div>
-    <div class="controls"><button class="btn btn-primary" onclick="saveScore()" id="saveScoreBtn">💾 บัน���ึกคะแนน</button>
-    </div>
-   </div><!-- Leaderboard Page -->
-   <div id="leaderboardPage" class="card hidden"><button class="back-btn" onclick="backToLanding()">←</button>
-    <h1>🏆 กระด���นคะแนน Time Challenge</h1>
-    <table class="leaderboard-table">
-     <thead>
-      <tr>
-       <th>อันดับ</th>
-       <th>ชื่อ</th>
-       <th>ห้อง</th>
-       <th>เลขที่</th>
-       <th>คะแน���</th>
-       <th>วันที่</th>
-      </tr>
-     </thead>
-     <tbody id="leaderboardBody"></tbody>
-    </table>
-    <div class="controls"><button class="btn btn-secondary" onclick="backToLanding()">กลับ</button>
-    </div>
-   </div>
-  </div><!-- PIN Modal -->
-  <div id="pinModal" class="modal-backdrop">
-   <div class="modal">
-    <h2>🔒 กรอกรหัส PIN ค���ู</h2>
-    <div class="form-group"><label for="pinInput">รหัส PIN</label> <input type="password" id="pinInput" placeholder="กรอกรหัส PIN">
-    </div>
-    <div class="controls"><button class="btn btn-primary" onclick="verifyPIN()">ยืนยัน</button> <button class="btn btn-secondary" onclick="closePINModal()">ยกเลิก</button>
-    </div>
-    <div id="pinError" style="color: #c47a6f; text-align: center; margin-top: 10px; display: none;">
-     รหัส PIN ไม่ถูกต้อง
-    </div>
-   </div>
+    <div style="margin-left:auto" class="small">PIN ครู: <span style="font-weight:800">Teacherversion5791</span></div>
   </div>
-  <script>
-    // ========== Configuration ==========
-    const defaultConfig = {
-      app_title: "Kimi-wa-Melody",
-      mascot_name: "MelodyCat",
-      teacher_pin: "Teacherversion5791",
-      instruction_text: "ฟังโน้ตและเลือกค��ตอบที่ถูกต้อง"
-    };
 
-    // ========== Note Configuration ==========
-    const NOTES = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
-    const NOTE_NAMES_TH = {
-      'C': 'โด', 'D': 'เร', 'E': 'มี', 'F': 'ฟา',
-      'G': 'ซอล', 'A': 'ลา', 'B': 'ที'
-    };
+  <!-- Landing -->
+  <div id="landing" class="card">
+    <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
+      <div>
+        <h2 style="margin:0">เริ่มต้น</h2>
+        <div class="small">กรอกข้อมูลนักเรียนก่อนเริ่ม</div>
+      </div>
+    </div>
+    <div style="margin-top:12px" class="form-row">
+      <div style="flex:1">
+        <label class="small">ชื่อ-สกุล / ชื่อกลุ่ม</label>
+        <input id="landingName" class="input" placeholder="เช่น นุ่น / กลุ่ม 1">
+      </div>
+      <div style="width:120px">
+        <label class="small">เลขที่</label>
+        <input id="landingNo" class="input" placeholder="เลขที่">
+      </div>
+      <div style="width:140px">
+        <label class="small">ห้อง</label>
+        <input id="landingClass" class="input" placeholder="เช่น ป.4/1">
+      </div>
+      <div style="width:220px">
+        <label class="small">โหมด</label>
+        <select id="landingMode" class="input">
+          <option value="practice">Practice — แบบฝึก</option>
+          <option value="time">Time Challenge — 60 วินาที</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top:12px" class="controls">
+      <button class="btn btn-primary" id="startBtn">เริ่มเลย</button>
+      <button class="btn btn-info" id="showLeaderboardBtn">ดูกระดานคะแนน</button>
+      <button class="btn btn-success" id="showExportBtn">ส่งออกข้อมูล (ครู)</button>
+    </div>
+  </div>
 
-    const NOTE_FREQUENCIES = {
-      'C': 261.63, 'D': 293.66, 'E': 329.63, 'F': 349.23,
-      'G': 392.00, 'A': 440.00, 'B': 493.88
-    };
+  <!-- Level select -->
+  <div id="levelPanel" class="card" style="display:none">
+    <h2 style="margin:0">เลือกด่าน</h2>
+    <div class="small" id="levelHint" style="margin-top:6px">ด่าน 1–7 : 1 โน้ต / ข้อ · ด่าน 8–14 : 2 โน้ต / ข้อ · ด่าน 15–20 : 3 โน้ต / ข้อ</div>
+    <div style="margin-top:12px" id="levelGrid" class="level-grid"></div>
+    <div style="margin-top:12px" class="controls">
+      <button class="btn" id="backToLanding">กลับ</button>
+    </div>
+  </div>
 
-    // Staff positions (y-coordinate) - Treble Clef Standard
-    // Staff lines from bottom to top (line 1-5): Line1(170), Line2(150), Line3(130), Line4(110), Line5(90)
-    const NOTE_POSITIONS = {
-      'C': 210, // Middle C - Below staff with leger line
-      'D': 190, // Below line 1 (space below staff)
-      'E': 170, // On line 1 (bottom staff line)
-      'F': 160, // Space between line 1 and 2
-      'G': 150, // On line 2
-      'A': 140, // Space between line 2 and 3
-      'B': 130, // On line 3 (middle line)
-      'C5': 120, // Space between line 3 and 4
-      'D5': 110, // On line 4
-      'E5': 100, // Space between line 4 and 5
-      'F5': 90, // On line 5 (top staff line)
-      'G5': 80 // Space above line 5
-    };
+  <!-- Game -->
+  <div id="gamePanel" class="card" style="display:none">
+    <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
+      <div>
+        <div class="small">ด่าน <span id="levelDisplay">1</span></div>
+        <div class="small">ข้อ <span id="qDisplay">1</span>/10</div>
+      </div>
+      <div class="small">คะแนน: <span id="scoreDisplay">0</span></div>
+      <div class="small timer" id="timerDisplay" style="display:none">60</div>
+    </div>
 
-    // Staff configuration
-    const STAFF_CONFIG = {
-      left: 250,
-      right: 650,
-      bottomY: 170,
-      gap: 20,
-      strokeWidth: 3
-    };
+    <div style="margin-top:12px" class="staff-card">
+      <svg id="staffSVG" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" aria-label="staff"></svg>
+    </div>
 
-    // Note rendering
-    const NOTE_CONFIG = {
-      startX: 380,
-      stepX: 48,
-      headRx: 16,
-      headRy: 12,
-      stemWidth: 3.8,
-      stemHeight: 60
-    };
+    <div style="margin-top:12px" class="controls">
+      <button class="btn btn-info" id="playBtn">🔊 ฟัง</button>
+      <button class="btn btn-primary" id="showAnswerBtn">ดูคำตอบ</button>
+      <button class="btn btn-success" id="nextBtn" style="display:none">ถัดไป</button>
+    </div>
 
-    // ========== Game State ==========
-    let currentStudent = null;
-    let currentMode = 'practice';
-    let currentLevel = 1;
-    let currentQuestion = 1;
-    let currentScore = 0;
-    let totalAnswered = 0;
-    let currentSequence = [];
-    let currentChoices = [];
-    let answered = false;
-    let audioContext = null;
-    let timerInterval = null;
-    let timeRemaining = 60;
+    <div id="choices" class="choices"></div>
 
-    // ========== Audio Context ==========
-    function initAudio() {
-      if (!audioContext) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      }
+    <div id="feedback" class="feedback"></div>
+
+    <div style="margin-top:12px" class="controls">
+      <button class="btn btn-success" id="saveScoreBtn">💾 บันทึกคะแนน</button>
+      <button class="btn" id="backToLevels">กลับ</button>
+    </div>
+  </div>
+
+  <!-- Leaderboard -->
+  <div id="leaderboardPanel" class="card" style="display:none">
+    <h2>กระดานคะแนน Time Challenge</h2>
+    <div class="leaderboard" id="leaderboardList"></div>
+    <div style="margin-top:12px" class="controls">
+      <button class="btn" id="lbBack">กลับ</button>
+    </div>
+  </div>
+
+  <!-- Export modal -->
+  <div id="pinModal" class="modal-backdrop">
+    <div class="modal">
+      <h3>ยืนยันรหัสครู</h3>
+      <div style="margin-top:8px">
+        <label class="small">รหัส PIN</label>
+        <input id="pinInput" class="input" type="password" placeholder="รหัสครู">
+      </div>
+      <div style="margin-top:12px" class="controls">
+        <button class="btn btn-primary" id="pinOk">ยืนยัน</button>
+        <button class="btn" id="pinCancel">ยกเลิก</button>
+      </div>
+      <div id="pinError" class="small" style="color:var(--bad);display:none;margin-top:8px">รหัสไม่ถูกต้อง</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ================= CONFIG ================= */
+const TEACHER_PIN = "Teacherversion5791";
+const TOTAL_LEVELS = 20;
+const QUESTIONS_PER_LEVEL = 10;
+
+const NOTES = ['C','D','E','F','G','A','B'];
+const NOTE_NAMES_TH = {C:'โด',D:'เร',E:'มี',F:'ฟา',G:'ซอล',A:'ลา',B:'ที'};
+const NOTE_FREQ = {C:261.63,D:293.66,E:329.63,F:349.23,G:392.00,A:440.00,B:493.88};
+
+/* Staff geometry */
+const STAFF = { left:110, right:760, bottomY:170, gap:20, strokeWidth:4 };
+
+/* Note rendering */
+const NOTE_CFG = { startX:360, stepX:48, rx:16, ry:12, stemW:3.8, stemH:60 };
+
+/* Clef SVG path (clean, high-fidelity) */
+const CLEF_PATH = `
+M115.9,19.6c-3.1,1.6-6.8,4.8-9.9,8.6c-6.0,7.6-8.5,16.8-6.3,24.0c2.1,6.9,8.5,11.8,16.3,13.4c5.8,1.1,11.6,0.7,16.3-1.3
+c8.6-3.6,13.8-11.3,14.9-20.3c1.2-9.9-2.9-20.6-12.2-30.9c-2.9-3.0-6.0-5.6-9.3-7.7c-4.1-2.6-8.0-4.6-11.8-6.1z
+M111.4,46.8c2.6-0.9,5.9-0.6,9.4,0.8c6.1,2.4,9.6,6.7,10.0,11.0c0.6,6.7-3.7,13.3-11.8,17.4c-4.5,2.4-9.6,3.4-14.8,2.9
+c-6.2-0.6-11.3-3.7-14.6-8.4c-3.0-4.2-3.8-9.5-2.2-14.1c1.1-3.1,3.5-6.0,6.6-8.4C98.1,50.9,104.6,48.3,111.4,46.8z
+M121.0,95.3c-0.3,1.3-0.7,2.5-1.3,3.7c-2.8,6.4-8.9,11.6-17.6,15.0c-3.9,1.5-8.0,2.5-12.0,3.2c-6.6,1.0-12.2,2.6-16.1,4.6
+c-6.2,3.2-9.6,7.6-9.7,12.9c-0.2,6.2,4.0,11.8,12.4,16.5c7.8,4.3,17.9,6.5,28.7,6.5c9.6,0,19.1-1.9,26.5-6.4
+c6.2-3.8,9.7-8.5,10.6-13.2c0.9-4.8-0.6-9.5-4.1-13.4c-3.8-4.2-9.9-6.8-18.0-7.9c-1.9-0.2-4.0-0.2-6.1,0.0c-4.3,0.4-7.9,1.3-10.6,2.7
+c-2.6,1.3-4.5,3.0-5.6,5.1c-1.2,2.3-1.5,5.0-0.6,7.9c1.3,4.1,5.0,7.6,10.8,10.8c5.6,3.0,12.0,4.5,18.6,4.5c5.6,0,11.2-0.9,15.7-2.6
+c3.5-1.3,6.6-3.0,9.2-5.1c2.5-2.0,4.6-4.4,6.1-7.1c1.5-2.8,2.3-5.7,2.4-8.6c0.1-3.3-0.9-6.6-2.9-9.9c-3.3-5.3-9.5-9.3-18.4-11.6
+c-3.9-1.0-8.3-1.8-13.1-2.2c-0.6-0.0-1.1-0.0-1.7-0.0C123.3,94.9,122.1,95.1,121.0,95.3z
+`;
+
+/* Clef transform: change these to fine-tune x/y/scale */
+const CLEF_TRANSFORM = { tx:52, ty:-68, s:0.21 };
+
+/* =============== State =============== */
+let state = {
+  student: {name:'', no:'', class:''},
+  mode: 'practice',
+  level: 1,
+  qIndex: 0,
+  score: 0,
+  current: null,
+  running: false,
+  timeTimer: null,
+  timeLeft: 60
+};
+
+/* =============== Helpers: Audio =============== */
+let audioCtx = null;
+function ensureAudio(){ if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+function playTone(freq, t=0.45){
+  ensureAudio();
+  const o = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  o.type = 'sine'; o.frequency.value = freq;
+  o.connect(g); g.connect(audioCtx.destination);
+  g.gain.setValueAtTime(0.0001,audioCtx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.18,audioCtx.currentTime+0.01);
+  o.start(); g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+t);
+  setTimeout(()=>o.stop(), (t+0.05)*1000);
+}
+function playSeq(seq, interval=380){
+  seq.forEach((n,i)=> setTimeout(()=> playTone(NOTE_FREQ[n]), i*interval));
+}
+function playCorrect(){ playSeq(['C','E','G'],200); }
+function playWrong(){ playSeq(['G','F','E'],180); }
+
+/* =============== SVG draw =============== */
+const svgNS = 'http://www.w3.org/2000/svg';
+function drawStaffAndClef(){
+  const svg = document.getElementById('staffSVG');
+  svg.innerHTML = '';
+
+  // staff lines
+  for(let i=0;i<5;i++){
+    const y = STAFF.bottomY - i*STAFF.gap;
+    const line = document.createElementNS(svgNS,'line');
+    line.setAttribute('x1', STAFF.left);
+    line.setAttribute('y1', y);
+    line.setAttribute('x2', STAFF.right);
+    line.setAttribute('y2', y);
+    line.setAttribute('stroke', '#000');
+    line.setAttribute('stroke-width', STAFF.strokeWidth);
+    line.setAttribute('stroke-linecap','round');
+    svg.appendChild(line);
+  }
+
+  // add clef group with path
+  const g = document.createElementNS(svgNS,'g');
+  g.setAttribute('transform', `translate(${CLEF_TRANSFORM.tx}, ${CLEF_TRANSFORM.ty}) scale(${CLEF_TRANSFORM.s})`);
+  const p = document.createElementNS(svgNS,'path');
+  p.setAttribute('d', CLEF_PATH);
+  p.setAttribute('fill', '#000');
+  g.appendChild(p);
+  svg.appendChild(g);
+
+  // store for notes rendering
+  svg.dataset.bottomY = STAFF.bottomY;
+  svg.dataset.gap = STAFF.gap;
+}
+
+/* Map note to Y position (Treble clef mapping; bottom staff line is E) */
+function getY(note){
+  const svg = document.getElementById('staffSVG');
+  const bottomY = parseFloat(svg.dataset.bottomY || STAFF.bottomY);
+  const gap = parseFloat(svg.dataset.gap || STAFF.gap);
+  const map = {
+    C: bottomY + gap, // middle C (ledger)
+    D: bottomY + gap/2,
+    E: bottomY,
+    F: bottomY - gap/2,
+    G: bottomY - gap,
+    A: bottomY - gap*1.5,
+    B: bottomY - gap*2
+  };
+  return map[note];
+}
+
+function renderSequence(seq){
+  const svg = document.getElementById('staffSVG');
+
+  // preserve staff & clef (first two children likely staff lines + clef)
+  const preserved = [];
+  const children = Array.from(svg.childNodes);
+  // Keep lines and clef group (we assume lines are first 5 and clef is next)
+  for(let i=0;i<svg.childNodes.length;i++){
+    const node = svg.childNodes[i];
+    if(node.tagName === 'line' || (node.tagName === 'g' && node.querySelector('path'))) preserved.push(node.cloneNode(true));
+  }
+  svg.innerHTML = '';
+  preserved.forEach(n => svg.appendChild(n));
+
+  // draw notes
+  seq.forEach((note,i)=>{
+    const x = NOTE_CFG.startX + i*NOTE_CFG.stepX;
+    const y = getY(note);
+    // ledger for C
+    if(note === 'C'){
+      const ledger = document.createElementNS(svgNS,'line');
+      ledger.setAttribute('x1', x-22); ledger.setAttribute('y1', y); ledger.setAttribute('x2', x+22); ledger.setAttribute('y2', y);
+      ledger.setAttribute('stroke','#000'); ledger.setAttribute('stroke-width',3);
+      svg.appendChild(ledger);
     }
+    // head
+    const head = document.createElementNS(svgNS,'ellipse');
+    head.setAttribute('cx', x); head.setAttribute('cy', y); head.setAttribute('rx', NOTE_CFG.rx); head.setAttribute('ry', NOTE_CFG.ry);
+    head.setAttribute('fill','#000'); head.setAttribute('transform', `rotate(-12 ${x} ${y})`);
+    svg.appendChild(head);
+    // stem
+    const stem = document.createElementNS(svgNS,'rect');
+    stem.setAttribute('x', x + NOTE_CFG.rx - 2); stem.setAttribute('y', y - NOTE_CFG.stemH); stem.setAttribute('width', NOTE_CFG.stemW); stem.setAttribute('height', NOTE_CFG.stemH);
+    stem.setAttribute('fill','#000');
+    svg.appendChild(stem);
+  });
+}
 
-    function playTone(frequency, duration = 0.5) {
-      initAudio();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-      
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-      
-      oscillator.frequency.value = frequency;
-      oscillator.type = 'sine';
-      
-      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
-      
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + duration);
+/* =============== Questions & choices =============== */
+function notesPerQuestion(level){ if(level<=7) return 1; if(level<=14) return 2; return 3; }
+function randomSeq(k){ return Array.from({length:k},()=> NOTES[Math.floor(Math.random()*NOTES.length)]); }
+function seqLabel(seq){ return seq.map(n=> `${n}(${NOTE_NAMES_TH[n]})`).join(' '); }
+
+function makeChoices(correct){
+  const k = correct.length;
+  if(k===1){
+    // all 7 single notes
+    const arr = NOTES.map(n=> [n]);
+    return shuffle(arr);
+  } else {
+    const set = new Set([JSON.stringify(correct)]);
+    const choices = [correct];
+    while(choices.length<4){
+      const cand = randomSeq(k);
+      const s = JSON.stringify(cand);
+      if(!set.has(s)){ set.add(s); choices.push(cand); }
     }
+    return shuffle(choices);
+  }
+}
+function shuffle(a){ const arr=a.slice(); for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]] } return arr; }
 
-    function playSequence(frequencies) {
-      let delay = 0;
-      frequencies.forEach(freq => {
-        setTimeout(() => playTone(freq, 0.5), delay);
-        delay += 600;
-      });
-    }
+function generateQuestion(){
+  const k = notesPerQuestion(state.level);
+  const seq = randomSeq(k);
+  const choices = makeChoices(seq);
+  state.current = { seq, choices, answer: JSON.stringify(seq) };
+  renderSequence(seq);
+  renderChoices(choices);
+  document.getElementById('qDisplay').textContent = (state.qIndex+1);
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('nextBtn').style.display = 'none';
+}
 
-    function playCorrect() {
-      playSequence([523.25, 659.25, 783.99]);
-    }
+/* render choices */
+function renderChoices(choices){
+  const ctn = document.getElementById('choices');
+  ctn.innerHTML = '';
+  choices.forEach(ch=>{
+    const btn = document.createElement('button');
+    btn.className = 'choice';
+    btn.textContent = seqLabel(ch);
+    btn.onclick = ()=> onChoice(ch, btn);
+    ctn.appendChild(btn);
+  });
+}
 
-    function playWrong() {
-      playSequence([392, 349.23, 329.63]);
-    }
+/* handle answer */
+function onChoice(ch, btn){
+  if(state.answered) return;
+  state.answered = true;
+  const correct = JSON.stringify(ch) === state.current.answer;
+  if(correct){
+    btn.classList.add('correct');
+    document.getElementById('feedback').textContent = 'ถูกต้อง!';
+    document.getElementById('feedback').className = 'feedback show correct';
+    playCorrect();
+    state.score++;
+  } else {
+    btn.classList.add('wrong');
+    document.getElementById('feedback').textContent = 'ผิด! คำตอบ: ' + seqLabel(JSON.parse(state.current.answer));
+    document.getElementById('feedback').className = 'feedback show incorrect';
+    playWrong();
+    // highlight correct
+    Array.from(document.querySelectorAll('.choice')).forEach(b=>{
+      if(b.textContent === seqLabel(JSON.parse(state.current.answer))) b.classList.add('correct');
+    });
+  }
+  // disable choices
+  Array.from(document.querySelectorAll('.choice')).forEach(b=> b.disabled=true);
+  document.getElementById('scoreDisplay').textContent = state.score;
+  document.getElementById('nextBtn').style.display = 'inline-block';
+}
 
-    // ========== SVG Drawing Functions ==========
-    function drawStaffAndClef() {
-      const svg = document.getElementById('musicStaff');
-      svg.innerHTML = '';
-      
-      // Draw 5 staff lines
-      for (let i = 0; i < 5; i++) {
-        const y = STAFF_CONFIG.bottomY - (i * STAFF_CONFIG.gap);
-        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        line.setAttribute('x1', STAFF_CONFIG.left);
-        line.setAttribute('y1', y);
-        line.setAttribute('x2', STAFF_CONFIG.right);
-        line.setAttribute('y2', y);
-        line.setAttribute('stroke', '#5c4a3a');
-        line.setAttribute('stroke-width', STAFF_CONFIG.strokeWidth);
-        line.setAttribute('stroke-linecap', 'round');
-        svg.appendChild(line);
-      }
-      
-      // Draw treble clef (G clef - 𝄞 style)
-      const clefG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-      clefG.setAttribute('transform', 'translate(260, 130) scale(0.8)');
-      
-      const clefPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      clefPath.setAttribute('d', 'M 15,-45 C 10,-45 7,-42 7,-37 C 7,-32 10,-28 15,-28 C 20,-28 23,-32 23,-37 C 23,-42 20,-45 15,-45 Z M 15,-40 C 17,-40 18,-38.5 18,-37 C 18,-35.5 17,-34 15,-34 C 13,-34 12,-35.5 12,-37 C 12,-38.5 13,-40 15,-40 Z M 14,-27 L 14,30 C 14,40 18,48 28,48 C 38,48 45,42 45,32 C 45,22 38,18 30,18 C 26,18 22,20 19,23 L 19,0 C 19,-5 21,-10 25,-14 C 29,-18 34,-20 40,-20 C 43,-20 46,-19 48,-17 C 50,-15 51,-12 51,-8 C 51,-4 50,0 47,4 C 44,8 40,11 35,13 C 30,15 24,16 18,16 L 18,21 C 25,21 32,19 38,16 C 44,13 49,9 53,4 C 57,-1 59,-7 59,-13 C 59,-19 57,-24 53,-28 C 49,-32 44,-34 38,-34 C 30,-34 23,-31 18,-25 C 13,-19 10,-11 10,0 L 10,25 C 7,22 4,21 0,21 C -6,21 -11,24 -14,29 C -17,34 -19,40 -19,47 C -19,54 -17,60 -13,65 C -9,70 -3,72 4,72 C 10,72 15,70 19,66 L 19,30 C 22,27 25,25 29,25 C 33,25 37,27 37,32 C 37,37 33,40 28,40 C 24,40 21,38 19,34 L 19,38 C 21,43 25,46 30,46 C 36,46 41,42 41,35 C 41,28 36,22 28,22 C 23,22 18,24 14,28 L 14,-27 Z M 10,30 L 10,64 C 7,67 3,68 -1,68 C -6,68 -10,66 -13,62 C -16,58 -17,53 -17,47 C -17,41 -16,36 -13,32 C -10,28 -6,26 -1,26 C 3,26 6,27 10,30 Z');
-      clefPath.setAttribute('fill', '#5c4a3a');
-      clefPath.setAttribute('stroke', 'none');
-      clefG.appendChild(clefPath);
-      
-      svg.appendChild(clefG);
-    }
+/* =============== Flow control =============== */
+function startPractice(level){
+  state.mode='practice'; state.level=level; state.qIndex=0; state.score=0; state.answered=false;
+  document.getElementById('landing').style.display='none';
+  document.getElementById('levelPanel').style.display='none';
+  document.getElementById('gamePanel').style.display='block';
+  document.getElementById('levelDisplay').textContent = level;
+  drawStaffAndClef(); generateQuestion();
+}
+function startTimeChallenge(){
+  state.mode='time'; state.level=1; state.score=0; state.qIndex=0; state.answered=false; state.timeLeft=60;
+  document.getElementById('landing').style.display='none';
+  document.getElementById('gamePanel').style.display='block';
+  document.getElementById('levelDisplay').textContent = 'Time Challenge';
+  document.getElementById('timerDisplay').style.display='block';
+  drawStaffAndClef(); generateQuestion(); startTimer();
+}
 
-    function drawNote(note, index) {
-      const svg = document.getElementById('musicStaff');
-      const x = NOTE_CONFIG.startX + (index * NOTE_CONFIG.stepX);
-      const y = NOTE_POSITIONS[note];
-      
-      // Draw leger line for C (Middle C)
-      if (note === 'C') {
-        const legerLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        legerLine.setAttribute('x1', x - 20);
-        legerLine.setAttribute('y1', y);
-        legerLine.setAttribute('x2', x + 20);
-        legerLine.setAttribute('y2', y);
-        legerLine.setAttribute('stroke', '#5c4a3a');
-        legerLine.setAttribute('stroke-width', '3');
-        legerLine.setAttribute('stroke-linecap', 'round');
-        svg.appendChild(legerLine);
-      }
-      
-      // Draw note head (ellipse)
-      const noteHead = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
-      noteHead.setAttribute('cx', x);
-      noteHead.setAttribute('cy', y);
-      noteHead.setAttribute('rx', NOTE_CONFIG.headRx);
-      noteHead.setAttribute('ry', NOTE_CONFIG.headRy);
-      noteHead.setAttribute('fill', '#5c4a3a');
-      noteHead.setAttribute('transform', `rotate(-12 ${x} ${y})`);
-      svg.appendChild(noteHead);
-      
-      // Draw stem
-      const stem = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-      stem.setAttribute('x', x + NOTE_CONFIG.headRx - 2);
-      stem.setAttribute('y', y - NOTE_CONFIG.stemHeight);
-      stem.setAttribute('width', NOTE_CONFIG.stemWidth);
-      stem.setAttribute('height', NOTE_CONFIG.stemHeight);
-      stem.setAttribute('fill', '#5c4a3a');
-      svg.appendChild(stem);
-    }
+function next(){
+  state.answered=false;
+  if(state.mode==='practice'){
+    state.qIndex++;
+    if(state.qIndex >= QUESTIONS_PER_LEVEL){ endLevel(); return; }
+    generateQuestion();
+  } else {
+    // time mode continuous
+    state.qIndex++;
+    generateQuestion(); playSeq(state.current.seq);
+  }
+}
 
-    function drawSequence(sequence) {
-      const svg = document.getElementById('musicStaff');
-      // Clear existing notes but keep staff and clef
-      const staffLines = svg.querySelectorAll('line');
-      const clef = svg.querySelector('g');
-      svg.innerHTML = '';
-      staffLines.forEach(line => svg.appendChild(line));
-      if (clef) svg.appendChild(clef);
-      
-      sequence.forEach((note, index) => {
-        drawNote(note, index);
-      });
-    }
+function endLevel(){
+  document.getElementById('feedback').textContent = `จบด่าน ${state.level} คะแนน ${state.score}`;
+  document.getElementById('feedback').className = 'feedback show correct';
+  document.getElementById('nextBtn').style.display='none';
+  // mark completed
+  const done = JSON.parse(localStorage.getItem('kimi_done')||'[]');
+  if(!done.includes(state.level)){ done.push(state.level); localStorage.setItem('kimi_done', JSON.stringify(done)); }
+}
 
-    // ========== Game Logic ==========
-    function getNotesPerQuestion(level) {
-      if (level <= 7) return 1;
-      if (level <= 14) return 2;
-      return 3;
-    }
+/* =============== Timer for Time Challenge =============== */
+function startTimer(){
+  stopTimer();
+  document.getElementById('timerDisplay').textContent = state.timeLeft;
+  state.timeTimer = setInterval(()=>{
+    state.timeLeft--;
+    document.getElementById('timerDisplay').textContent = state.timeLeft;
+    if(state.timeLeft<=0){ stopTimer(); endTime(); }
+  },1000);
+}
+function stopTimer(){ if(state.timeTimer){ clearInterval(state.timeTimer); state.timeTimer=null; } }
+function endTime(){
+  document.getElementById('feedback').textContent = `หมดเวลา! คะแนน ${state.score}`;
+  document.getElementById('feedback').className = 'feedback show correct';
+  // save leaderboard
+  saveLeaderboard();
+  // disable choices
+  Array.from(document.querySelectorAll('.choice')).forEach(b=> b.disabled=true);
+  document.getElementById('nextBtn').style.display='none';
+}
 
-    function generateRandomSequence(length) {
-      const sequence = [];
-      for (let i = 0; i < length; i++) {
-        sequence.push(NOTES[Math.floor(Math.random() * NOTES.length)]);
-      }
-      return sequence;
-    }
+/* =============== Leaderboard & Storage =============== */
+function saveLeaderboard(){
+  const lb = JSON.parse(localStorage.getItem('kimi_time_leaderboard')||'[]');
+  lb.push({name: state.student.name, class: state.student.class, no: state.student.no, score: state.score, total: state.qIndex+1, date: new Date().toLocaleString()});
+  // sort by score desc
+  lb.sort((a,b)=> b.score - a.score);
+  localStorage.setItem('kimi_time_leaderboard', JSON.stringify(lb.slice(0,50)));
+}
 
-    function seqToLabel(seq) {
-      return seq.map(note => `${note}(${NOTE_NAMES_TH[note]})`).join(' ');
-    }
+function renderLeaderboard(){
+  const lb = JSON.parse(localStorage.getItem('kimi_time_leaderboard')||'[]');
+  const el = document.getElementById('leaderboardList');
+  if(lb.length===0){ el.innerHTML='<div class="small">ยังไม่มีคะแนน</div>'; return; }
+  el.innerHTML = lb.slice(0,20).map((r,i)=> `<div style="padding:8px;border-bottom:1px solid #eee">${i+1}. ${r.name} (${r.class} ${r.no}) — ${r.score}/${r.total} — ${r.date}</div>`).join('');
+}
 
-    function generateChoices(correctSeq) {
-      const notesPerQ = correctSeq.length;
-      
-      if (notesPerQ === 1) {
-        // Show all 7 notes
-        const choices = NOTES.map(note => [note]);
-        return shuffleArray(choices);
-      } else {
-        // Generate 4 choices including correct answer
-        const choices = [correctSeq];
-        const seqStrings = new Set([JSON.stringify(correctSeq)]);
-        
-        while (choices.length < 4) {
-          const randomSeq = generateRandomSequence(notesPerQ);
-          const seqStr = JSON.stringify(randomSeq);
-          if (!seqStrings.has(seqStr)) {
-            choices.push(randomSeq);
-            seqStrings.add(seqStr);
-          }
-        }
-        
-        return shuffleArray(choices);
-      }
-    }
+/* =============== UI wiring =============== */
+document.getElementById('startBtn').addEventListener('click', ()=>{
+  const name=document.getElementById('landingName').value.trim();
+  const no=document.getElementById('landingNo').value.trim();
+  const cls=document.getElementById('landingClass').value.trim();
+  const mode=document.getElementById('landingMode').value;
+  if(!name || !no || !cls){ alert('กรุณากรอกข้อมูลให้ครบ'); return; }
+  state.student={name, no, class:cls};
+  // save locally
+  localStorage.setItem('kimi_student', JSON.stringify(state.student));
+  if(mode==='time'){ startTimeChallenge(); } else {
+    // show level selection
+    document.getElementById('landing').style.display='none';
+    document.getElementById('levelPanel').style.display='block';
+    renderLevels();
+  }
+});
 
-    function shuffleArray(array) {
-      const newArray = [...array];
-      for (let i = newArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-      }
-      return newArray;
-    }
+function renderLevels(){
+  const container = document.getElementById('levelGrid');
+  container.innerHTML='';
+  const done = JSON.parse(localStorage.getItem('kimi_done')||'[]');
+  for(let i=1;i<=TOTAL_LEVELS;i++){
+    const btn = document.createElement('button');
+    btn.className = 'level-btn' + (done.includes(i)? ' completed':'');
+    btn.textContent = 'ด่าน '+i;
+    btn.onclick = ()=> { state.level=i; startPractice(i); };
+    container.appendChild(btn);
+  }
+}
 
-    function generateQuestion() {
-      const notesPerQ = getNotesPerQuestion(currentLevel);
-      currentSequence = generateRandomSequence(notesPerQ);
-      currentChoices = generateChoices(currentSequence);
-      answered = false;
-      
-      drawSequence(currentSequence);
-      renderChoices();
-      
-      document.getElementById('questionDisplay').textContent = `ข้อ ${currentQuestion}/10`;
-      document.getElementById('answerBtn').disabled = false;
-      document.getElementById('nextBtn').classList.add('hidden');
-      document.getElementById('feedback').classList.remove('show');
-    }
+document.getElementById('backToLanding').addEventListener('click', ()=>{
+  document.getElementById('levelPanel').style.display='none';
+  document.getElementById('landing').style.display='block';
+});
+document.getElementById('backToLevels').addEventListener('click', ()=>{
+  stopTimer();
+  document.getElementById('gamePanel').style.display='none';
+  document.getElementById('levelPanel').style.display='block';
+  renderLevels();
+});
+document.getElementById('showLeaderboardBtn').addEventListener('click', ()=>{
+  renderLeaderboard();
+  document.getElementById('landing').style.display='none';
+  document.getElementById('leaderboardPanel').style.display='block';
+});
+document.getElementById('lbBack').addEventListener('click', ()=>{
+  document.getElementById('leaderboardPanel').style.display='none';
+  document.getElementById('landing').style.display='block';
+});
+document.getElementById('playBtn').addEventListener('click', ()=> { if(state.current) playSeq(state.current.seq); });
+document.getElementById('showAnswerBtn').addEventListener('click', ()=>{
+  if(!state.current) return;
+  document.getElementById('feedback').textContent = 'คำตอบ: ' + seqLabel(JSON.parse(state.current.answer));
+  document.getElementById('feedback').className = 'feedback show incorrect';
+  Array.from(document.querySelectorAll('.choice')).forEach(b=>{
+    if(b.textContent === seqLabel(JSON.parse(state.current.answer))) b.classList.add('correct');
+    b.disabled = true;
+  });
+  document.getElementById('nextBtn').style.display='inline-block';
+});
+document.getElementById('nextBtn').addEventListener('click', ()=> next());
+document.getElementById('saveScoreBtn').addEventListener('click', saveScoreLocal);
 
-    function renderChoices() {
-      const container = document.getElementById('choicesContainer');
-      container.innerHTML = '';
-      
-      currentChoices.forEach(choice => {
-        const btn = document.createElement('button');
-        btn.className = 'choice-btn';
-        btn.textContent = seqToLabel(choice);
-        btn.onclick = () => checkAnswer(choice, btn);
-        container.appendChild(btn);
-      });
-    }
+function saveScoreLocal(){
+  // Save a record to localStorage (for teacher export)
+  const recs = JSON.parse(localStorage.getItem('kimi_records_all')||'[]');
+  recs.push({
+    student_name: state.student.name,
+    class_room: state.student.class,
+    student_no: state.student.no,
+    mode: state.mode,
+    level: state.level,
+    score: state.score,
+    total: state.qIndex+1,
+    timestamp: new Date().toISOString()
+  });
+  localStorage.setItem('kimi_records_all', JSON.stringify(recs));
+  alert('บันทึกคะแนนเรียบร้อย');
+}
 
-    function playQuestion() {
-      const frequencies = currentSequence.map(note => NOTE_FREQUENCIES[note]);
-      playSequence(frequencies);
-    }
+/* =============== Export (PIN modal) =============== */
+document.getElementById('showExportBtn').addEventListener('click', ()=> {
+  document.getElementById('pinModal').style.display = 'flex';
+});
+document.getElementById('pinCancel').addEventListener('click', ()=> {
+  document.getElementById('pinModal').style.display = 'none';
+});
+document.getElementById('pinOk').addEventListener('click', ()=> {
+  const val = document.getElementById('pinInput').value;
+  if(val === TEACHER_PIN){
+    document.getElementById('pinModal').style.display = 'none';
+    exportCSVLocal();
+  } else {
+    document.getElementById('pinError').style.display = 'block';
+  }
+});
 
-    function showAnswer() {
-      if (answered) return;
-      
-      const feedback = document.getElementById('feedback');
-      feedback.textContent = `คำตอบที่ถู���ต้อง: ${seqToLabel(currentSequence)}`;
-      feedback.className = 'feedback show incorrect';
-      
-      document.getElementById('answerBtn').disabled = true;
-      document.getElementById('nextBtn').classList.remove('hidden');
-      
-      // Disable all choice buttons
-      document.querySelectorAll('.choice-btn').forEach(btn => {
-        btn.disabled = true;
-        if (btn.textContent === seqToLabel(currentSequence)) {
-          btn.classList.add('correct');
-        }
-      });
-      
-      answered = true;
-      totalAnswered++;
-      updateScore();
-    }
+function exportCSVLocal(){
+  const recs = JSON.parse(localStorage.getItem('kimi_records_all')||'[]');
+  if(recs.length===0){ alert('ไม่มีข้อมูลให้ส่งออก'); return; }
+  let csv = 'name,class,no,mode,level,score,total,date\n';
+  recs.forEach(r=>{
+    csv += `"${r.student_name}","${r.class_room}","${r.student_no}","${r.mode}",${r.level},${r.score},${r.total},"${new Date(r.timestamp).toLocaleString('th-TH')}"\n`;
+  });
+  const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+  const link = document.createElement('a'); link.href = URL.createObjectURL(blob);
+  link.download = `kimi_records_${new Date().toISOString().split('T')[0]}.csv`; link.click();
+  alert('ส่งออก CSV เรียบร้อย');
+}
 
-    function checkAnswer(selectedSeq, btn) {
-      if (answered) return;
-      
-      answered = true;
-      totalAnswered++;
-      
-      const isCorrect = JSON.stringify(selectedSeq) === JSON.stringify(currentSequence);
-      const feedback = document.getElementById('feedback');
-      
-      if (isCorrect) {
-        currentScore++;
-        btn.classList.add('correct');
-        feedback.textContent = '✅ ถูกต้อง!';
-        feedback.className = 'feedback show correct';
-        playCorrect();
-      } else {
-        btn.classList.add('incorrect');
-        feedback.textContent = `❌ ผิ���! คำต��บที่ถูกต���อง: ${seqToLabel(currentSequence)}`;
-        feedback.className = 'feedback show incorrect';
-        playWrong();
-        
-        // Highlight correct answer
-        document.querySelectorAll('.choice-btn').forEach(choiceBtn => {
-          if (choiceBtn.textContent === seqToLabel(currentSequence)) {
-            choiceBtn.classList.add('correct');
-          }
-        });
-      }
-      
-      updateScore();
-      document.getElementById('answerBtn').disabled = true;
-      document.getElementById('nextBtn').classList.remove('hidden');
-      
-      // Disable all choice buttons
-      document.querySelectorAll('.choice-btn').forEach(choiceBtn => {
-        choiceBtn.disabled = true;
-      });
-    }
+/* =============== Init =============== */
+(function init(){
+  // restore saved student fields
+  const s = JSON.parse(localStorage.getItem('kimi_student')||'null');
+  if(s){ document.getElementById('landingName').value = s.name; document.getElementById('landingNo').value = s.no; document.getElementById('landingClass').value = s.class; state.student=s; }
 
-    function updateScore() {
-      document.getElementById('scoreDisplay').textContent = `คะแนน: ${currentScore}/${totalAnswered}`;
-    }
-
-    function nextQuestion() {
-      if (currentMode === 'time_challenge') {
-        // Time challenge mode - continuous play
-        currentQuestion++;
-        generateQuestion();
-        playQuestion();
-      } else {
-        // Practice mode
-        if (currentQuestion >= 10) {
-          endLevel();
-        } else {
-          currentQuestion++;
-          generateQuestion();
-        }
-      }
-    }
-
-    function endLevel() {
-      const feedback = document.getElementById('feedback');
-      feedback.textContent = `จบด่าน ${currentLevel}! คะแนน: ${currentScore}/${totalAnswered}`;
-      feedback.className = 'feedback show correct';
-      
-      document.getElementById('nextBtn').classList.add('hidden');
-      document.getElementById('choicesContainer').innerHTML = '';
-      
-      // Mark level as completed
-      updateLevelCompletion(currentLevel);
-    }
-
-    function updateLevelCompletion(level) {
-      const completed = JSON.parse(localStorage.getItem('kimi_completed_levels') || '[]');
-      if (!completed.includes(level)) {
-        completed.push(level);
-        localStorage.setItem('kimi_completed_levels', JSON.stringify(completed));
-      }
-    }
-
-    // ========== Timer Functions ==========
-    function startTimer() {
-      timeRemaining = 60;
-      document.getElementById('timerContainer').classList.remove('hidden');
-      updateTimerDisplay();
-      
-      timerInterval = setInterval(() => {
-        timeRemaining--;
-        updateTimerDisplay();
-        
-        if (timeRemaining <= 10) {
-          document.getElementById('timerDisplay').classList.add('warning');
-        }
-        
-        if (timeRemaining <= 0) {
-          endTimeChallenge();
-        }
-      }, 1000);
-    }
-
-    function updateTimerDisplay() {
-      document.getElementById('timerDisplay').textContent = timeRemaining;
-    }
-
-    function stopTimer() {
-      if (timerInterval) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-      }
-    }
-
-    function endTimeChallenge() {
-      stopTimer();
-      
-      const feedback = document.getElementById('feedback');
-      feedback.textContent = `⏰ หมด���วล��! คะแนนของคุณ: ${currentScore}/${totalAnswered}`;
-      feedback.className = 'feedback show correct';
-      
-      document.getElementById('nextBtn').classList.add('hidden');
-      document.getElementById('choicesContainer').innerHTML = '';
-      document.querySelectorAll('.choice-btn').forEach(btn => btn.disabled = true);
-      
-      // Save to leaderboard
-      saveToLeaderboard();
-    }
-
-    function saveToLeaderboard() {
-      const leaderboard = JSON.parse(localStorage.getItem('kimi_time_leaderboard') || '[]');
-      
-      leaderboard.push({
-        name: currentStudent.name,
-        class: currentStudent.class,
-        no: currentStudent.no,
-        score: currentScore,
-        total: totalAnswered,
-        date: new Date().toLocaleDateString('th-TH')
-      });
-      
-      // Sort by score (descending) and keep top 50
-      leaderboard.sort((a, b) => {
-        const scoreA = a.total > 0 ? (a.score / a.total) : 0;
-        const scoreB = b.total > 0 ? (b.score / b.total) : 0;
-        if (scoreB !== scoreA) return scoreB - scoreA;
-        return b.score - a.score;
-      });
-      
-      localStorage.setItem('kimi_time_leaderboard', JSON.stringify(leaderboard.slice(0, 50)));
-    }
-
-    // ========== Navigation Functions ==========
-    function startGame() {
-      const name = document.getElementById('studentName').value.trim();
-      const no = document.getElementById('studentNo').value.trim();
-      const classRoom = document.getElementById('studentClass').value.trim();
-      const mode = document.getElementById('gameMode').value;
-      
-      if (!name || !no || !classRoom) {
-        const msg = document.createElement('div');
-        msg.className = 'feedback show incorrect';
-        msg.textContent = 'กรุณากร����กข้อมูลให้ครบถ���วน';
-        document.getElementById('landingPage').appendChild(msg);
-        setTimeout(() => msg.remove(), 3000);
-        return;
-      }
-      
-      currentStudent = { name, no, class: classRoom };
-      currentMode = mode;
-      localStorage.setItem('kimi_student', JSON.stringify(currentStudent));
-      
-      if (mode === 'time_challenge') {
-        // Go directly to game
-        currentLevel = 1;
-        currentQuestion = 1;
-        currentScore = 0;
-        totalAnswered = 0;
-        
-        document.getElementById('landingPage').classList.add('hidden');
-        document.getElementById('gamePage').classList.remove('hidden');
-        document.getElementById('levelDisplay').textContent = 'Time Challenge';
-        
-        drawStaffAndClef();
-        generateQuestion();
-        startTimer();
-        playQuestion();
-      } else {
-        // Show level selection
-        document.getElementById('landingPage').classList.add('hidden');
-        document.getElementById('levelPage').classList.remove('hidden');
-        renderLevelSelect();
-      }
-    }
-
-    function renderLevelSelect() {
-      const container = document.getElementById('levelSelect');
-      container.innerHTML = '';
-      
-      const completed = JSON.parse(localStorage.getItem('kimi_completed_levels') || '[]');
-      
-      for (let i = 1; i <= 20; i++) {
-        const btn = document.createElement('button');
-        btn.className = 'level-btn';
-        if (completed.includes(i)) {
-          btn.classList.add('completed');
-        }
-        btn.textContent = `ด่าน ${i}`;
-        btn.onclick = () => startLevel(i);
-        container.appendChild(btn);
-      }
-    }
-
-    function startLevel(level) {
-      currentLevel = level;
-      currentQuestion = 1;
-      currentScore = 0;
-      totalAnswered = 0;
-      
-      document.getElementById('levelPage').classList.add('hidden');
-      document.getElementById('gamePage').classList.remove('hidden');
-      document.getElementById('levelDisplay').textContent = `ด่าน ${level}`;
-      document.getElementById('timerContainer').classList.add('hidden');
-      
-      drawStaffAndClef();
-      generateQuestion();
-    }
-
-    function backToLanding() {
-      stopTimer();
-      document.getElementById('levelPage').classList.add('hidden');
-      document.getElementById('gamePage').classList.add('hidden');
-      document.getElementById('leaderboardPage').classList.add('hidden');
-      document.getElementById('landingPage').classList.remove('hidden');
-    }
-
-    function backToLevelSelect() {
-      stopTimer();
-      document.getElementById('gamePage').classList.add('hidden');
-      document.getElementById('levelPage').classList.remove('hidden');
-      renderLevelSelect();
-    }
-
-    function showLeaderboard() {
-      document.getElementById('landingPage').classList.add('hidden');
-      document.getElementById('leaderboardPage').classList.remove('hidden');
-      
-      const leaderboard = JSON.parse(localStorage.getItem('kimi_time_leaderboard') || '[]');
-      const tbody = document.getElementById('leaderboardBody');
-      tbody.innerHTML = '';
-      
-      if (leaderboard.length === 0) {
-        const row = tbody.insertRow();
-        const cell = row.insertCell();
-        cell.colSpan = 6;
-        cell.textContent = 'ยั��ไม่มีข้อมูลคะแนน';
-        cell.style.textAlign = 'center';
-        cell.style.color = '#8b7355';
-        return;
-      }
-      
-      leaderboard.slice(0, 10).forEach((entry, index) => {
-        const row = tbody.insertRow();
-        row.insertCell().textContent = index + 1;
-        row.insertCell().textContent = entry.name;
-        row.insertCell().textContent = entry.class;
-        row.insertCell().textContent = entry.no;
-        row.insertCell().textContent = `${entry.score}/${entry.total}`;
-        row.insertCell().textContent = entry.date;
-      });
-    }
-
-    // ========== Data Persistence ==========
-    async function saveScore() {
-      if (!currentStudent) {
-        const feedback = document.createElement('div');
-        feedback.className = 'feedback show incorrect';
-        feedback.textContent = 'ไม่��บข้อมูลนักเรียน';
-        document.getElementById('gamePage').insertBefore(feedback, document.getElementById('choicesContainer'));
-        setTimeout(() => feedback.remove(), 3000);
-        return;
-      }
-
-      const saveBtn = document.getElementById('saveScoreBtn');
-      saveBtn.disabled = true;
-      saveBtn.textContent = '⏳ กำลัง���ันทึ��...';
-
-      const record = {
-        student_name: currentStudent.name,
-        class_room: currentStudent.class,
-        student_no: currentStudent.no,
-        mode: currentMode,
-        level: currentLevel,
-        score: currentScore,
-        total: totalAnswered,
-        timestamp: new Date().toISOString()
-      };
-
-      const result = await window.dataSdk.create(record);
-
-      if (result.isOk) {
-        const feedback = document.createElement('div');
-        feedback.className = 'feedback show correct';
-        feedback.textContent = '✅ บันทึกคะแนนเรีย��ร้อย!';
-        document.getElementById('gamePage').insertBefore(feedback, document.getElementById('choicesContainer'));
-        setTimeout(() => feedback.remove(), 3000);
-      } else {
-        const feedback = document.createElement('div');
-        feedback.className = 'feedback show incorrect';
-        feedback.textContent = '❌ เกิดข้อผิดพลาดในการบันทึก';
-        document.getElementById('gamePage').insertBefore(feedback, document.getElementById('choicesContainer'));
-        setTimeout(() => feedback.remove(), 3000);
-      }
-
-      saveBtn.disabled = false;
-      saveBtn.textContent = '💾 บันทึกคะแนน';
-    }
-
-    // ========== Export Functions ==========
-    function showExportModal() {
-      document.getElementById('pinModal').classList.add('show');
-      document.getElementById('pinInput').value = '';
-      document.getElementById('pinError').style.display = 'none';
-    }
-
-    function closePINModal() {
-      document.getElementById('pinModal').classList.remove('show');
-    }
-
-    function verifyPIN() {
-      const config = window.elementSdk?.config || defaultConfig;
-      const enteredPIN = document.getElementById('pinInput').value;
-      const correctPIN = config.teacher_pin || defaultConfig.teacher_pin;
-      
-      if (enteredPIN === correctPIN) {
-        closePINModal();
-        exportToCSV();
-      } else {
-        document.getElementById('pinError').style.display = 'block';
-      }
-    }
-
-    function exportToCSV() {
-      // This will be called after successful Data SDK initialization
-      // We'll use the data from onDataChanged
-      const records = window.kimiRecords || [];
-      
-      if (records.length === 0) {
-        const msg = document.createElement('div');
-        msg.className = 'feedback show incorrect';
-        msg.textContent = 'ไม่มีข้อมูลสำหรับส่งออก';
-        document.getElementById('landingPage').appendChild(msg);
-        setTimeout(() => msg.remove(), 3000);
-        return;
-      }
-      
-      let csv = 'name,class,no,mode,level,score,total,date\n';
-      
-      records.forEach(record => {
-        const date = new Date(record.timestamp).toLocaleDateString('th-TH');
-        csv += `"${record.student_name}","${record.class_room}","${record.student_no}","${record.mode}",${record.level},${record.score},${record.total},"${date}"\n`;
-      });
-      
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `kimi-melody-records-${new Date().toISOString().split('T')[0]}.csv`;
-      link.click();
-      
-      const msg = document.createElement('div');
-      msg.className = 'feedback show correct';
-      msg.textContent = '✅ ส่งออกข้อมูลเรียบร้อย!';
-      document.getElementById('landingPage').appendChild(msg);
-      setTimeout(() => msg.remove(), 3000);
-    }
-
-    // ========== Data SDK Integration ==========
-    const dataHandler = {
-      onDataChanged(data) {
-        // Store records globally for export
-        window.kimiRecords = data;
-      }
-    };
-
-    // ========== Element SDK Integration ==========
-    async function onConfigChange(config) {
-      const appTitle = config.app_title || defaultConfig.app_title;
-      const mascotName = config.mascot_name || defaultConfig.mascot_name;
-      const instructionText = config.instruction_text || defaultConfig.instruction_text;
-
-      document.getElementById('appTitle').textContent = appTitle;
-      document.getElementById('mascotTag').textContent = `🐱 ${mascotName} 🎵`;
-      document.getElementById('instructionText').textContent = instructionText;
-    }
-
-    // ========== Initialization ==========
-    async function init() {
-      // Initialize Element SDK
-      if (window.elementSdk) {
-        await window.elementSdk.init({
-          defaultConfig,
-          onConfigChange,
-          mapToCapabilities: (config) => ({
-            recolorables: [],
-            borderables: [],
-            fontEditable: undefined,
-            fontSizeable: undefined
-          }),
-          mapToEditPanelValues: (config) => new Map([
-            ['app_title', config.app_title || defaultConfig.app_title],
-            ['mascot_name', config.mascot_name || defaultConfig.mascot_name],
-            ['teacher_pin', config.teacher_pin || defaultConfig.teacher_pin],
-            ['instruction_text', config.instruction_text || defaultConfig.instruction_text]
-          ])
-        });
-
-        // Apply initial config
-        await onConfigChange(window.elementSdk.config);
-      }
-
-      // Initialize Data SDK
-      if (window.dataSdk) {
-        const result = await window.dataSdk.init(dataHandler);
-        if (!result.isOk) {
-          console.error('Failed to initialize Data SDK');
-        }
-      }
-
-      // Load saved student data
-      const savedStudent = localStorage.getItem('kimi_student');
-      if (savedStudent) {
-        const student = JSON.parse(savedStudent);
-        document.getElementById('studentName').value = student.name;
-        document.getElementById('studentNo').value = student.no;
-        document.getElementById('studentClass').value = student.class;
-      }
-    }
-
-    // Start initialization
-    init();
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a52187dd483d017',t:'MTc2NDI1MTQzOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  // initial draw staff & clef
+  drawStaffAndClef();
+})();
+</script>
+</body>
 </html>
