@@ -1,480 +1,1235 @@
 <html....>
 <html lang="th">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Kimi-wa-Melody — Final (Full)</title>
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#efe7d7;--card:#fff7ee;--accent:#7C5A3A;--muted:#765b44;--good:#2E8B57;--bad:#C03B3B}
-*{box-sizing:border-box} body{margin:0;font-family:'Kanit',sans-serif;background:linear-gradient(135deg,#d4c5a9,#b8a58a)}
-.app{max-width:1100px;margin:20px auto;padding:16px}
-.card{background:var(--card);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 10px 30px rgba(0,0,0,.12)}
-.header{display:flex;align-items:center;gap:12px}
-.mascot{font-size:34px}
-.controls{display:flex;gap:8px;flex-wrap:wrap}
-.btn{padding:10px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
-.btn-primary{background:var(--accent);color:#fff}
-.btn-info{background:#7a96aa;color:#fff}
-.btn-success{background:#5d7a52;color:#fff}
-.small{color:var(--muted);font-size:13px}
-.staff-card{background:#fff;padding:12px;border-radius:10px;box-shadow:inset 0 2px 8px rgba(0,0,0,.04)}
-#staffSVG{width:100%;height:auto;display:block}
-.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:10px}
-.choice{padding:12px;border-radius:8px;background:#fff;border:1px solid #eee;cursor:pointer;font-weight:700;text-align:center}
-.choice.correct{background:var(--good);color:#fff} .choice.wrong{background:var(--bad);color:#fff}
-.feedback{margin-top:10px;padding:10px;border-radius:8px;display:none}
-.feedback.show{display:block}
-.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:80}
-.modal{background:var(--card);padding:14px;border-radius:12px;min-width:300px}
-.qr-img{width:220px;height:220px;border-radius:8px;display:block;margin:12px auto}
-.fullscreen-btn{position:fixed;right:18px;bottom:18px;background:var(--accent);color:#fff;border-radius:50%;width:56px;height:56px;border:none;box-shadow:0 12px 30px rgba(0,0,0,.2);cursor:pointer}
-.hidden{display:none}
-</style>
-</head>
-<body>
-<div class="app">
-  <div class="card header">
-    <div class="mascot">🐱</div>
-    <div>
-      <h2 style="margin:0">Kimi-wa-Melody</h2>
-      <div class="small">ฝึกอ่านโน้ต — MelodyCat</div>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kimi-wa-Melody - MelodyCat</title>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Kanit', 'Sarabun', Arial, sans-serif;
+      background: linear-gradient(135deg, #d4c5a9 0%, #b8a58a 100%);
+      min-height: 100%;
+      width: 100%;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .app-container {
+      width: 100%;
+      min-height: 100%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card {
+      background: #f5ede0;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      padding: 30px;
+      margin: 15px 0;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    h1 {
+      color: #5c4a3a;
+      text-align: center;
+      font-size: 2.5rem;
+      margin: 0 0 10px 0;
+    }
+
+    .mascot-tag {
+      text-align: center;
+      color: #8b7355;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin: 15px 0;
+    }
+
+    label {
+      display: block;
+      color: #5c4a3a;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #c4b5a0;
+      border-radius: 10px;
+      font-size: 1rem;
+      background: white;
+      transition: all 0.3s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #8b7355;
+      box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+    }
+
+    .btn {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      font-family: inherit;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #8b7355 0%, #6d5a45 100%);
+      color: white;
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #7a9b6f 0%, #5d7a52 100%);
+      color: white;
+    }
+
+    .btn-info {
+      background: linear-gradient(135deg, #9bb3c4 0%, #7a96aa 100%);
+      color: white;
+    }
+
+    .btn-warning {
+      background: linear-gradient(135deg, #c4a569 0%, #a68a52 100%);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #a89f91 0%, #8a8175 100%);
+      color: white;
+    }
+
+    .staff-container {
+      background: white;
+      border-radius: 15px;
+      padding: 40px 20px;
+      margin: 20px 0;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+      overflow-x: auto;
+    }
+
+    #musicStaff {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .info-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(135deg, #8b7355 0%, #6d5a45 100%);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 15px 0;
+    }
+
+    .choices-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .choice-btn {
+      padding: 20px;
+      background: white;
+      border: 3px solid #c4b5a0;
+      border-radius: 12px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #5c4a3a;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .choice-btn:hover {
+      background: #f0e8d8;
+      border-color: #8b7355;
+      transform: scale(1.05);
+    }
+
+    .choice-btn.correct {
+      background: #7a9b6f;
+      color: white;
+      border-color: #5d7a52;
+    }
+
+    .choice-btn.incorrect {
+      background: #c47a6f;
+      color: white;
+      border-color: #a65d52;
+    }
+
+    .feedback {
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 600;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+      display: none;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.correct {
+      background: #e8f5e4;
+      color: #5d7a52;
+      border: 2px solid #7a9b6f;
+    }
+
+    .feedback.incorrect {
+      background: #f5e4e4;
+      color: #a65d52;
+      border: 2px solid #c47a6f;
+    }
+
+    .level-select {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .level-btn {
+      padding: 15px;
+      background: white;
+      border: 2px solid #c4b5a0;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #5c4a3a;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .level-btn:hover {
+      background: #f0e8d8;
+      transform: scale(1.05);
+    }
+
+    .level-btn.completed {
+      background: #7a9b6f;
+      color: white;
+      border-color: #5d7a52;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .leaderboard-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    .leaderboard-table th {
+      background: #8b7355;
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .leaderboard-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #c4b5a0;
+    }
+
+    .leaderboard-table tr:nth-child(even) {
+      background: #f9f6f0;
+    }
+
+    .leaderboard-table tr:hover {
+      background: #f0e8d8;
+    }
+
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal {
+      background: #f5ede0;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    .modal h2 {
+      color: #5c4a3a;
+      margin-top: 0;
+    }
+
+    .timer-display {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #5c4a3a;
+    }
+
+    .timer-display.warning {
+      color: #c47a6f;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(139, 115, 85, 0.9);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: all 0.3s;
+      z-index: 100;
+    }
+
+    .back-btn:hover {
+      background: rgba(109, 90, 69, 0.9);
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+      }
+
+      .controls {
+        flex-direction: column;
+      }
+
+      .info-bar {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+
+      .choices-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="app-container"><!-- Landing Page -->
+   <div id="landingPage" class="card">
+    <h1 id="appTitle">Kimi-wa-Melody</h1>
+    <div class="mascot-tag" id="mascotTag">
+     🐱 MelodyCat 🎵
     </div>
-    <div style="margin-left:auto" class="small">PIN ครู: <strong>Teacherversion5791</strong></div>
-  </div>
-
-  <!-- Landing -->
-  <div id="landing" class="card">
-    <div style="display:flex;gap:10px;align-items:center;justify-content:space-between">
-      <div>
-        <h3 style="margin:0">เริ่มต้น</h3>
-        <div class="small">กรอกข้อมูลนักเรียนก่อนเริ่ม</div>
-      </div>
+    <div class="form-group"><label for="studentName">ชื่อ-สกุล (หรือชื่อกลุ่ม)</label> <input type="text" id="studentName" placeholder="กรอกชื่อของคุณ" required>
     </div>
-
-    <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-      <input id="name" placeholder="ชื่อ-สกุล / ชื่อกลุ่ม" style="flex:1;padding:10px;border-radius:8px;border:1px solid #ddd">
-      <input id="no" placeholder="เลขที่" style="width:110px;padding:10px;border-radius:8px;border:1px solid #ddd">
-      <input id="cls" placeholder="ห้อง" style="width:140px;padding:10px;border-radius:8px;border:1px solid #ddd">
-      <select id="mode" style="width:220px;padding:10px;border-radius:8px;border:1px solid #ddd">
-        <option value="practice">Practice</option>
-        <option value="time">Time Challenge (60s)</option>
-      </select>
+    <div class="form-group"><label for="studentNo">เลขที่</label> <input type="text" id="studentNo" placeholder="กรอกเลขที่" required>
     </div>
-
-    <div style="margin-top:10px" class="controls">
-      <button class="btn btn-primary" id="start">เริ่มเกม</button>
-      <button class="btn btn-info" id="showLB">ดูกระดานคะแนน</button>
-      <button class="btn btn-success" id="showExport">ส่งออก (ครู)</button>
-      <button class="btn" id="zipBtn">สร้าง ZIP (คำสั่ง)</button>
-      <button class="btn" id="qrRoomBtn">แชร์ห้อง (QR)</button>
+    <div class="form-group"><label for="studentClass">ห้อง</label> <input type="text" id="studentClass" placeholder="กรอกห้อง" required>
     </div>
-  </div>
-
-  <!-- Level panel -->
-  <div id="levels" class="card hidden">
-    <h3>เลือกด่าน</h3>
-    <div class="small">1–7: 1 โน้ต · 8–14: 2 โน้ต · 15–20: 3 โน้ต</div>
-    <div id="levelGrid" style="margin-top:8px;display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px"></div>
-    <div style="margin-top:10px"><button class="btn" id="backToLanding">กลับ</button></div>
-  </div>
-
-  <!-- Game panel -->
-  <div id="game" class="card hidden">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div><strong>ด่าน</strong> <span id="levelLabel">1</span> · <strong>ข้อ</strong> <span id="qLabel">1</span>/10</div>
-      <div><strong>คะแนน</strong> <span id="scoreLabel">0</span></div>
-      <div id="timerWrap" class="small hidden">เวลา: <span id="timerLabel">60</span>s</div>
+    <div class="form-group"><label for="gameMode">เลือกโหมด</label> <select id="gameMode"> <option value="practice">โหมดฝึกฝน (Practice)</option> <option value="time_challenge">โหมดชิงเวลา (Time Challenge - 60 วินาที)</option> </select>
     </div>
-
-    <div style="margin-top:10px" class="staff-card">
-      <svg id="staffSVG" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" aria-label="Staff"></svg>
+    <div class="controls"><button class="btn btn-primary" onclick="startGame()">เริ่มเกม</button> <button class="btn btn-info" onclick="showLeaderboard()">ดูกระดานคะแนน</button> <button class="btn btn-warning" onclick="showExportModal()">ส่งออกข้อมูล (ครู)</button>
     </div>
-
-    <div style="margin-top:8px" class="controls">
-      <button class="btn btn-info" id="playBtn">🔊 ฟัง</button>
-      <button class="btn btn-primary" id="showAnsBtn">ดูคำตอบ</button>
-      <button class="btn btn-success hidden" id="nextBtn">ถัดไป</button>
-      <button class="btn" id="fullscreenToggle">Full</button>
+   </div><!-- Level Selection Page -->
+   <div id="levelPage" class="card hidden"><button class="back-btn" onclick="backToLanding()">←</button>
+    <h1>เลือกด่าน</h1>
+    <p style="text-align: center; color: #5c4a3a; font-size: 1.1rem;" id="instructionText">ฟังโน้ตและเลือกคำตอบที่ถูกต้อง</p>
+    <div class="level-select" id="levelSelect"></div>
+   </div><!-- Game Page -->
+   <div id="gamePage" class="card hidden"><button class="back-btn" onclick="backToLevelSelect()">←</button>
+    <div class="info-bar">
+     <div>
+      <span id="levelDisplay">ด่าน 1</span>
+     </div>
+     <div>
+      <span id="questionDisplay">ข้อ 1/10</span>
+     </div>
+     <div>
+      <span id="scoreDisplay">คะแนน: 0/0</span>
+     </div>
+     <div id="timerContainer" class="hidden"><span class="timer-display" id="timerDisplay">60</span>
+     </div>
     </div>
-
-    <div id="choices" class="choices"></div>
+    <div class="staff-container">
+     <svg id="musicStaff" viewbox="0 0 900 250" xmlns="http://www.w3.org/2000/svg"><!-- Staff and notes will be drawn here -->
+     </svg>
+    </div>
+    <div class="controls"><button class="btn btn-info" onclick="playQuestion()" id="playBtn">🔊 ฟัง</button> <button class="btn btn-warning" onclick="showAnswer()" id="answerBtn">👁️ ดูคำตอบ</button> <button class="btn btn-success hidden" onclick="nextQuestion()" id="nextBtn">➡️ ถัดไป</button>
+    </div>
     <div id="feedback" class="feedback"></div>
-
-    <div style="margin-top:8px" class="controls">
-      <button class="btn btn-success" id="saveBtn">บันทึกคะแนน</button>
-      <button class="btn" id="toLevels">กลับ</button>
+    <div id="choicesContainer" class="choices-grid"></div>
+    <div class="controls"><button class="btn btn-primary" onclick="saveScore()" id="saveScoreBtn">💾 บันทึกคะแนน</button>
     </div>
-  </div>
-
-  <!-- Leaderboard -->
-  <div id="leaderboard" class="card hidden">
-    <h3>กระดานคะแนน (Time Challenge)</h3>
-    <div id="lbList" style="max-height:320px;overflow:auto"></div>
-    <div style="margin-top:8px"><button class="btn" id="lbBack">กลับ</button></div>
-  </div>
-
-  <!-- PIN modal -->
+   </div><!-- Leaderboard Page -->
+   <div id="leaderboardPage" class="card hidden"><button class="back-btn" onclick="backToLanding()">←</button>
+    <h1>🏆 กระดานคะแนน Time Challenge</h1>
+    <table class="leaderboard-table">
+     <thead>
+      <tr>
+       <th>อันดับ</th>
+       <th>ชื่อ</th>
+       <th>ห้อง</th>
+       <th>เลขที่</th>
+       <th>คะแนนสะสม</th>
+       <th>วันที่</th>
+      </tr>
+     </thead>
+     <tbody id="leaderboardBody"></tbody>
+    </table>
+    <div class="controls"><button class="btn btn-secondary" onclick="backToLanding()">กลับ</button>
+    </div>
+   </div>
+  </div><!-- PIN Modal -->
   <div id="pinModal" class="modal-backdrop">
-    <div class="modal">
-      <h4>กรอกรหัส PIN ครู</h4>
-      <input id="pin" type="password" class="input" placeholder="PIN ครู" style="width:100%;padding:8px;border-radius:8px;border:1px solid #ddd">
-      <div style="margin-top:8px" class="controls">
-        <button class="btn btn-primary" id="pinOk">ยืนยัน</button>
-        <button class="btn" id="pinCancel">ยกเลิก</button>
-      </div>
-      <div id="pinErr" style="color:var(--bad);display:none;margin-top:8px">รหัสไม่ถูกต้อง</div>
+   <div class="modal">
+    <h2>🔒 กรอกรหัส PIN ครู</h2>
+    <div class="form-group"><label for="pinInput">รหัส PIN</label> <input type="password" id="pinInput" placeholder="กรอกรหัส PIN">
     </div>
-  </div>
-
-  <!-- QR modal -->
-  <div id="qrModal" class="modal-backdrop">
-    <div class="modal" style="text-align:center">
-      <h4>แชร์ห้อง</h4>
-      <div id="roomLink" style="word-break:break-all"></div>
-      <img id="qrImg" class="qr-img" alt="QR code"/>
-      <div style="margin-top:8px" class="controls">
-        <button class="btn btn-primary" id="closeQr">ปิด</button>
-      </div>
+    <div class="controls"><button class="btn btn-primary" onclick="verifyPIN()">ยืนยันตัวตน</button> <button class="btn btn-secondary" onclick="closePINModal()">ยกเลิก</button>
     </div>
+    <div id="pinError" style="color: #c47a6f; text-align: center; margin-top: 10px; display: none;">
+     รหัส PIN ไม่ถูกต้อง
+    </div>
+   </div>
   </div>
+  <script>
+    // ========== Configuration ==========
+    const defaultConfig = {
+      app_title: "Kimi-wa-Melody",
+      mascot_name: "MelodyCat",
+      teacher_pin: "Teacherversion5791",
+      instruction_text: "ฟังโน้ตและเลือกคำตอบที่ถูกต้อง"
+    };
 
-</div>
+    // ========== Note Configuration ==========
+    const NOTES = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+    const NOTE_NAMES_TH = {
+      'C': 'โด', 'D': 'เร', 'E': 'มี', 'F': 'ฟา',
+      'G': 'ซอล', 'A': 'ลา', 'B': 'ที'
+    };
 
-<button id="fsBtn" class="fullscreen-btn" title="Fullscreen">⤢</button>
+    const NOTE_FREQUENCIES = {
+      'C': 261.63, 'D': 293.66, 'E': 329.63, 'F': 349.23,
+      'G': 392.00, 'A': 440.00, 'B': 493.88
+    };
 
-<script>
-/* ================== CONFIG ================== */
-/* If you want to use your image as clef: set USE_CLEF_IMAGE = true and put a URL in CLEF_IMAGE_URL.
-   CLEF_IMAGE_URL can be a hosted URL (e.g., GitHub raw URL, S3) or a data URI (base64).
-   If USE_CLEF_IMAGE=false, the embedded SVG path CLEF_PATH will be used. */
-const USE_CLEF_IMAGE = true;
-const CLEF_IMAGE_URL = ""; // <-- ใส่ URL ของภาพที่คุณอัปโหลดไว้ เช่น "https://your.site/treble.png" หรือ data:image/png;base64,...
-const SHEETS_WEBHOOK_URL = ""; // <-- ใส่ URL ที่ได้จากการ deploy Google Apps Script (ส่วน B) ถ้าต้องการเชื่อม
+    // Staff positions (y-coordinate) - Treble Clef Standard
+    // Staff lines from bottom to top (line 1-5): Line1(170), Line2(150), Line3(130), Line4(110), Line5(90)
+    const NOTE_POSITIONS = {
+      'C': 190, // Middle C - Below staff with leger line (gap of 20 from line 1)
+      'D': 180, // Below line 1 (space below staff)
+      'E': 170, // On line 1 (bottom staff line)
+      'F': 160, // Space between line 1 and 2
+      'G': 150, // On line 2
+      'A': 140, // Space between line 2 and 3
+      'B': 130, // On line 3 (middle line)
+      'C5': 120, // Space between line 3 and 4
+      'D5': 110, // On line 4
+      'E5': 100, // Space between line 4 and 5
+      'F5': 90, // On line 5 (top staff line)
+      'G5': 80 // Space above line 5
+    };
 
-const TEACHER_PIN = "Teacherversion5791";
-const TOTAL_LEVELS = 20;
-const QUESTIONS_PER_LEVEL = 10;
+    // Staff configuration
+    const STAFF_CONFIG = {
+      left: 300,
+      right: 600,
+      bottomY: 170,
+      gap: 20,
+      strokeWidth: 3
+    };
 
-/* Notes & staff config */
-const NOTES = ['C','D','E','F','G','A','B'];
-const NOTE_TH = {C:'โด',D:'เร',E:'มี',F:'ฟา',G:'ซอล',A:'ลา',B:'ที'};
-const NOTE_FREQ = {C:261.63,D:293.66,E:329.63,F:349.23,G:392.00,A:440.00,B:493.88};
+    // Note rendering
+    const NOTE_CONFIG = {
+      startX: 380,
+      stepX: 48,
+      headRx: 16,
+      headRy: 12,
+      stemWidth: 3.8,
+      stemHeight: 60
+    };
 
-const STAFF = { left:110, right:760, bottomY:170, gap:20, strokeWidth:4 };
-const NOTE_CFG = { startX:360, stepX:48, rx:16, ry:12, stemW:3.8, stemH:60 };
+    // ========== Game State ==========
+    let currentStudent = null;
+    let currentMode = 'practice';
+    let currentLevel = 1;
+    let currentQuestion = 1;
+    let currentScore = 0;
+    let totalAnswered = 0;
+    let currentSequence = [];
+    let currentChoices = [];
+    let answered = false;
+    let audioContext = null;
+    let timerInterval = null;
+    let timeRemaining = 60;
 
-/* Clef fallback path (validated high-fidelity path). Kept for vector fallback. */
-const CLEF_PATH = `M115.9,19.6c-3.1,1.6-6.8,4.8-9.9,8.6c-6.0,7.6-8.5,16.8-6.3,24.0c2.1,6.9,8.5,11.8,16.3,13.4c5.8,1.1,11.6,0.7,16.3-1.3
-c8.6-3.6,13.8-11.3,14.9-20.3c1.2-9.9-2.9-20.6-12.2-30.9c-2.9-3.0-6.0-5.6-9.3-7.7c-4.1-2.6-8.0-4.6-11.8-6.1z
-M111.4,46.8c2.6-0.9,5.9-0.6,9.4,0.8c6.1,2.4,9.6,6.7,10.0,11.0c0.6,6.7-3.7,13.3-11.8,17.4c-4.5,2.4-9.6,3.4-14.8,2.9
-c-6.2-0.6-11.3-3.7-14.6-8.4c-3.0-4.2-3.8-9.5-2.2-14.1c1.1-3.1,3.5-6.0,6.6-8.4C98.1,50.9,104.6,48.3,111.4,46.8z
-M121.0,95.3c-0.3,1.3-0.7,2.5-1.3,3.7c-2.8,6.4-8.9,11.6-17.6,15.0c-3.9,1.5-8.0,2.5-12.0,3.2c-6.6,1.0-12.2,2.6-16.1,4.6
-c-6.2,3.2-9.6,7.6-9.7,12.9c-0.2,6.2,4.0,11.8,12.4,16.5c7.8,4.3,17.9,6.5,28.7,6.5c9.6,0,19.1-1.9,26.5-6.4
-c6.2-3.8,9.7-8.5,10.6-13.2c0.9-4.8-0.6-9.5-4.1-13.4c-3.8-4.2-9.9-6.8-18.0-7.9c-1.9-0.2-4.0-0.2-6.1,0.0c-4.3,0.4-7.9,1.3-10.6,2.7
-c-2.6,1.3-4.5,3.0-5.6,5.1c-1.2,2.3-1.5,5.0-0.6,7.9c1.3,4.1,5.0,7.6,10.8,10.8c5.6,3.0,12.0,4.5,18.6,4.5c5.6,0,11.2-0.9,15.7-2.6
-c3.5-1.3,6.6-3.0,9.2-5.1c2.5-2.0,4.6-4.4,6.1-7.1c1.5-2.8,2.3-5.7,2.4-8.6c0.1-3.3-0.9-6.6-2.9-9.9c-3.3-5.3-9.5-9.3-18.4-11.6
-c-3.9-1.0-8.3-1.8-13.1-2.2c-0.6-0.0-1.1-0.0-1.7-0.0C123.3,94.9,122.1,95.1,121.0,95.3z`;
-
-/* Fine-tune clef position when using image (pixel perfect): adjust THESE values */
-let CLEF_IMAGE_TRANSFORM = { x: 48, y: -60, scale: 0.95 }; // change to fit your image
-
-/* =============== State =============== */
-let appState = {
-  student: null,
-  mode: 'practice',
-  level: 1,
-  qIndex: 0,
-  score: 0,
-  current: null,
-  answered: false,
-  timer: null,
-  timeLeft: 60
-};
-
-/* =============== Audio helpers =============== */
-let audioCtx = null;
-function ensureAudio(){ if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
-function playTone(freq, dur=0.45){
-  ensureAudio();
-  const o = audioCtx.createOscillator();
-  const g = audioCtx.createGain();
-  o.type='sine'; o.frequency.value=freq;
-  o.connect(g); g.connect(audioCtx.destination);
-  g.gain.setValueAtTime(0.001,audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.18,audioCtx.currentTime+0.01);
-  o.start(); g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur);
-  setTimeout(()=>o.stop(), (dur+0.05)*1000);
-}
-function playSeq(notes, interval=380){ notes.forEach((n,i)=> setTimeout(()=>playTone(NOTE_FREQ[n]), i*interval)); }
-function playCorrect(){ playSeq(['C','E','G'],180); }
-function playWrong(){ playSeq(['G','F','E'],160); }
-
-/* =============== SVG draw =============== */
-const svgNS = 'http://www.w3.org/2000/svg';
-function drawStaff(){
-  const svg = document.getElementById('staffSVG');
-  svg.innerHTML = '';
-  // draw 5 lines
-  for(let i=0;i<5;i++){
-    const y = STAFF.bottomY - i*STAFF.gap;
-    const L = document.createElementNS(svgNS,'line');
-    L.setAttribute('x1', STAFF.left); L.setAttribute('y1', y);
-    L.setAttribute('x2', STAFF.right); L.setAttribute('y2', y);
-    L.setAttribute('stroke','#000'); L.setAttribute('stroke-width', STAFF.strokeWidth);
-    L.setAttribute('stroke-linecap','round');
-    svg.appendChild(L);
-  }
-
-  // clef: either image or path
-  if(USE_CLEF_IMAGE && CLEF_IMAGE_URL){
-    const g = document.createElementNS(svgNS,'g');
-    const img = document.createElementNS(svgNS,'image');
-    img.setAttributeNS('http://www.w3.org/1999/xlink','href', CLEF_IMAGE_URL);
-    // size and position: you may adjust these multipliers for pixel-perfect fit
-    const width = 220; const height = 320;
-    img.setAttribute('width', width); img.setAttribute('height', height);
-    // position - tuned with CLEF_IMAGE_TRANSFORM
-    const tx = CLEF_IMAGE_TRANSFORM.x; const ty = CLEF_IMAGE_TRANSFORM.y; const s = CLEF_IMAGE_TRANSFORM.scale;
-    // place image's top-left so that it visually overlays staff near left
-    g.setAttribute('transform', `translate(${tx}, ${ty}) scale(${s})`);
-    g.appendChild(img);
-    svg.appendChild(g);
-  } else {
-    const g = document.createElementNS(svgNS,'g');
-    // default transform chosen to circle line 2 (G line)
-    g.setAttribute('transform', `translate(52, -68) scale(0.21)`);
-    const p = document.createElementNS(svgNS,'path');
-    p.setAttribute('d', CLEF_PATH); p.setAttribute('fill','#000');
-    g.appendChild(p); svg.appendChild(g);
-  }
-
-  // store bottomY and gap for notes
-  svg.dataset.bottomY = STAFF.bottomY;
-  svg.dataset.gap = STAFF.gap;
-}
-
-function noteY(n){
-  const svg = document.getElementById('staffSVG');
-  const bottomY = parseFloat(svg.dataset.bottomY || STAFF.bottomY);
-  const gap = parseFloat(svg.dataset.gap || STAFF.gap);
-  const map = { C: bottomY + gap, D: bottomY + gap/2, E: bottomY, F: bottomY - gap/2, G: bottomY - gap, A: bottomY - gap*1.5, B: bottomY - gap*2 };
-  return map[n];
-}
-
-function renderSeq(seq){
-  const svg = document.getElementById('staffSVG');
-  // preserve staff lines and clef (assume first children are lines & clef)
-  const preserved = Array.from(svg.childNodes).filter(n => n.tagName === 'line' || (n.tagName==='g' && n.querySelector('path') || n.tagName==='g' && n.querySelector('image')));
-  svg.innerHTML = '';
-  preserved.forEach(n => svg.appendChild(n.cloneNode(true)));
-  // draw notes
-  seq.forEach((nt,idx)=>{
-    const x = NOTE_CFG.startX + idx*NOTE_CFG.stepX;
-    const y = noteY(nt);
-    if(nt === 'C'){
-      const led = document.createElementNS(svgNS,'line');
-      led.setAttribute('x1', x - 22); led.setAttribute('y1', y); led.setAttribute('x2', x + 22); led.setAttribute('y2', y);
-      led.setAttribute('stroke','#000'); led.setAttribute('stroke-width','3'); led.setAttribute('stroke-linecap','round');
-      svg.appendChild(led);
+    // ========== Audio Context ==========
+    function initAudio() {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
     }
-    const head = document.createElementNS(svgNS,'ellipse');
-    head.setAttribute('cx', x); head.setAttribute('cy', y); head.setAttribute('rx', NOTE_CFG.rx); head.setAttribute('ry', NOTE_CFG.ry);
-    head.setAttribute('fill','#000'); head.setAttribute('transform', `rotate(-12 ${x} ${y})`);
-    svg.appendChild(head);
 
-    const stem = document.createElementNS(svgNS,'rect');
-    stem.setAttribute('x', x + NOTE_CFG.rx - 2); stem.setAttribute('y', y - NOTE_CFG.stemH);
-    stem.setAttribute('width', NOTE_CFG.stemW); stem.setAttribute('height', NOTE_CFG.stemH); stem.setAttribute('fill','#000');
-    svg.appendChild(stem);
-  });
-}
-
-/* =============== Questions & choices =============== */
-function notesPerQ(l){ if(l<=7) return 1; if(l<=14) return 2; return 3; }
-function randSeq(k){ return Array.from({length:k},()=> NOTES[Math.floor(Math.random()*NOTES.length)]); }
-function seqLabel(s){ return s.map(n=> n + '(' + (NOTE_TH[n]||'') + ')' ).join(' '); }
-
-function makeChoices(correct){
-  const k = correct.length;
-  if(k===1){
-    return shuffle(NOTES.map(n=>[n])); // each choice is array of length 1
-  } else {
-    const set = new Set([JSON.stringify(correct)]);
-    const choices = [correct];
-    while(choices.length<4){
-      const c = randSeq(k);
-      const s = JSON.stringify(c);
-      if(!set.has(s)){ set.add(s); choices.push(c); }
+    function playTone(frequency, duration = 0.5) {
+      initAudio();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.value = frequency;
+      oscillator.type = 'sine';
+      
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + duration);
     }
-    return shuffle(choices);
-  }
-}
-function shuffle(a){ const arr=a.slice(); for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]] } return arr; }
 
-function generateQuestion(){
-  appState.answered = false;
-  const k = notesPerQ(appState.level);
-  const seq = randSeq(k);
-  const choices = makeChoices(seq);
-  appState.current = { seq, choices, answer: JSON.stringify(seq) };
-  renderSeq(seq);
-  renderChoices(choices);
-  document.getElementById('qLabel').textContent = appState.qIndex + 1;
-  document.getElementById('feedback').className = 'feedback';
-  document.getElementById('nextBtn').style.display = 'none';
-}
+    function playSequence(frequencies) {
+      let delay = 0;
+      frequencies.forEach(freq => {
+        setTimeout(() => playTone(freq, 0.5), delay);
+        delay += 600;
+      });
+    }
 
-function renderChoices(choices){
-  const ctn = document.getElementById('choices'); ctn.innerHTML = '';
-  choices.forEach(ch=>{
-    const b = document.createElement('button'); b.className='choice'; b.textContent = seqLabel(ch);
-    b.onclick = ()=> checkAnswer(ch,b); ctn.appendChild(b);
-  });
-}
+    function playCorrect() {
+      playSequence([523.25, 659.25, 783.99]);
+    }
 
-function checkAnswer(choice, btn){
-  if(appState.answered) return;
-  appState.answered = true;
-  const ok = JSON.stringify(choice) === appState.current.answer;
-  if(ok){ btn.classList.add('correct'); document.getElementById('feedback').textContent='ถูกต้อง!'; document.getElementById('feedback').className='feedback show feedback correct'; playCorrect(); appState.score++; }
-  else { btn.classList.add('wrong'); document.getElementById('feedback').textContent = 'ผิด! คำตอบ: ' + seqLabel(JSON.parse(appState.current.answer)); document.getElementById('feedback').className='feedback show feedback incorrect'; playWrong();
-    Array.from(document.querySelectorAll('.choice')).forEach(b=>{ if(b.textContent === seqLabel(JSON.parse(appState.current.answer))) b.classList.add('correct'); });
-  }
-  Array.from(document.querySelectorAll('.choice')).forEach(b=>b.disabled=true);
-  document.getElementById('scoreLabel').textContent = appState.score;
-  document.getElementById('nextBtn').style.display = 'inline-block';
-}
+    function playWrong() {
+      playSequence([392, 349.23, 329.63]);
+    }
 
-/* =============== Flow =============== */
-function startPractice(level){
-  appState.mode='practice'; appState.level=level; appState.qIndex=0; appState.score=0; appState.answered=false;
-  document.getElementById('landing').style.display='none'; document.getElementById('levels').style.display='none'; document.getElementById('game').style.display='block';
-  document.getElementById('levelLabel').textContent = level; document.getElementById('timerWrap').classList.add('hidden');
-  drawStaff(); generateQuestion();
-}
-function startTime(){
-  appState.mode='time'; appState.level=1; appState.qIndex=0; appState.score=0; appState.answered=false; appState.timeLeft=60;
-  document.getElementById('landing').style.display='none'; document.getElementById('game').style.display='block';
-  document.getElementById('levelLabel').textContent='Time Challenge'; document.getElementById('timerWrap').classList.remove('hidden');
-  drawStaff(); generateQuestion(); startTimer(); playSeq(appState.current.seq);
-}
-function nextQ(){
-  appState.answered=false; appState.qIndex++;
-  if(appState.mode==='practice'){
-    if(appState.qIndex >= QUESTIONS_PER_LEVEL){ endLevel(); return; }
-    generateQuestion();
-  } else {
-    generateQuestion(); playSeq(appState.current.seq);
-  }
-}
-function endLevel(){
-  document.getElementById('feedback').textContent = `จบด่าน ${appState.level} คะแนน ${appState.score}`; document.getElementById('feedback').className='feedback show feedback correct';
-  document.getElementById('nextBtn').style.display='none';
-  // mark done
-  const done = JSON.parse(localStorage.getItem('kimi_done')||'[]'); if(!done.includes(appState.level)){ done.push(appState.level); localStorage.setItem('kimi_done', JSON.stringify(done)); }
-}
+    // ========== SVG Drawing Functions ==========
+    function drawStaffAndClef() {
+      const svg = document.getElementById('musicStaff');
+      svg.innerHTML = '';
+      
+      // Draw 5 staff lines
+      for (let i = 0; i < 5; i++) {
+        const y = STAFF_CONFIG.bottomY - (i * STAFF_CONFIG.gap);
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', STAFF_CONFIG.left);
+        line.setAttribute('y1', y);
+        line.setAttribute('x2', STAFF_CONFIG.right);
+        line.setAttribute('y2', y);
+        line.setAttribute('stroke', '#5c4a3a');
+        line.setAttribute('stroke-width', STAFF_CONFIG.strokeWidth);
+        line.setAttribute('stroke-linecap', 'round');
+        svg.appendChild(line);
+      }
+      
+      // Add clef instruction text above staff
+      const clefText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      clefText.setAttribute('x', '450');
+      clefText.setAttribute('y', '30');
+      clefText.setAttribute('fill', '#5c4a3a');
+      clefText.setAttribute('font-size', '18');
+      clefText.setAttribute('font-weight', '600');
+      clefText.setAttribute('text-anchor', 'middle');
+      clefText.setAttribute('font-family', 'Kanit, Sarabun, Arial, sans-serif');
+      clefText.textContent = 'กุญแจเสียงคือ Treble Clef (กุญแจซอล)';
+      svg.appendChild(clefText);
+    }
 
-/* =============== Timer =============== */
-function startTimer(){
-  stopTimer(); appState.timer = setInterval(()=>{ appState.timeLeft--; document.getElementById('timerLabel').textContent = appState.timeLeft; if(appState.timeLeft<=0){ stopTimer(); finishTime(); } },1000);
-}
-function stopTimer(){ if(appState.timer){ clearInterval(appState.timer); appState.timer=null; } }
-function finishTime(){
-  document.getElementById('feedback').textContent = `หมดเวลา! คะแนน ${appState.score}`; document.getElementById('feedback').className='feedback show feedback correct';
-  saveTimeLeader();
-  Array.from(document.querySelectorAll('.choice')).forEach(b=>b.disabled=true);
-  document.getElementById('nextBtn').style.display='none';
-}
+    function drawNote(note, index) {
+      const svg = document.getElementById('musicStaff');
+      const x = NOTE_CONFIG.startX + (index * NOTE_CONFIG.stepX);
+      const y = NOTE_POSITIONS[note];
+      
+      // Draw leger line for Middle C (note C below the staff)
+      if (note === 'C') {
+        const legerLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        legerLine.setAttribute('x1', x - 24);
+        legerLine.setAttribute('y1', y);
+        legerLine.setAttribute('x2', x + 24);
+        legerLine.setAttribute('y2', y);
+        legerLine.setAttribute('stroke', '#5c4a3a');
+        legerLine.setAttribute('stroke-width', STAFF_CONFIG.strokeWidth);
+        legerLine.setAttribute('stroke-linecap', 'round');
+        svg.appendChild(legerLine);
+      }
+      
+      // Draw note head (ellipse)
+      const noteHead = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+      noteHead.setAttribute('cx', x);
+      noteHead.setAttribute('cy', y);
+      noteHead.setAttribute('rx', NOTE_CONFIG.headRx);
+      noteHead.setAttribute('ry', NOTE_CONFIG.headRy);
+      noteHead.setAttribute('fill', '#5c4a3a');
+      noteHead.setAttribute('transform', `rotate(-12 ${x} ${y})`);
+      svg.appendChild(noteHead);
+      
+      // Draw stem
+      const stem = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      stem.setAttribute('x', x + NOTE_CONFIG.headRx - 2);
+      stem.setAttribute('y', y - NOTE_CONFIG.stemHeight);
+      stem.setAttribute('width', NOTE_CONFIG.stemWidth);
+      stem.setAttribute('height', NOTE_CONFIG.stemHeight);
+      stem.setAttribute('fill', '#5c4a3a');
+      svg.appendChild(stem);
+    }
 
-/* =============== Storage & leaderboard =============== */
-function saveTimeLeader(){
-  const key='kimi_time_lb'; const lb = JSON.parse(localStorage.getItem(key)||'[]');
-  lb.push({name: appState.student.name, class: appState.student.class, no: appState.student.no, score: appState.score, total: appState.qIndex+1, date: new Date().toLocaleString()});
-  lb.sort((a,b)=> b.score - a.score);
-  localStorage.setItem(key, JSON.stringify(lb.slice(0,50)));
-}
-function renderLB(){
-  const lb = JSON.parse(localStorage.getItem('kimi_time_lb')||'[]'); const el=document.getElementById('lbList');
-  if(lb.length===0){ el.innerHTML='<div class="small">ยังไม่มีคะแนน</div>'; return; }
-  el.innerHTML = lb.slice(0,20).map((r,i)=> `<div style="padding:6px;border-bottom:1px solid #eee">${i+1}. ${r.name} (${r.class} ${r.no}) — ${r.score}/${r.total} — ${r.date}</div>`).join('');
-}
+    function drawSequence(sequence) {
+      const svg = document.getElementById('musicStaff');
+      // Clear everything and redraw from scratch
+      svg.innerHTML = '';
+      
+      // Redraw staff lines
+      for (let i = 0; i < 5; i++) {
+        const y = STAFF_CONFIG.bottomY - (i * STAFF_CONFIG.gap);
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', STAFF_CONFIG.left);
+        line.setAttribute('y1', y);
+        line.setAttribute('x2', STAFF_CONFIG.right);
+        line.setAttribute('y2', y);
+        line.setAttribute('stroke', '#5c4a3a');
+        line.setAttribute('stroke-width', STAFF_CONFIG.strokeWidth);
+        line.setAttribute('stroke-linecap', 'round');
+        svg.appendChild(line);
+      }
+      
+      // Redraw clef text
+      const clefText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      clefText.setAttribute('x', '450');
+      clefText.setAttribute('y', '30');
+      clefText.setAttribute('fill', '#5c4a3a');
+      clefText.setAttribute('font-size', '18');
+      clefText.setAttribute('font-weight', '600');
+      clefText.setAttribute('text-anchor', 'middle');
+      clefText.setAttribute('font-family', 'Kanit, Sarabun, Arial, sans-serif');
+      clefText.textContent = 'กุญแจเสียงคือ Treble Clef (กุญแจซอล)';
+      svg.appendChild(clefText);
+      
+      // Draw new notes
+      sequence.forEach((note, index) => {
+        drawNote(note, index);
+      });
+    }
 
-/* =============== Save / Export =============== */
-function saveRecordLocal(){
-  const key='kimi_records_all'; const arr = JSON.parse(localStorage.getItem(key)||'[]');
-  arr.push({student_name: appState.student.name, class_room: appState.student.class, student_no: appState.student.no, mode: appState.mode, level: appState.level, score: appState.score, total: appState.qIndex+1, timestamp: new Date().toISOString()});
-  localStorage.setItem(key, JSON.stringify(arr)); alert('บันทึกคะแนนเรียบร้อย');
-}
+    // ========== Game Logic ==========
+    function getNotesPerQuestion(level) {
+      if (level <= 7) return 1;
+      if (level <= 14) return 2;
+      return 3;
+    }
 
-/* Export CSV local and optionally POST to Sheets webhook */
-async function exportCSV(){
-  const recs = JSON.parse(localStorage.getItem('kimi_records_all')||'[]');
-  if(recs.length===0){ alert('ไม่มีข้อมูลให้ส่งออก'); return; }
-  let csv = 'name,class,no,mode,level,score,total,date\n';
-  recs.forEach(r => { csv += `"${r.student_name}","${r.class_room}","${r.student_no}","${r.mode}",${r.level},${r.score},${r.total},"${new Date(r.timestamp).toLocaleString('th-TH')}"\n`; });
-  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-  a.download = `kimi_records_${new Date().toISOString().split('T')[0]}.csv`; a.click(); alert('ดาวน์โหลด CSV เรียบร้อย');
-  // optional: send to Google Sheets webhook
-  if(SHEETS_WEBHOOK_URL){
-    try{
-      const resp = await fetch(SHEETS_WEBHOOK_URL, {method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({records: recs})});
-      if(resp.ok) alert('ส่งข้อมูลไป Google Sheets เรียบร้อย');
-      else alert('ส่งไป Google Sheets ไม่สำเร็จ: ' + resp.status);
-    }catch(e){ console.error(e); alert('ส่งไป Google Sheets ขัดข้อง'); }
-  }
-}
+    function generateRandomSequence(length) {
+      const sequence = [];
+      for (let i = 0; i < length; i++) {
+        sequence.push(NOTES[Math.floor(Math.random() * NOTES.length)]);
+      }
+      return sequence;
+    }
 
-/* =============== Fullscreen & QR =============== */
-const fsBtn = document.getElementById('fsBtn'); fsBtn.addEventListener('click', ()=> {
-  if(!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen();
-});
+    function seqToLabel(seq) {
+      return seq.map(note => `${note}(${NOTE_NAMES_TH[note]})`).join(' ');
+    }
 
-function openQR(roomId){
-  const link = `${location.origin}${location.pathname}?room=${encodeURIComponent(roomId)}`;
-  document.getElementById('roomLink').textContent = link;
-  // use Google Chart API for QR image (simple & reliable). If you need offline QR, we'll add a JS QR lib.
-  const qrSrc = `https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=${encodeURIComponent(link)}`;
-  document.getElementById('qrImg').src = qrSrc;
-  document.getElementById('qrModal').style.display = 'flex';
-}
+    function generateChoices(correctSeq) {
+      const notesPerQ = correctSeq.length;
+      
+      if (notesPerQ === 1) {
+        // Show all 7 notes
+        const choices = NOTES.map(note => [note]);
+        return shuffleArray(choices);
+      } else {
+        // Generate 4 choices including correct answer
+        const choices = [correctSeq];
+        const seqStrings = new Set([JSON.stringify(correctSeq)]);
+        
+        while (choices.length < 4) {
+          const randomSeq = generateRandomSequence(notesPerQ);
+          const seqStr = JSON.stringify(randomSeq);
+          if (!seqStrings.has(seqStr)) {
+            choices.push(randomSeq);
+            seqStrings.add(seqStr);
+          }
+        }
+        
+        return shuffleArray(choices);
+      }
+    }
 
-/* =============== UI wiring =============== */
-document.getElementById('start').addEventListener('click', ()=> {
-  const name = document.getElementById('name').value.trim(); const no=document.getElementById('no').value.trim(); const cls=document.getElementById('cls').value.trim(); const mode=document.getElementById('mode').value;
-  if(!name||!no||!cls){ alert('กรุณากรอกข้อมูลให้ครบ'); return; }
-  appState.student = {name, no, class:cls};
-  appState.mode = mode;
-  localStorage.setItem('kimi_student', JSON.stringify(appState.student));
-  if(mode==='time'){ startTime(); } else { // show levels
-    document.getElementById('landing').style.display='none'; document.getElementById('levels').style.display='block'; renderLevels();
-  }
-});
-function renderLevels(){ const ctn=document.getElementById('levelGrid'); ctn.innerHTML=''; const done = JSON.parse(localStorage.getItem('kimi_done')||'[]'); for(let i=1;i<=TOTAL_LEVELS;i++){ const b=document.createElement('button'); b.className='btn level-btn'; b.textContent='ด่าน '+i; if(done.includes(i)){ b.style.background='var(--good)'; b.style.color='#fff'; } (function(li){ b.addEventListener('click', ()=> startPractice(li)); })(i); ctn.appendChild(b);} }
-document.getElementById('backToLanding').addEventListener('click', ()=>{ document.getElementById('levels').style.display='none'; document.getElementById('landing').style.display='block'; });
-document.getElementById('toLevels').addEventListener('click', ()=>{ stopTimer(); document.getElementById('game').style.display='none'; document.getElementById('levels').style.display='block'; renderLevels(); });
-document.getElementById('showLB').addEventListener('click', ()=>{ renderLB(); document.getElementById('landing').style.display='none'; document.getElementById('leaderboard').style.display='block'; });
-document.getElementById('lbBack').addEventListener('click', ()=>{ document.getElementById('leaderboard').style.display='none'; document.getElementById('landing').style.display='block'; });
-document.getElementById('playBtn').addEventListener('click', ()=>{ if(appState.current) playSeq(appState.current.seq); });
-document.getElementById('showAnsBtn').addEventListener('click', ()=>{ if(!appState.current) return; document.getElementById('feedback').textContent='คำตอบ: '+ seqLabel(JSON.parse(appState.current.answer)); document.getElementById('feedback').className='feedback show'; Array.from(document.querySelectorAll('.choice')).forEach(b=>{ if(b.textContent===seqLabel(JSON.parse(appState.current.answer))) b.classList.add('correct'); b.disabled=true;}); document.getElementById('nextBtn').style.display='inline-block'; });
-document.getElementById('nextBtn').addEventListener('click', ()=> nextQ());
-document.getElementById('saveBtn').addEventListener('click', ()=> saveRecordLocal());
-document.getElementById('showExport').addEventListener('click', ()=> { document.getElementById('pinModal').style.display='flex'; });
-document.getElementById('pinCancel').addEventListener('click', ()=> { document.getElementById('pinModal').style.display='none'; document.getElementById('pinErr').style.display='none'; });
-document.getElementById('pinOk').addEventListener('click', async ()=> { const val=document.getElementById('pin').value; if(val===TEACHER_PIN){ document.getElementById('pinModal').style.display='none'; await exportCSV(); } else { document.getElementById('pinErr').style.display='block'; } });
-document.getElementById('qrRoomBtn').addEventListener('click', ()=> { const roomId = `${appState.student?appState.student.name:'guest'}_${Date.now()}`; openQR(roomId); });
-document.getElementById('closeQr').addEventListener('click', ()=> { document.getElementById('qrModal').style.display='none'; });
-document.getElementById('zipBtn').addEventListener('click', ()=> { alert('คำสั่งสร้าง ZIP: เปิด terminal ในโฟลเดอร์โปรเจกต์ แล้วรัน:\nzip -r kimi-wa-melody.zip index.html assets/ (ถ้ามี)\nหรือใช้ GUI zip ในเครื่องของคุณ'); });
+    function shuffleArray(array) {
+      const newArray = [...array];
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      }
+      return newArray;
+    }
 
-/* =============== Helper: restore student & init =============== */
-(function init(){
-  const s = JSON.parse(localStorage.getItem('kimi_student')||'null'); if(s){ document.getElementById('name').value = s.name; document.getElementById('no').value = s.no; document.getElementById('cls').value = s.class; appState.student=s; }
-  drawStaff();
-})();
+    function generateQuestion() {
+      const notesPerQ = getNotesPerQuestion(currentLevel);
+      currentSequence = generateRandomSequence(notesPerQ);
+      currentChoices = generateChoices(currentSequence);
+      answered = false;
+      
+      drawSequence(currentSequence);
+      renderChoices();
+      
+      document.getElementById('questionDisplay').textContent = `ข้อ ${currentQuestion}/10`;
+      document.getElementById('answerBtn').disabled = false;
+      document.getElementById('nextBtn').classList.add('hidden');
+      document.getElementById('feedback').classList.remove('show');
+    }
 
-/* =============== Google Sheets webhook helper (optional) =============== */
-/* If you set SHEETS_WEBHOOK_URL to an Apps Script WebApp URL, exportCSV() will POST JSON there.
-   See section B for the exact Apps Script code and deploy steps. */
+    function renderChoices() {
+      const container = document.getElementById('choicesContainer');
+      container.innerHTML = '';
+      
+      currentChoices.forEach(choice => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.textContent = seqToLabel(choice);
+        btn.onclick = () => checkAnswer(choice, btn);
+        container.appendChild(btn);
+      });
+    }
 
-</script>
-</body>
+    function playQuestion() {
+      const frequencies = currentSequence.map(note => NOTE_FREQUENCIES[note]);
+      playSequence(frequencies);
+    }
+
+    function showAnswer() {
+      if (answered) return;
+      
+      const feedback = document.getElementById('feedback');
+      feedback.textContent = `คำตอบที่ถูกต้อง: ${seqToLabel(currentSequence)}`;
+      feedback.className = 'feedback show incorrect';
+      
+      document.getElementById('answerBtn').disabled = true;
+      document.getElementById('nextBtn').classList.remove('hidden');
+      
+      // Disable all choice buttons
+      document.querySelectorAll('.choice-btn').forEach(btn => {
+        btn.disabled = true;
+        if (btn.textContent === seqToLabel(currentSequence)) {
+          btn.classList.add('correct');
+        }
+      });
+      
+      answered = true;
+      totalAnswered++;
+      updateScore();
+    }
+
+    function checkAnswer(selectedSeq, btn) {
+      if (answered) return;
+      
+      answered = true;
+      totalAnswered++;
+      
+      const isCorrect = JSON.stringify(selectedSeq) === JSON.stringify(currentSequence);
+      const feedback = document.getElementById('feedback');
+      
+      if (isCorrect) {
+        currentScore++;
+        btn.classList.add('correct');
+        feedback.textContent = '✅ ถูกต้อง!';
+        feedback.className = 'feedback show correct';
+        playCorrect();
+      } else {
+        btn.classList.add('incorrect');
+        feedback.textContent = `❌ ผิด! คำตอบที่ถูกต้อง: ${seqToLabel(currentSequence)}`;
+        feedback.className = 'feedback show incorrect';
+        playWrong();
+        
+        // Highlight correct answer
+        document.querySelectorAll('.choice-btn').forEach(choiceBtn => {
+          if (choiceBtn.textContent === seqToLabel(currentSequence)) {
+            choiceBtn.classList.add('correct');
+          }
+        });
+      }
+      
+      updateScore();
+      document.getElementById('answerBtn').disabled = true;
+      document.getElementById('nextBtn').classList.remove('hidden');
+      
+      // Disable all choice buttons
+      document.querySelectorAll('.choice-btn').forEach(choiceBtn => {
+        choiceBtn.disabled = true;
+      });
+    }
+
+    function updateScore() {
+      document.getElementById('scoreDisplay').textContent = `คะแนน: ${currentScore}/${totalAnswered}`;
+    }
+
+    function nextQuestion() {
+      if (currentMode === 'time_challenge') {
+        // Time challenge mode - continuous play
+        currentQuestion++;
+        generateQuestion();
+        playQuestion();
+      } else {
+        // Practice mode
+        if (currentQuestion >= 10) {
+          endLevel();
+        } else {
+          currentQuestion++;
+          generateQuestion();
+        }
+      }
+    }
+
+    function endLevel() {
+      const feedback = document.getElementById('feedback');
+      feedback.textContent = `จบด่าน ${currentLevel}! คะแนน: ${currentScore}/${totalAnswered}`;
+      feedback.className = 'feedback show correct';
+      
+      document.getElementById('nextBtn').classList.add('hidden');
+      document.getElementById('choicesContainer').innerHTML = '';
+      
+      // Mark level as completed
+      updateLevelCompletion(currentLevel);
+    }
+
+    function updateLevelCompletion(level) {
+      const completed = JSON.parse(localStorage.getItem('kimi_completed_levels') || '[]');
+      if (!completed.includes(level)) {
+        completed.push(level);
+        localStorage.setItem('kimi_completed_levels', JSON.stringify(completed));
+      }
+    }
+
+    // ========== Timer Functions ==========
+    function startTimer() {
+      timeRemaining = 60;
+      document.getElementById('timerContainer').classList.remove('hidden');
+      updateTimerDisplay();
+      
+      timerInterval = setInterval(() => {
+        timeRemaining--;
+        updateTimerDisplay();
+        
+        if (timeRemaining <= 10) {
+          document.getElementById('timerDisplay').classList.add('warning');
+        }
+        
+        if (timeRemaining <= 0) {
+          endTimeChallenge();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      document.getElementById('timerDisplay').textContent = timeRemaining;
+    }
+
+    function stopTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    function endTimeChallenge() {
+      stopTimer();
+      
+      const feedback = document.getElementById('feedback');
+      feedback.textContent = `⏰ หมดเวลา! คะแนนของคุณ: ${currentScore}/${totalAnswered}`;
+      feedback.className = 'feedback show correct';
+      
+      document.getElementById('nextBtn').classList.add('hidden');
+      document.getElementById('choicesContainer').innerHTML = '';
+      document.querySelectorAll('.choice-btn').forEach(btn => btn.disabled = true);
+      
+      // Save to leaderboard
+      saveToLeaderboard();
+    }
+
+    function saveToLeaderboard() {
+      const leaderboard = JSON.parse(localStorage.getItem('kimi_time_leaderboard') || '[]');
+      
+      leaderboard.push({
+        name: currentStudent.name,
+        class: currentStudent.class,
+        no: currentStudent.no,
+        score: currentScore,
+        total: totalAnswered,
+        date: new Date().toLocaleDateString('th-TH')
+      });
+      
+      // Sort by score (descending) and keep top 50
+      leaderboard.sort((a, b) => {
+        const scoreA = a.total > 0 ? (a.score / a.total) : 0;
+        const scoreB = b.total > 0 ? (b.score / b.total) : 0;
+        if (scoreB !== scoreA) return scoreB - scoreA;
+        return b.score - a.score;
+      });
+      
+      localStorage.setItem('kimi_time_leaderboard', JSON.stringify(leaderboard.slice(0, 50)));
+    }
+
+    // ========== Navigation Functions ==========
+    function startGame() {
+      const name = document.getElementById('studentName').value.trim();
+      const no = document.getElementById('studentNo').value.trim();
+      const classRoom = document.getElementById('studentClass').value.trim();
+      const mode = document.getElementById('gameMode').value;
+      
+      if (!name || !no || !classRoom) {
+        const msg = document.createElement('div');
+        msg.className = 'feedback show incorrect';
+        msg.textContent = 'กรุณากรอกข้อมูลให้ครบถ้วน';
+        document.getElementById('landingPage').appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
+        return;
+      }
+      
+      currentStudent = { name, no, class: classRoom };
+      currentMode = mode;
+      localStorage.setItem('kimi_student', JSON.stringify(currentStudent));
+      
+      if (mode === 'time_challenge') {
+        // Go directly to game
+        currentLevel = 1;
+        currentQuestion = 1;
+        currentScore = 0;
+        totalAnswered = 0;
+        
+        document.getElementById('landingPage').classList.add('hidden');
+        document.getElementById('gamePage').classList.remove('hidden');
+        document.getElementById('levelDisplay').textContent = 'Time Challenge';
+        
+        drawStaffAndClef();
+        generateQuestion();
+        startTimer();
+        playQuestion();
+      } else {
+        // Show level selection
+        document.getElementById('landingPage').classList.add('hidden');
+        document.getElementById('levelPage').classList.remove('hidden');
+        renderLevelSelect();
+      }
+    }
+
+    function renderLevelSelect() {
+      const container = document.getElementById('levelSelect');
+      container.innerHTML = '';
+      
+      const completed = JSON.parse(localStorage.getItem('kimi_completed_levels') || '[]');
+      
+      for (let i = 1; i <= 20; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'level-btn';
+        if (completed.includes(i)) {
+          btn.classList.add('completed');
+        }
+        btn.textContent = `ด่าน ${i}`;
+        btn.onclick = () => startLevel(i);
+        container.appendChild(btn);
+      }
+    }
+
+    function startLevel(level) {
+      currentLevel = level;
+      currentQuestion = 1;
+      currentScore = 0;
+      totalAnswered = 0;
+      
+      document.getElementById('levelPage').classList.add('hidden');
+      document.getElementById('gamePage').classList.remove('hidden');
+      document.getElementById('levelDisplay').textContent = `ด่าน ${level}`;
+      document.getElementById('timerContainer').classList.add('hidden');
+      
+      drawStaffAndClef();
+      generateQuestion();
+    }
+
+    function backToLanding() {
+      stopTimer();
+      document.getElementById('levelPage').classList.add('hidden');
+      document.getElementById('gamePage').classList.add('hidden');
+      document.getElementById('leaderboardPage').classList.add('hidden');
+      document.getElementById('landingPage').classList.remove('hidden');
+    }
+
+    function backToLevelSelect() {
+      stopTimer();
+      document.getElementById('gamePage').classList.add('hidden');
+      document.getElementById('levelPage').classList.remove('hidden');
+      renderLevelSelect();
+    }
+
+    function showLeaderboard() {
+      document.getElementById('landingPage').classList.add('hidden');
+      document.getElementById('leaderboardPage').classList.remove('hidden');
+      
+      const leaderboard = JSON.parse(localStorage.getItem('kimi_time_leaderboard') || '[]');
+      const tbody = document.getElementById('leaderboardBody');
+      tbody.innerHTML = '';
+      
+      if (leaderboard.length === 0) {
+        const row = tbody.insertRow();
+        const cell = row.insertCell();
+        cell.colSpan = 6;
+        cell.textContent = 'ยังไม่มีข้อมูลคะแนน';
+        cell.style.textAlign = 'center';
+        cell.style.color = '#8b7355';
+        return;
+      }
+      
+      leaderboard.slice(0, 10).forEach((entry, index) => {
+        const row = tbody.insertRow();
+        row.insertCell().textContent = index + 1;
+        row.insertCell().textContent = entry.name;
+        row.insertCell().textContent = entry.class;
+        row.insertCell().textContent = entry.no;
+        row.insertCell().textContent = `${entry.score}/${entry.total}`;
+        row.insertCell().textContent = entry.date;
+      });
+    }
+
+    // ========== Data Persistence ==========
+    async function saveScore() {
+      if (!currentStudent) {
+        const feedback = document.createElement('div');
+        feedback.className = 'feedback show incorrect';
+        feedback.textContent = 'ไม่พบข้อมูลนักเรียน';
+        document.getElementById('gamePage').insertBefore(feedback, document.getElementById('choicesContainer'));
+        setTimeout(() => feedback.remove(), 3000);
+        return;
+      }
+
+      const saveBtn = document.getElementById('saveScoreBtn');
+      saveBtn.disabled = true;
+      saveBtn.textContent = '⏳ กำลังบันทึก...';
+
+      const record = {
+        student_name: currentStudent.name,
+        class_room: currentStudent.class,
+        student_no: currentStudent.no,
+        mode: currentMode,
+        level: currentLevel,
+        score: currentScore,
+        total: totalAnswered,
+        timestamp: new Date().toISOString()
+      };
+
+      const result = await window.dataSdk.create(record);
+
+      if (result.isOk) {
+        const feedback = document.createElement('div');
+        feedback.className = 'feedback show correct';
+        feedback.textContent = '✅ บันทึกคะแนนเรียบร้อย!';
+        document.getElementById('gamePage').insertBefore(feedback, document.getElementById('choicesContainer'));
+        setTimeout(() => feedback.remove(), 3000);
+      } else {
+        const feedback = document.createElement('div');
+        feedback.className = 'feedback show incorrect';
+        feedback.textContent = '❌ เกิดข้อผิดพลาดในการบันทึก';
+        document.getElementById('gamePage').insertBefore(feedback, document.getElementById('choicesContainer'));
+        setTimeout(() => feedback.remove(), 3000);
+      }
+
+      saveBtn.disabled = false;
+      saveBtn.textContent = '💾 บันทึกคะแนน';
+    }
+
+    // ========== Export Functions ==========
+    function showExportModal() {
+      document.getElementById('pinModal').classList.add('show');
+      document.getElementById('pinInput').value = '';
+      document.getElementById('pinError').style.display = 'none';
+    }
+
+    function closePINModal() {
+      document.getElementById('pinModal').classList.remove('show');
+    }
+
+    function verifyPIN() {
+      const config = window.elementSdk?.config || defaultConfig;
+      const enteredPIN = document.getElementById('pinInput').value;
+      const correctPIN = config.teacher_pin || defaultConfig.teacher_pin;
+      
+      if (enteredPIN === correctPIN) {
+        closePINModal();
+        exportToCSV();
+      } else {
+        document.getElementById('pinError').style.display = 'block';
+      }
+    }
+
+    function exportToCSV() {
+      // This will be called after successful Data SDK initialization
+      // We'll use the data from onDataChanged
+      const records = window.kimiRecords || [];
+      
+      if (records.length === 0) {
+        const msg = document.createElement('div');
+        msg.className = 'feedback show incorrect';
+        msg.textContent = 'ไม่มีข้อมูลสำหรับส่งออก';
+        document.getElementById('landingPage').appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
+        return;
+      }
+      
+      let csv = 'name,class,no,mode,level,score,total,date\n';
+      
+      records.forEach(record => {
+        const date = new Date(record.timestamp).toLocaleDateString('th-TH');
+        csv += `"${record.student_name}","${record.class_room}","${record.student_no}","${record.mode}",${record.level},${record.score},${record.total},"${date}"\n`;
+      });
+      
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `kimi-melody-records-${new Date().toISOString().split('T')[0]}.csv`;
+      link.click();
+      
+      const msg = document.createElement('div');
+      msg.className = 'feedback show correct';
+      msg.textContent = '✅ ส่งออกข้อมูลเรียบร้อย!';
+      document.getElementById('landingPage').appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
+    }
+
+    // ========== Data SDK Integration ==========
+    const dataHandler = {
+      onDataChanged(data) {
+        // Store records globally for export
+        window.kimiRecords = data;
+      }
+    };
+
+    // ========== Element SDK Integration ==========
+    async function onConfigChange(config) {
+      const appTitle = config.app_title || defaultConfig.app_title;
+      const mascotName = config.mascot_name || defaultConfig.mascot_name;
+      const instructionText = config.instruction_text || defaultConfig.instruction_text;
+
+      document.getElementById('appTitle').textContent = appTitle;
+      document.getElementById('mascotTag').textContent = `🐱 ${mascotName} 🎵`;
+      document.getElementById('instructionText').textContent = instructionText;
+    }
+
+    // ========== Initialization ==========
+    async function init() {
+      // Initialize Element SDK
+      if (window.elementSdk) {
+        await window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities: (config) => ({
+            recolorables: [],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ['app_title', config.app_title || defaultConfig.app_title],
+            ['mascot_name', config.mascot_name || defaultConfig.mascot_name],
+            ['teacher_pin', config.teacher_pin || defaultConfig.teacher_pin],
+            ['instruction_text', config.instruction_text || defaultConfig.instruction_text]
+          ])
+        });
+
+        // Apply initial config
+        await onConfigChange(window.elementSdk.config);
+      }
+
+      // Initialize Data SDK
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error('Failed to initialize Data SDK');
+        }
+      }
+
+      // Load saved student data
+      const savedStudent = localStorage.getItem('kimi_student');
+      if (savedStudent) {
+        const student = JSON.parse(savedStudent);
+        document.getElementById('studentName').value = student.name;
+        document.getElementById('studentNo').value = student.no;
+        document.getElementById('studentClass').value = student.class;
+      }
+    }
+
+    // Start initialization
+    init();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a52482eb069d036',t:'MTc2NDI1MzM5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
