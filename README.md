@@ -437,7 +437,7 @@
     </div>
     <div id="feedback" class="feedback"></div>
     <div id="choicesContainer" class="choices-grid"></div>
-    <div class="controls"><button class="btn btn-primary" onclick="saveScore()" id="saveScoreBtn">💾 บันทึกคะแน��</button>
+    <div class="controls"><button class="btn btn-primary" onclick="saveScore()" id="saveScoreBtn">💾 บันทึกคะแนน</button>
     </div>
    </div><!-- Leaderboard Page -->
    <div id="leaderboardPage" class="card hidden"><button class="back-btn" onclick="backToLanding()">←</button>
@@ -464,7 +464,7 @@
     <h2>🔒 กรอกรหัส PIN ครู</h2>
     <div class="form-group"><label for="pinInput">รหัส PIN</label> <input type="password" id="pinInput" placeholder="กรอกรหัส PIN">
     </div>
-    <div class="controls"><button class="btn btn-primary" onclick="verifyPIN()">ยืนยัน</button> <button class="btn btn-secondary" onclick="closePINModal()">ยกเลิ���</button>
+    <div class="controls"><button class="btn btn-primary" onclick="verifyPIN()">ยืนยัน</button> <button class="btn btn-secondary" onclick="closePINModal()">ยกเลิก</button>
     </div>
     <div id="pinError" style="color: #c47a6f; text-align: center; margin-top: 10px; display: none;">
      รหัส PIN ไม่ถูกต้อง
@@ -780,7 +780,7 @@
         playCorrect();
       } else {
         btn.classList.add('incorrect');
-        feedback.textContent = `❌ ผิด! คำตอบท��่ถูกต้อง: ${seqToLabel(currentSequence)}`;
+        feedback.textContent = `❌ ผิด! คำตอบทที่ถูกต้องคือ: ${seqToLabel(currentSequence)}`;
         feedback.className = 'feedback show incorrect';
         playWrong();
         
