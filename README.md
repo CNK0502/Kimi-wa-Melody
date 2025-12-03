@@ -780,7 +780,7 @@
         playCorrect();
       } else {
         btn.classList.add('incorrect');
-        feedback.textContent = `❌ ผิด! คำตอบทที่ถูกต้องคือ: ${seqToLabel(currentSequence)}`;
+        feedback.textContent = `❌ ผิด! คำตอบที่ถูกต้องคือ: ${seqToLabel(currentSequence)}`;
         feedback.className = 'feedback show incorrect';
         playWrong();
         
