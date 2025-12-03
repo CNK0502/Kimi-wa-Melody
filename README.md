@@ -1,8 +1,9 @@
-<html....>
+<!doctype html>
 <html lang="en">
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kimi-wa-Melody - MelodyCat</title>
   <script src="/_sdk/data_sdk.js"></script>
   <script src="/_sdk/element_sdk.js"></script>
   <style>
@@ -79,7 +80,7 @@
     }
 
     .mode-card.selected {
-      background: linear-gradient(135deg, #d4a5b8 30%, #c97c9d 70%);
+      background: linear-gradient(135deg, #d4a5b8 0%, #c97c9d 100%);
       border-color: #c97c9d;
       color: white;
     }
@@ -112,7 +113,7 @@
     h1 {
       color: #c97c9d;
       text-align: center;
-      font-size: 50rem;
+      font-size: 3rem;
       margin: 0 0 10px 0;
       font-family: 'Niconne', cursive;
       font-weight: 400;
@@ -579,13 +580,13 @@
  <body>
   <div class="app-container"><!-- Landing Page -->
    <div id="landingPage" class="card">
-    <h1 id="appTitle">🌸 Kimi-wa-Melody 🌸</h1>
+    <h1 id="appTitle">🌸 Kimi-wa-melody 🌸</h1>
     <div class="mascot-tag" id="mascotTag">
      🐱 MelodyCat 🎵
     </div>
     <div class="landing-container"><!-- Left Side - Mode Selection (1x3) -->
      <div class="landing-left">
-      <h2 style="text-align: center;">เลือกโหมด</h2>
+      <h2 style="text-align: center;">Select Mode</h2>
       <div class="mode-grid"><button class="mode-card selected" id="modeBtn-practice" onclick="selectMode('practice')">
         <div class="mode-icon">
          📚
@@ -594,7 +595,7 @@
          Practice Mode
         </div>
         <div class="mode-desc">
-         ฝึกฝนแบบไม่จำกัดเวลา
+         Practice without time limit
         </div></button> <button class="mode-card" id="modeBtn-time_challenge" onclick="selectMode('time_challenge')">
         <div class="mode-icon">
          ⏱️
@@ -603,7 +604,7 @@
          Time Challenge
         </div>
         <div class="mode-desc">
-         ท้าทายเวลา 60 วินาที
+         60 second challenge
         </div></button> <button class="mode-card" id="modeBtn-matching" onclick="selectMode('matching')">
         <div class="mode-icon">
          🎴
@@ -612,7 +613,7 @@
          Matching Mode
         </div>
         <div class="mode-desc">
-         เกมจับคู่โน้ตเพลง
+         Match musical notes game
         </div></button>
       </div>
      </div><!-- Right Side - Student Info Form -->
@@ -712,7 +713,7 @@
   <script>
     // ========== Configuration ==========
     const defaultConfig = {
-      app_title: "Kimi-wa-Melody",
+      app_title: "Kimi-wa-melody",
       mascot_name: "MelodyCat",
       teacher_pin: "Teacherversion5791",
       instruction_text: "Listen to the notes and choose the correct answer"
@@ -893,7 +894,7 @@
       clefText.setAttribute('font-size', '18');
       clefText.setAttribute('font-weight', '600');
       clefText.setAttribute('text-anchor', 'middle');
-      clefText.setAttribute('font-family', 'Kanit, Sarabun, Arial, sans-serif');
+      clefText.setAttribute('font-family', 'Arial, sans-serif');
       clefText.textContent = 'Treble Clef (G Clef)';
       svg.appendChild(clefText);
       
@@ -1811,5 +1812,5 @@
     // Start initialization
     init();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a82ab2a02fc7b40',t:'MTc2NDc2MDc2Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a82c8a910d27b40',t:'MTc2NDc2MTk3MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
