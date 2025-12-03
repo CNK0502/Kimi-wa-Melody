@@ -1,4 +1,4 @@
-<html....>
+<html...>
 <html lang="en">
  <head>
   <meta charset="UTF-8">
@@ -359,18 +359,22 @@
       width: 100%;
       border-collapse: collapse;
       margin: 20px 0;
+      font-size: 0.95rem;
     }
 
     .leaderboard-table th {
       background: #d4a5b8;
       color: white;
-      padding: 12px;
+      padding: 12px 8px;
       text-align: center;
       font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     .leaderboard-table td {
-      padding: 10px 12px;
+      padding: 10px 8px;
       border-bottom: 1px solid #e8d5dd;
       text-align: center;
     }
@@ -381,6 +385,47 @@
 
     .leaderboard-table tr:hover {
       background: #fef8fa;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .stat-card {
+      background: white;
+      border: 2px solid #e8d5dd;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #c97c9d;
+      margin: 10px 0;
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      color: #b08ba4;
+      font-weight: 600;
+    }
+
+    .filter-controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 15px 0;
+      align-items: center;
+    }
+
+    .filter-controls select {
+      flex: 1;
+      min-width: 150px;
     }
 
     .modal-backdrop {
@@ -544,6 +589,24 @@
       0%, 100% { transform: translateX(0); }
       25% { transform: translateX(-10px); }
       75% { transform: translateX(10px); }
+    }
+
+    .table-container {
+      max-height: 500px;
+      overflow-y: auto;
+      border-radius: 15px;
+      border: 2px solid #e8d5dd;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #b08ba4;
+    }
+
+    .empty-state-icon {
+      font-size: 4rem;
+      margin-bottom: 15px;
     }
 
     /* Tablet Styles (iPad and similar) */
@@ -750,6 +813,23 @@
         top: 15px;
         left: 15px;
       }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .stat-value {
+        font-size: 2rem;
+      }
+
+      .filter-controls {
+        flex-direction: column;
+      }
+
+      .filter-controls select {
+        width: 100%;
+      }
     }
 
     /* Mobile Portrait - Standard Phones */
@@ -915,6 +995,14 @@
         top: 10px;
         left: 10px;
       }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-value {
+        font-size: 1.8rem;
+      }
     }
 
     /* Very Small Phones */
@@ -1032,7 +1120,7 @@
       </div>
      </div>
     </div>
-    <div class="controls" style="margin-top: 20px;"><button class="btn btn-info" onclick="showLeaderboard()">View Leaderboard</button> <button class="btn btn-warning" onclick="showExportModal()">Export Data (Teacher)</button>
+    <div class="controls" style="margin-top: 20px;"><button class="btn btn-info" onclick="showGardenHall()">🌺 Garden Hall of Fame</button> <button class="btn btn-warning" onclick="showExportModal()">📊 Export Data (Teacher)</button>
     </div>
    </div><!-- Level Selection Page -->
    <div id="levelPage" class="card hidden"><button class="back-btn" onclick="backToLanding()">←</button>
@@ -1081,29 +1169,71 @@
     <div class="matching-grid" id="matchingGrid"></div>
     <div class="controls"><button class="btn btn-warning" onclick="resetMatching()">🔄 Reset Game</button> <button class="btn btn-primary hidden" onclick="saveMatchingScore()" id="saveMatchingBtn">💾 Save Score</button>
     </div>
-   </div><!-- Leaderboard Page -->
-   <div id="leaderboardPage" class="card hidden"><button class="back-btn" onclick="backToLanding()">←</button>
-    <h1>🏆 Time Challenge Leaderboard</h1>
-    <table class="leaderboard-table">
-     <thead>
-      <tr>
-       <th>Rank</th>
-       <th>Name</th>
-       <th>Class</th>
-       <th>Number</th>
-       <th>Score</th>
-       <th>Date</th>
-      </tr>
-     </thead>
-     <tbody id="leaderboardBody"></tbody>
-    </table>
-    <div class="controls"><button class="btn btn-secondary" onclick="backToLanding()">Back</button>
+   </div><!-- Garden Hall of Fame Page -->
+   <div id="gardenHallPage" class="card hidden"><button class="back-btn" onclick="backToLanding()">←</button>
+    <h1>🌺 Garden Hall of Fame 🌺</h1>
+    <p style="text-align: center; color: #b08ba4; margin-bottom: 20px;">View all student scores and performance data</p><!-- Statistics Overview -->
+    <div class="stats-grid" id="statsGrid">
+     <div class="stat-card">
+      <div class="stat-label">
+       Total Students
+      </div>
+      <div class="stat-value" id="statTotalStudents">
+       0
+      </div>
+     </div>
+     <div class="stat-card">
+      <div class="stat-label">
+       Total Games Played
+      </div>
+      <div class="stat-value" id="statTotalGames">
+       0
+      </div>
+     </div>
+     <div class="stat-card">
+      <div class="stat-label">
+       Average Score
+      </div>
+      <div class="stat-value" id="statAvgScore">
+       0%
+      </div>
+     </div>
+     <div class="stat-card">
+      <div class="stat-label">
+       Practice Sessions
+      </div>
+      <div class="stat-value" id="statPractice">
+       0
+      </div>
+     </div>
+    </div><!-- Filter Controls -->
+    <div class="filter-controls"><select id="filterMode" onchange="filterGardenHall()"> <option value="all">All Modes</option> <option value="practice">Practice Mode</option> <option value="time_challenge">Time Challenge</option> <option value="matching">Matching Mode</option> </select> <select id="filterClass" onchange="filterGardenHall()"> <option value="all">All Classes</option> </select> <button class="btn btn-secondary" onclick="resetFilters()">Clear Filters</button>
+    </div><!-- Records Table -->
+    <div class="table-container">
+     <table class="leaderboard-table">
+      <thead>
+       <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Class</th>
+        <th>Number</th>
+        <th>Mode</th>
+        <th>Level/Moves</th>
+        <th>Score</th>
+        <th>Percentage</th>
+        <th>Date</th>
+       </tr>
+      </thead>
+      <tbody id="gardenHallBody"></tbody>
+     </table>
+    </div>
+    <div class="controls"><button class="btn btn-warning" onclick="showExportModal()">📊 Export Data</button> <button class="btn btn-secondary" onclick="backToLanding()">Back</button>
     </div>
    </div>
   </div><!-- PIN Modal -->
   <div id="pinModal" class="modal-backdrop">
    <div class="modal">
-    <h2>Enter Teacher PIN</h2>
+    <h2>🔒 Enter Teacher PIN</h2>
     <div class="form-group"><label for="pinInput">PIN Code</label> <input type="password" id="pinInput" placeholder="Enter PIN">
     </div>
     <div class="controls"><button class="btn btn-primary" onclick="verifyPIN()">Confirm</button> <button class="btn btn-secondary" onclick="closePINModal()">Cancel</button>
@@ -1134,18 +1264,11 @@
       'G': 392.00, 'A': 440.00, 'B': 493.88
     };
 
-    // Staff positions (y-coordinate) - Treble Clef Standard
     const NOTE_POSITIONS = {
-      'C': 190, // Middle C - Below staff with leger line
-      'D': 180, // Below line 1 (space below staff)
-      'E': 170, // On line 1 (bottom staff line)
-      'F': 160, // Space between line 1 and 2
-      'G': 150, // On line 2
-      'A': 140, // Space between line 2 and 3
-      'B': 130  // On line 3 (middle line)
+      'C': 190, 'D': 180, 'E': 170, 'F': 160,
+      'G': 150, 'A': 140, 'B': 130
     };
 
-    // Staff configuration
     const STAFF_CONFIG = {
       left: 300,
       right: 600,
@@ -1154,7 +1277,6 @@
       strokeWidth: 3
     };
 
-    // Note rendering
     const NOTE_CONFIG = {
       startX: 380,
       stepX: 48,
@@ -1187,8 +1309,9 @@
     let matchingFlippedCards = [];
     let matchingCards = [];
 
-    // Selected mode on landing page
     let selectedMode = 'practice';
+    let allRecords = [];
+    let filteredRecords = [];
 
     // ========== Audio Context ==========
     function initAudio() {
@@ -1237,7 +1360,6 @@
       const x = NOTE_CONFIG.startX + (index * NOTE_CONFIG.stepX);
       const y = NOTE_POSITIONS[note];
       
-      // Draw leger line for Middle C (note C below the staff)
       if (note === 'C') {
         const legerLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
         legerLine.setAttribute('x1', x - 24);
@@ -1250,7 +1372,6 @@
         svg.appendChild(legerLine);
       }
       
-      // Draw note head (ellipse)
       const noteHead = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
       noteHead.setAttribute('cx', x);
       noteHead.setAttribute('cy', y);
@@ -1260,7 +1381,6 @@
       noteHead.setAttribute('transform', `rotate(-12 ${x} ${y})`);
       svg.appendChild(noteHead);
       
-      // Draw stem
       const stem = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
       stem.setAttribute('x', x + NOTE_CONFIG.headRx - 2);
       stem.setAttribute('y', y - NOTE_CONFIG.stemHeight);
@@ -1272,10 +1392,8 @@
 
     function drawSequence(sequence) {
       const svg = document.getElementById('musicStaff');
-      // Clear everything and redraw from scratch
       svg.innerHTML = '';
       
-      // Redraw staff lines
       for (let i = 0; i < 5; i++) {
         const y = STAFF_CONFIG.bottomY - (i * STAFF_CONFIG.gap);
         const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
@@ -1289,7 +1407,6 @@
         svg.appendChild(line);
       }
       
-      // Redraw clef text
       const clefText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       clefText.setAttribute('x', '450');
       clefText.setAttribute('y', '30');
@@ -1301,7 +1418,6 @@
       clefText.textContent = 'Treble Clef (G Clef)';
       svg.appendChild(clefText);
       
-      // Draw new notes
       sequence.forEach((note, index) => {
         drawNote(note, index);
       });
@@ -1330,11 +1446,9 @@
       const notesPerQ = correctSeq.length;
       
       if (notesPerQ === 1) {
-        // Show all 7 notes
         const choices = NOTES.map(note => [note]);
         return shuffleArray(choices);
       } else {
-        // Generate 4 choices including correct answer
         const choices = [correctSeq];
         const seqStrings = new Set([JSON.stringify(correctSeq)]);
         
@@ -1403,7 +1517,6 @@
       document.getElementById('answerBtn').disabled = true;
       document.getElementById('nextBtn').classList.remove('hidden');
       
-      // Disable all choice buttons
       document.querySelectorAll('.choice-btn').forEach(btn => {
         btn.disabled = true;
         if (btn.textContent === seqToLabel(currentSequence)) {
@@ -1437,7 +1550,6 @@
         feedback.className = 'feedback show incorrect';
         playWrong();
         
-        // Highlight correct answer
         document.querySelectorAll('.choice-btn').forEach(choiceBtn => {
           if (choiceBtn.textContent === seqToLabel(currentSequence)) {
             choiceBtn.classList.add('correct');
@@ -1449,7 +1561,6 @@
       document.getElementById('answerBtn').disabled = true;
       document.getElementById('nextBtn').classList.remove('hidden');
       
-      // Disable all choice buttons
       document.querySelectorAll('.choice-btn').forEach(choiceBtn => {
         choiceBtn.disabled = true;
       });
@@ -1461,12 +1572,10 @@
 
     function nextQuestion() {
       if (currentMode === 'time_challenge') {
-        // Time challenge mode - continuous play
         currentQuestion++;
         generateQuestion();
         playQuestion();
       } else {
-        // Practice mode
         if (currentQuestion >= 10) {
           endLevel();
         } else {
@@ -1484,7 +1593,6 @@
       document.getElementById('nextBtn').classList.add('hidden');
       document.getElementById('choicesContainer').innerHTML = '';
       
-      // Mark level as completed
       updateLevelCompletion(currentLevel);
     }
 
@@ -1537,35 +1645,8 @@
       document.getElementById('nextBtn').classList.add('hidden');
       document.getElementById('choicesContainer').innerHTML = '';
       document.querySelectorAll('.choice-btn').forEach(btn => btn.disabled = true);
-      
-      // Save to leaderboard
-      saveToLeaderboard();
     }
 
-    function saveToLeaderboard() {
-      const leaderboard = JSON.parse(localStorage.getItem('kimi_time_leaderboard') || '[]');
-      
-      leaderboard.push({
-        name: currentStudent.name,
-        class: currentStudent.class,
-        no: currentStudent.no,
-        score: currentScore,
-        total: totalAnswered,
-        date: new Date().toLocaleDateString('en-US')
-      });
-      
-      // Sort by score (descending) and keep top 50
-      leaderboard.sort((a, b) => {
-        const scoreA = a.total > 0 ? (a.score / a.total) : 0;
-        const scoreB = b.total > 0 ? (b.score / b.total) : 0;
-        if (scoreB !== scoreA) return scoreB - scoreA;
-        return b.score - a.score;
-      });
-      
-      localStorage.setItem('kimi_time_leaderboard', JSON.stringify(leaderboard.slice(0, 50)));
-    }
-
-    // ========== Feedback Helper ==========
     function showFeedbackMessage(message, isSuccess) {
       const feedback = document.createElement('div');
       feedback.className = `feedback show ${isSuccess ? 'correct' : 'incorrect'}`;
@@ -1582,12 +1663,10 @@
     function selectMode(mode) {
       selectedMode = mode;
       
-      // Remove selected class from all mode cards
       document.querySelectorAll('.mode-card').forEach(card => {
         card.classList.remove('selected');
       });
       
-      // Add selected class to clicked card
       document.getElementById(`modeBtn-${mode}`).classList.add('selected');
     }
 
@@ -1611,12 +1690,10 @@
       localStorage.setItem('kimi_student', JSON.stringify(currentStudent));
       
       if (mode === 'matching') {
-        // Start matching mode
         document.getElementById('landingPage').classList.add('hidden');
         document.getElementById('matchingPage').classList.remove('hidden');
         initMatchingGame();
       } else if (mode === 'time_challenge') {
-        // Go directly to game without level selection
         currentLevel = 1;
         currentQuestion = 1;
         currentScore = 0;
@@ -1631,7 +1708,6 @@
         startTimer();
         playQuestion();
       } else {
-        // Show level selection for practice mode
         document.getElementById('landingPage').classList.add('hidden');
         document.getElementById('levelPage').classList.remove('hidden');
         renderLevelSelect();
@@ -1645,16 +1721,13 @@
       matchingFlippedCards = [];
       matchingStartTime = Date.now();
       
-      // Start timer
       if (matchingTimerInterval) clearInterval(matchingTimerInterval);
       matchingTimerInterval = setInterval(updateMatchingTimer, 1000);
       
-      // Create card pairs - 8 pairs = 16 cards
       const notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C'];
       matchingCards = [];
       
       notes.forEach((note, index) => {
-        // Text card
         matchingCards.push({
           id: `text-${index}`,
           type: 'text',
@@ -1662,7 +1735,6 @@
           matched: false
         });
         
-        // Visual card (staff notation)
         matchingCards.push({
           id: `visual-${index}`,
           type: 'visual',
@@ -1671,7 +1743,6 @@
         });
       });
       
-      // Shuffle cards
       matchingCards = shuffleArray(matchingCards);
       
       renderMatchingGrid();
@@ -1692,21 +1763,17 @@
           cardElement.classList.add('matched');
         }
         
-        // Card back (flower emoji)
         const cardBack = document.createElement('div');
         cardBack.className = 'card-back';
         cardBack.textContent = '🌸';
         cardElement.appendChild(cardBack);
         
-        // Card front (content)
         const cardFront = document.createElement('div');
         cardFront.className = 'card-front';
         
         if (card.type === 'text') {
-          // Show note name with Thai name
           cardFront.innerHTML = `<div style="text-align: center;"><div style="font-size: 2rem;">${card.note}</div><div style="font-size: 1rem;">(${NOTE_NAMES_TH[card.note]})</div></div>`;
         } else {
-          // Show staff notation
           const svg = createMiniStaff(card.note);
           cardFront.appendChild(svg);
         }
@@ -1727,7 +1794,6 @@
       svg.setAttribute('width', '100%');
       svg.setAttribute('height', '100%');
       
-      // Draw staff lines
       for (let i = 0; i < 5; i++) {
         const y = 70 - (i * 10);
         const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
@@ -1740,7 +1806,6 @@
         svg.appendChild(line);
       }
       
-      // Draw leger line for Middle C if needed
       const noteY = getNoteYPosition(note);
       if (note === 'C') {
         const legerLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
@@ -1753,7 +1818,6 @@
         svg.appendChild(legerLine);
       }
       
-      // Draw note
       const noteHead = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
       noteHead.setAttribute('cx', '60');
       noteHead.setAttribute('cy', noteY);
@@ -1763,7 +1827,6 @@
       noteHead.setAttribute('transform', `rotate(-12 60 ${noteY})`);
       svg.appendChild(noteHead);
       
-      // Draw stem
       const stem = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
       stem.setAttribute('x', '67');
       stem.setAttribute('y', noteY - 30);
@@ -1777,13 +1840,8 @@
 
     function getNoteYPosition(note) {
       const positions = {
-        'C': 80,  // Below staff
-        'D': 75,  // Below line 1
-        'E': 70,  // On line 1
-        'F': 65,  // Space
-        'G': 60,  // On line 2
-        'A': 55,  // Space
-        'B': 50   // On line 3
+        'C': 80, 'D': 75, 'E': 70, 'F': 65,
+        'G': 60, 'A': 55, 'B': 50
       };
       return positions[note];
     }
@@ -1792,11 +1850,8 @@
       const card = matchingCards[index];
       
       if (card.matched || matchingFlippedCards.length >= 2) return;
-      
-      // Check if card is already flipped
       if (matchingFlippedCards.some(fc => fc.index === index)) return;
       
-      // Flip the card
       const cardElement = document.querySelector(`.matching-card[data-index="${index}"]`);
       cardElement.classList.add('flipped');
       
@@ -1814,7 +1869,6 @@
       const [first, second] = matchingFlippedCards;
       
       if (first.card.note === second.card.note && first.card.type !== second.card.type) {
-        // Match!
         matchingCards[first.index].matched = true;
         matchingCards[second.index].matched = true;
         matchingMatched++;
@@ -1829,7 +1883,6 @@
         
         playCorrect();
         
-        // Check if game complete
         if (matchingMatched === 8) {
           setTimeout(() => {
             clearInterval(matchingTimerInterval);
@@ -1837,14 +1890,13 @@
             
             const msg = document.createElement('div');
             msg.className = 'feedback show correct';
-            msg.textContent = `�������� Congratulations! Completed in ${matchingMoves} moves and ${formatTime(elapsed)}! 🌸`;
+            msg.textContent = `🎉 Congratulations! Completed in ${matchingMoves} moves and ${formatTime(elapsed)}! 🌸`;
             document.getElementById('matchingPage').insertBefore(msg, document.getElementById('matchingGrid'));
             
             document.getElementById('saveMatchingBtn').classList.remove('hidden');
           }, 500);
         }
       } else {
-        // No match
         const firstElement = document.querySelector(`.matching-card[data-index="${first.index}"]`);
         const secondElement = document.querySelector(`.matching-card[data-index="${second.index}"]`);
         
@@ -1881,10 +1933,7 @@
 
     function resetMatching() {
       if (matchingTimerInterval) clearInterval(matchingTimerInterval);
-      
-      // Remove any feedback messages
       document.querySelectorAll('#matchingPage .feedback').forEach(el => el.remove());
-      
       initMatchingGame();
     }
 
@@ -1916,8 +1965,8 @@
           student_no: currentStudent.no,
           mode: 'matching',
           level: matchingMoves,
-          score: elapsed,
-          total: 8,
+          score: 8,
+          total: elapsed,
           timestamp: new Date().toISOString()
         };
 
@@ -1926,7 +1975,7 @@
         if (result.isOk) {
           const msg = document.createElement('div');
           msg.className = 'feedback show correct';
-          msg.textContent = '✅ Score saved successfully!';
+          msg.textContent = '✅ Score saved successfully to Garden Hall!';
           document.getElementById('matchingPage').appendChild(msg);
           setTimeout(() => msg.remove(), 3000);
         } else {
@@ -1939,7 +1988,7 @@
       } catch (error) {
         const msg = document.createElement('div');
         msg.className = 'feedback show incorrect';
-        msg.textContent = `��� Error: ${error.message}`;
+        msg.textContent = `❌ Error: ${error.message}`;
         document.getElementById('matchingPage').appendChild(msg);
         setTimeout(() => msg.remove(), 3000);
       } finally {
@@ -1987,7 +2036,7 @@
       document.getElementById('levelPage').classList.add('hidden');
       document.getElementById('gamePage').classList.add('hidden');
       document.getElementById('matchingPage').classList.add('hidden');
-      document.getElementById('leaderboardPage').classList.add('hidden');
+      document.getElementById('gardenHallPage').classList.add('hidden');
       document.getElementById('landingPage').classList.remove('hidden');
     }
 
@@ -1995,43 +2044,138 @@
       stopTimer();
       document.getElementById('gamePage').classList.add('hidden');
       
-      // If in time challenge mode, go back to landing
       if (currentMode === 'time_challenge') {
         document.getElementById('landingPage').classList.remove('hidden');
       } else {
-        // Practice mode - go to level selection
         document.getElementById('levelPage').classList.remove('hidden');
         renderLevelSelect();
       }
     }
 
-    function showLeaderboard() {
+    // ========== Garden Hall of Fame Functions ==========
+    function showGardenHall() {
       document.getElementById('landingPage').classList.add('hidden');
-      document.getElementById('leaderboardPage').classList.remove('hidden');
+      document.getElementById('gardenHallPage').classList.remove('hidden');
       
-      const leaderboard = JSON.parse(localStorage.getItem('kimi_time_leaderboard') || '[]');
-      const tbody = document.getElementById('leaderboardBody');
+      filteredRecords = [...allRecords];
+      updateGardenHallStats();
+      populateFilterOptions();
+      renderGardenHall();
+    }
+
+    function updateGardenHallStats() {
+      const uniqueStudents = new Set(allRecords.map(r => `${r.student_name}-${r.student_no}`));
+      document.getElementById('statTotalStudents').textContent = uniqueStudents.size;
+      document.getElementById('statTotalGames').textContent = allRecords.length;
+      
+      const practiceCount = allRecords.filter(r => r.mode === 'practice').length;
+      document.getElementById('statPractice').textContent = practiceCount;
+      
+      let totalPercentage = 0;
+      let validScores = 0;
+      
+      allRecords.forEach(record => {
+        if (record.mode !== 'matching' && record.total > 0) {
+          totalPercentage += (record.score / record.total) * 100;
+          validScores++;
+        }
+      });
+      
+      const avgScore = validScores > 0 ? (totalPercentage / validScores).toFixed(1) : 0;
+      document.getElementById('statAvgScore').textContent = `${avgScore}%`;
+    }
+
+    function populateFilterOptions() {
+      const classes = new Set(allRecords.map(r => r.class_room));
+      const classSelect = document.getElementById('filterClass');
+      
+      classSelect.innerHTML = '<option value="all">All Classes</option>';
+      classes.forEach(className => {
+        const option = document.createElement('option');
+        option.value = className;
+        option.textContent = className;
+        classSelect.appendChild(option);
+      });
+    }
+
+    function filterGardenHall() {
+      const modeFilter = document.getElementById('filterMode').value;
+      const classFilter = document.getElementById('filterClass').value;
+      
+      filteredRecords = allRecords.filter(record => {
+        const modeMatch = modeFilter === 'all' || record.mode === modeFilter;
+        const classMatch = classFilter === 'all' || record.class_room === classFilter;
+        return modeMatch && classMatch;
+      });
+      
+      renderGardenHall();
+    }
+
+    function resetFilters() {
+      document.getElementById('filterMode').value = 'all';
+      document.getElementById('filterClass').value = 'all';
+      filteredRecords = [...allRecords];
+      renderGardenHall();
+    }
+
+    function renderGardenHall() {
+      const tbody = document.getElementById('gardenHallBody');
       tbody.innerHTML = '';
       
-      if (leaderboard.length === 0) {
+      if (filteredRecords.length === 0) {
         const row = tbody.insertRow();
         const cell = row.insertCell();
-        cell.colSpan = 6;
-        cell.textContent = 'No scores yet';
-        cell.style.textAlign = 'center';
-        cell.style.color = '#ec407a';
+        cell.colSpan = 9;
+        cell.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">🌸</div>
+            <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 8px;">No Records Yet</div>
+            <div>Student scores will appear here once they save their game results</div>
+          </div>
+        `;
         return;
       }
       
-      leaderboard.slice(0, 10).forEach((entry, index) => {
-        const row = tbody.insertRow();
-        row.insertCell().textContent = index + 1;
-        row.insertCell().textContent = entry.name;
-        row.insertCell().textContent = entry.class;
-        row.insertCell().textContent = entry.no;
-        row.insertCell().textContent = `${entry.score}/${entry.total}`;
-        row.insertCell().textContent = entry.date;
+      const sortedRecords = [...filteredRecords].sort((a, b) => {
+        return new Date(b.timestamp) - new Date(a.timestamp);
       });
+      
+      sortedRecords.forEach((record, index) => {
+        const row = tbody.insertRow();
+        const date = new Date(record.timestamp).toLocaleDateString('en-US');
+        
+        let percentage = '-';
+        let displayScore = `${record.score}`;
+        let displayLevel = record.level;
+        
+        if (record.mode === 'matching') {
+          displayLevel = `${record.level} moves`;
+          displayScore = `${formatTime(record.total)}`;
+          percentage = '-';
+        } else if (record.total > 0) {
+          percentage = `${((record.score / record.total) * 100).toFixed(1)}%`;
+          displayScore = `${record.score}/${record.total}`;
+        }
+        
+        row.insertCell().textContent = index + 1;
+        row.insertCell().textContent = record.student_name;
+        row.insertCell().textContent = record.class_room;
+        row.insertCell().textContent = record.student_no;
+        row.insertCell().textContent = formatModeName(record.mode);
+        row.insertCell().textContent = displayLevel;
+        row.insertCell().textContent = displayScore;
+        row.insertCell().textContent = percentage;
+        row.insertCell().textContent = date;
+      });
+    }
+
+    function formatModeName(mode) {
+      const names = {
+        'practice': 'Practice',
+        'time_challenge': 'Time Challenge',
+        'matching': 'Matching'
+      };
+      return names[mode] || mode;
     }
 
     // ========== Data Persistence ==========
@@ -2065,7 +2209,7 @@
         const result = await window.dataSdk.create(record);
 
         if (result.isOk) {
-          showFeedbackMessage('✅ Score saved successfully!', true);
+          showFeedbackMessage('✅ Score saved successfully to Garden Hall!', true);
         } else {
           showFeedbackMessage(`❌ Error: ${result.error?.message || 'Could not save'}`, false);
         }
@@ -2102,62 +2246,73 @@
     }
 
     function exportToCSV() {
-      const records = window.kimiRecords || [];
-      
-      if (records.length === 0) {
+      if (allRecords.length === 0) {
         const msg = document.createElement('div');
         msg.className = 'feedback show incorrect';
         msg.textContent = 'No data to export';
-        document.getElementById('landingPage').appendChild(msg);
-        setTimeout(() => msg.remove(), 3000);
+        const currentPage = document.querySelector('.card:not(.hidden)');
+        if (currentPage) {
+          currentPage.appendChild(msg);
+          setTimeout(() => msg.remove(), 3000);
+        }
         return;
       }
       
-      // Create CSV with proper headers
-      let csv = 'Name,Class,Number,Mode,Level,Score,Total,Date\n';
+      let csv = 'Name,Class,Number,Mode,Level/Moves,Score,Total,Percentage,Date\n';
       
-      records.forEach(record => {
+      allRecords.forEach(record => {
         const date = new Date(record.timestamp).toLocaleDateString('en-US');
         const name = (record.student_name || '').replace(/"/g, '""');
         const classRoom = (record.class_room || '').replace(/"/g, '""');
         const studentNo = (record.student_no || '').replace(/"/g, '""');
-        const mode = (record.mode || '').replace(/"/g, '""');
-        csv += `"${name}","${classRoom}","${studentNo}","${mode}",${record.level},${record.score},${record.total},"${date}"\n`;
+        const mode = formatModeName(record.mode);
+        
+        let percentage = '-';
+        if (record.mode !== 'matching' && record.total > 0) {
+          percentage = `${((record.score / record.total) * 100).toFixed(1)}%`;
+        }
+        
+        csv += `"${name}","${classRoom}","${studentNo}","${mode}",${record.level},${record.score},${record.total},"${percentage}","${date}"\n`;
       });
       
-      // Add BOM for UTF-8 Excel compatibility
       const BOM = '\uFEFF';
       const blob = new Blob([BOM + csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       
-      // Create download link
       const link = document.createElement('a');
       link.setAttribute('href', url);
-      link.setAttribute('download', `kimi-melody-records-${new Date().toISOString().split('T')[0]}.csv`);
+      link.setAttribute('download', `kimi-melody-garden-hall-${new Date().toISOString().split('T')[0]}.csv`);
       link.style.display = 'none';
       document.body.appendChild(link);
       
-      // Trigger download
       link.click();
       
-      // Cleanup
       setTimeout(() => {
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
       }, 100);
       
-      // Show success message
       const msg = document.createElement('div');
       msg.className = 'feedback show correct';
       msg.textContent = '✅ Data exported successfully!';
-      document.getElementById('landingPage').appendChild(msg);
-      setTimeout(() => msg.remove(), 3000);
+      const currentPage = document.querySelector('.card:not(.hidden)');
+      if (currentPage) {
+        currentPage.appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
+      }
     }
 
     // ========== Data SDK Integration ==========
     const dataHandler = {
       onDataChanged(data) {
-        window.kimiRecords = data;
+        allRecords = data;
+        
+        if (document.getElementById('gardenHallPage').classList.contains('hidden') === false) {
+          filteredRecords = [...allRecords];
+          updateGardenHallStats();
+          populateFilterOptions();
+          renderGardenHall();
+        }
       }
     };
 
@@ -2174,7 +2329,6 @@
 
     // ========== Initialization ==========
     async function init() {
-      // Initialize Element SDK
       if (window.elementSdk) {
         await window.elementSdk.init({
           defaultConfig,
@@ -2196,7 +2350,6 @@
         await onConfigChange(window.elementSdk.config);
       }
 
-      // Initialize Data SDK
       if (window.dataSdk) {
         const result = await window.dataSdk.init(dataHandler);
         if (result.isOk) {
@@ -2206,7 +2359,6 @@
         }
       }
 
-      // Load saved student data
       const savedStudent = localStorage.getItem('kimi_student');
       if (savedStudent) {
         const student = JSON.parse(savedStudent);
@@ -2215,12 +2367,10 @@
         document.getElementById('studentClass').value = student.class;
       }
 
-      // Set default mode selection
       selectMode('practice');
     }
 
-    // Start initialization
     init();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a833fa02312d036',t:'MTc2NDc2Njg0My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a83f28ea514d023',t:'MTc2NDc3NDE3Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
