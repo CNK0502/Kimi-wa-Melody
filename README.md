@@ -113,11 +113,16 @@
     h1 {
       color: #c97c9d;
       text-align: center;
-      font-size: 6rem;
+      font-size: 10rem;
       margin: 0 0 10px 0;
       font-family: 'Niconne', cursive;
       font-weight: 400;
       text-shadow: 2px 2px 8px rgba(201, 124, 157, 0.3);
+      line-height: 1.2;
+    }
+    
+    #landingPage h1 {
+      font-size: 4rem;
     }
 
     h2 {
@@ -360,13 +365,14 @@
       background: #d4a5b8;
       color: white;
       padding: 12px;
-      text-align: left;
+      text-align: center;
       font-weight: 600;
     }
 
     .leaderboard-table td {
       padding: 10px 12px;
       border-bottom: 1px solid #e8d5dd;
+      text-align: center;
     }
 
     .leaderboard-table tr:nth-child(even) {
@@ -680,7 +686,7 @@
     </div>
    </div><!-- Leaderboard Page -->
    <div id="leaderboardPage" class="card hidden"><button class="back-btn" onclick="backToLanding()">←</button>
-    <h1>🏆 Time Challenge Leaderboard</h1>
+    <h1>🏆Challenge Leaderboard</h1>
     <table class="leaderboard-table">
      <thead>
       <tr>
@@ -1812,5 +1818,5 @@
     // Start initialization
     init();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a82e19d1161d32d',t:'MTc2NDc2Mjk5Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a82f15697af26e3',t:'MTc2NDc2MzYzNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
