@@ -113,7 +113,7 @@
     h1 {
       color: #c97c9d;
       text-align: center;
-      font-size: 10rem;
+      font-size: 25rem;
       margin: 0 0 10px 0;
       font-family: 'Niconne', cursive;
       font-weight: 400;
