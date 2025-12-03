@@ -80,7 +80,7 @@
     }
 
     .mode-card.selected {
-      background: linear-gradient(135deg, #d4a5b8 0%, #c97c9d 100%);
+      background: linear-gradient(135deg, #d4a5b8 30%, #c97c9d 70%);
       border-color: #c97c9d;
       color: white;
     }
@@ -113,7 +113,7 @@
     h1 {
       color: #c97c9d;
       text-align: center;
-      font-size: 25rem;
+      font-size: 50rem;
       margin: 0 0 10px 0;
       font-family: 'Niconne', cursive;
       font-weight: 400;
