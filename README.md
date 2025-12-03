@@ -1103,7 +1103,7 @@
   </div><!-- PIN Modal -->
   <div id="pinModal" class="modal-backdrop">
    <div class="modal">
-    <h2>�� Enter Teacher PIN</h2>
+    <h2>Enter Teacher PIN</h2>
     <div class="form-group"><label for="pinInput">PIN Code</label> <input type="password" id="pinInput" placeholder="Enter PIN">
     </div>
     <div class="controls"><button class="btn btn-primary" onclick="verifyPIN()">Confirm</button> <button class="btn btn-secondary" onclick="closePINModal()">Cancel</button>
