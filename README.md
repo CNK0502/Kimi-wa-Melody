@@ -417,12 +417,16 @@
 
     .timer-display {
       font-size: 2rem;
-      font-weight: 600;
-      color: #c97c9d;
+      font-weight: 700;
+      color: #ffffff;
+      background: linear-gradient(135deg, #c97c9d 0%, #b06888 100%);
+      padding: 8px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(201, 124, 157, 0.4);
     }
 
     .timer-display.warning {
-      color: #f5b3b3;
+      background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
       animation: pulse 1s infinite;
     }
 
@@ -542,28 +546,78 @@
       75% { transform: translateX(10px); }
     }
 
+    /* Tablet Styles (iPad and similar) */
+    @media (max-width: 1024px) {
+      .card {
+        padding: 25px;
+        max-width: 95%;
+      }
+
+      #landingPage h1 {
+        font-size: 2.5rem;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      .landing-container {
+        gap: 20px;
+      }
+
+      .mode-icon {
+        font-size: 2.2rem;
+      }
+
+      .mode-title {
+        font-size: 1.1rem;
+      }
+
+      .matching-grid {
+        max-width: 500px;
+        gap: 12px;
+      }
+
+      .staff-container {
+        padding: 30px 15px;
+      }
+
+      .back-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+      }
+    }
+
+    /* Mobile Landscape and Small Tablets */
     @media (max-width: 768px) {
+      .app-container {
+        padding: 15px;
+      }
+
+      .card {
+        padding: 20px;
+        margin: 10px 0;
+        border-radius: 15px;
+      }
+
+      #landingPage h1 {
+        font-size: 2rem;
+        margin-bottom: 8px;
+      }
+
       h1 {
         font-size: 1.8rem;
       }
 
-      .btn {
-        padding: 12px 20px;
+      h2 {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+      }
+
+      .mascot-tag {
         font-size: 1rem;
-      }
-
-      .controls {
-        flex-direction: column;
-      }
-
-      .info-bar {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-      }
-
-      .choices-grid {
-        grid-template-columns: 1fr 1fr;
+        margin-bottom: 15px;
       }
 
       .landing-container {
@@ -577,6 +631,349 @@
 
       .mode-icon {
         font-size: 2rem;
+        margin-bottom: 8px;
+      }
+
+      .mode-title {
+        font-size: 1.1rem;
+      }
+
+      .mode-desc {
+        font-size: 0.85rem;
+      }
+
+      .form-group {
+        margin: 12px 0;
+      }
+
+      label {
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+      }
+
+      input, select {
+        padding: 10px 12px;
+        font-size: 0.95rem;
+      }
+
+      .btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+      }
+
+      .controls {
+        gap: 10px;
+      }
+
+      .info-bar {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+        padding: 12px 20px;
+        font-size: 1rem;
+      }
+
+      .timer-display {
+        font-size: 1.5rem;
+      }
+
+      .staff-container {
+        padding: 20px 10px;
+        margin: 15px 0;
+      }
+
+      .choices-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .choice-btn {
+        padding: 15px 10px;
+        font-size: 1.1rem;
+      }
+
+      .feedback {
+        font-size: 1.1rem;
+        padding: 12px;
+      }
+
+      .level-select {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 8px;
+      }
+
+      .level-btn {
+        padding: 12px;
+        font-size: 0.9rem;
+      }
+
+      .matching-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        max-width: 100%;
+      }
+
+      .matching-card {
+        font-size: 1.2rem;
+      }
+
+      .matching-card .card-back {
+        font-size: 2rem;
+      }
+
+      .matching-card.flipped .card-front {
+        font-size: 0.9rem;
+      }
+
+      .leaderboard-table {
+        font-size: 0.85rem;
+      }
+
+      .leaderboard-table th,
+      .leaderboard-table td {
+        padding: 8px 6px;
+      }
+
+      .modal {
+        padding: 25px;
+        width: 92%;
+      }
+
+      .modal h2 {
+        font-size: 1.3rem;
+      }
+
+      .back-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+        top: 15px;
+        left: 15px;
+      }
+    }
+
+    /* Mobile Portrait - Standard Phones */
+    @media (max-width: 480px) {
+      .app-container {
+        padding: 10px;
+      }
+
+      .card {
+        padding: 15px;
+        border-radius: 12px;
+      }
+
+      #landingPage h1 {
+        font-size: 1.6rem;
+        margin-bottom: 5px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+      }
+
+      .mascot-tag {
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+      }
+
+      .landing-container {
+        gap: 15px;
+        margin-top: 15px;
+      }
+
+      .mode-card {
+        padding: 12px;
+      }
+
+      .mode-icon {
+        font-size: 1.8rem;
+        margin-bottom: 6px;
+      }
+
+      .mode-title {
+        font-size: 1rem;
+        margin-bottom: 3px;
+      }
+
+      .mode-desc {
+        font-size: 0.8rem;
+      }
+
+      .form-group {
+        margin: 10px 0;
+      }
+
+      label {
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+      }
+
+      input, select {
+        padding: 9px 10px;
+        font-size: 0.9rem;
+      }
+
+      .btn {
+        padding: 10px 16px;
+        font-size: 0.95rem;
+      }
+
+      .controls {
+        gap: 8px;
+        margin: 15px 0;
+      }
+
+      .info-bar {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+        gap: 6px;
+      }
+
+      .timer-display {
+        font-size: 1.3rem;
+      }
+
+      .staff-container {
+        padding: 15px 8px;
+        margin: 12px 0;
+      }
+
+      .choices-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin: 15px 0;
+      }
+
+      .choice-btn {
+        padding: 12px;
+        font-size: 1rem;
+      }
+
+      .feedback {
+        font-size: 1rem;
+        padding: 10px;
+        margin: 12px 0;
+      }
+
+      .level-select {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+        gap: 6px;
+        margin: 15px 0;
+      }
+
+      .level-btn {
+        padding: 10px;
+        font-size: 0.85rem;
+      }
+
+      .matching-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+      }
+
+      .matching-card {
+        font-size: 1rem;
+        border-radius: 10px;
+      }
+
+      .matching-card .card-back {
+        font-size: 1.5rem;
+      }
+
+      .matching-card.flipped .card-front {
+        font-size: 0.8rem;
+      }
+
+      .leaderboard-table {
+        font-size: 0.75rem;
+      }
+
+      .leaderboard-table th,
+      .leaderboard-table td {
+        padding: 6px 4px;
+      }
+
+      .modal {
+        padding: 20px;
+        width: 95%;
+      }
+
+      .modal h2 {
+        font-size: 1.2rem;
+      }
+
+      .back-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+        top: 10px;
+        left: 10px;
+      }
+    }
+
+    /* Very Small Phones */
+    @media (max-width: 360px) {
+      #landingPage h1 {
+        font-size: 1.4rem;
+      }
+
+      .mode-icon {
+        font-size: 1.5rem;
+      }
+
+      .mode-title {
+        font-size: 0.95rem;
+      }
+
+      .mode-desc {
+        font-size: 0.75rem;
+      }
+
+      .matching-grid {
+        gap: 5px;
+      }
+
+      .matching-card {
+        font-size: 0.9rem;
+      }
+
+      .matching-card .card-back {
+        font-size: 1.3rem;
+      }
+
+      .leaderboard-table {
+        font-size: 0.7rem;
+      }
+
+      .leaderboard-table th,
+      .leaderboard-table td {
+        padding: 5px 3px;
+      }
+    }
+
+    /* Large Desktop Screens */
+    @media (min-width: 1440px) {
+      .card {
+        max-width: 1200px;
+      }
+
+      #landingPage h1 {
+        font-size: 3.5rem;
+      }
+
+      .landing-container {
+        gap: 40px;
+      }
+
+      .matching-grid {
+        max-width: 700px;
+        gap: 20px;
       }
     }
   </style>
@@ -604,7 +1001,7 @@
          Practice without time limit
         </div></button> <button class="mode-card" id="modeBtn-time_challenge" onclick="selectMode('time_challenge')">
         <div class="mode-icon">
-         ⏱️
+         ⏰
         </div>
         <div class="mode-title">
          Time Challenge
@@ -1219,7 +1616,7 @@
         document.getElementById('matchingPage').classList.remove('hidden');
         initMatchingGame();
       } else if (mode === 'time_challenge') {
-        // Go directly to game
+        // Go directly to game without level selection
         currentLevel = 1;
         currentQuestion = 1;
         currentScore = 0;
@@ -1234,7 +1631,7 @@
         startTimer();
         playQuestion();
       } else {
-        // Show level selection
+        // Show level selection for practice mode
         document.getElementById('landingPage').classList.add('hidden');
         document.getElementById('levelPage').classList.remove('hidden');
         renderLevelSelect();
@@ -1440,7 +1837,7 @@
             
             const msg = document.createElement('div');
             msg.className = 'feedback show correct';
-            msg.textContent = `🎉 Congratulations! Completed in ${matchingMoves} moves and ${formatTime(elapsed)}! 🌸`;
+            msg.textContent = `�������� Congratulations! Completed in ${matchingMoves} moves and ${formatTime(elapsed)}! 🌸`;
             document.getElementById('matchingPage').insertBefore(msg, document.getElementById('matchingGrid'));
             
             document.getElementById('saveMatchingBtn').classList.remove('hidden');
@@ -1542,7 +1939,7 @@
       } catch (error) {
         const msg = document.createElement('div');
         msg.className = 'feedback show incorrect';
-        msg.textContent = `❌ Error: ${error.message}`;
+        msg.textContent = `��� Error: ${error.message}`;
         document.getElementById('matchingPage').appendChild(msg);
         setTimeout(() => msg.remove(), 3000);
       } finally {
@@ -1597,8 +1994,15 @@
     function backToLevelSelect() {
       stopTimer();
       document.getElementById('gamePage').classList.add('hidden');
-      document.getElementById('levelPage').classList.remove('hidden');
-      renderLevelSelect();
+      
+      // If in time challenge mode, go back to landing
+      if (currentMode === 'time_challenge') {
+        document.getElementById('landingPage').classList.remove('hidden');
+      } else {
+        // Practice mode - go to level selection
+        document.getElementById('levelPage').classList.remove('hidden');
+        renderLevelSelect();
+      }
     }
 
     function showLeaderboard() {
@@ -1818,5 +2222,5 @@
     // Start initialization
     init();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a8302e1860d26c1',t:'MTc2NDc2NDM1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a832ca5f2aad326',t:'MTc2NDc2NjA2NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
