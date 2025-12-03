@@ -1,5 +1,5 @@
 <html....>
-<html lang="th">
+<html lang="en">
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +7,14 @@
   <script src="/_sdk/data_sdk.js"></script>
   <script src="/_sdk/element_sdk.js"></script>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Niconne&family=Montserrat:wght@300;400;600;700&display=swap');
+
     body {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Kanit', 'Sarabun', Arial, sans-serif;
-      background: linear-gradient(135deg, #d4c5a9 0%, #b8a58a 100%);
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #f8f3f0 0%, #fef5f7 50%, #f0f4f8 100%);
       min-height: 100%;
       width: 100%;
     }
@@ -31,27 +33,106 @@
     }
 
     .card {
-      background: #f5ede0;
+      background: linear-gradient(135deg, #ffffff 0%, #fffbfc 100%);
       border-radius: 20px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 24px rgba(201, 124, 157, 0.2);
+      border: 2px solid #e8d5dd;
       padding: 30px;
       margin: 15px 0;
       width: 100%;
-      max-width: 900px;
+      max-width: 1000px;
+    }
+
+    .landing-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .landing-left, .landing-right {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mode-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .mode-card {
+      background: white;
+      border: 2px solid #e8d5dd;
+      border-radius: 15px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+      font-family: inherit;
+    }
+
+    .mode-card:hover {
+      background: #fef8fa;
+      border-color: #c97c9d;
+      transform: translateX(5px);
+      box-shadow: 0 4px 12px rgba(201, 124, 157, 0.3);
+    }
+
+    .mode-card.selected {
+      background: linear-gradient(135deg, #d4a5b8 0%, #c97c9d 100%);
+      border-color: #c97c9d;
+      color: white;
+    }
+
+    .mode-card.selected .mode-icon {
+      transform: scale(1.2);
+    }
+
+    .mode-icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      transition: transform 0.3s;
+    }
+
+    .mode-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .mode-desc {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .mode-card.selected .mode-desc {
+      opacity: 0.95;
     }
 
     h1 {
-      color: #5c4a3a;
+      color: #c97c9d;
       text-align: center;
-      font-size: 2.5rem;
+      font-size: 10rem;
       margin: 0 0 10px 0;
+      font-family: 'Niconne', cursive;
+      font-weight: 400;
+      text-shadow: 2px 2px 8px rgba(201, 124, 157, 0.3);
+    }
+
+    h2 {
+      color: #c97c9d;
+      font-size: 1.5rem;
+      margin: 0 0 15px 0;
+      font-weight: 600;
     }
 
     .mascot-tag {
       text-align: center;
-      color: #8b7355;
+      color: #b08ba4;
       font-size: 1.1rem;
       margin-bottom: 20px;
+      font-weight: 300;
     }
 
     .form-group {
@@ -60,26 +141,27 @@
 
     label {
       display: block;
-      color: #5c4a3a;
+      color: #b08ba4;
       font-weight: 600;
       margin-bottom: 8px;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
 
     input, select {
       width: 100%;
       padding: 12px 15px;
-      border: 2px solid #c4b5a0;
+      border: 2px solid #e8d5dd;
       border-radius: 10px;
       font-size: 1rem;
       background: white;
       transition: all 0.3s;
+      font-family: 'Montserrat', sans-serif;
     }
 
     input:focus, select:focus {
       outline: none;
-      border-color: #8b7355;
-      box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+      border-color: #c97c9d;
+      box-shadow: 0 0 0 3px rgba(201, 124, 157, 0.1);
     }
 
     .btn {
@@ -110,27 +192,27 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #8b7355 0%, #6d5a45 100%);
+      background: linear-gradient(135deg, #d4a5b8 0%, #c97c9d 100%);
       color: white;
     }
 
     .btn-success {
-      background: linear-gradient(135deg, #7a9b6f 0%, #5d7a52 100%);
+      background: linear-gradient(135deg, #a8d5a3 0%, #8bc985 100%);
       color: white;
     }
 
     .btn-info {
-      background: linear-gradient(135deg, #9bb3c4 0%, #7a96aa 100%);
+      background: linear-gradient(135deg, #c5a3d8 0%, #b08bc4 100%);
       color: white;
     }
 
     .btn-warning {
-      background: linear-gradient(135deg, #c4a569 0%, #a68a52 100%);
+      background: linear-gradient(135deg, #f5c89a 0%, #f0b880 100%);
       color: white;
     }
 
     .btn-secondary {
-      background: linear-gradient(135deg, #a89f91 0%, #8a8175 100%);
+      background: linear-gradient(135deg, #d4a5b8 0%, #c97c9d 100%);
       color: white;
     }
 
@@ -162,12 +244,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: linear-gradient(135deg, #8b7355 0%, #6d5a45 100%);
+      background: linear-gradient(135deg, #d4a5b8 0%, #c97c9d 100%);
       color: white;
       padding: 15px 25px;
       border-radius: 12px;
       font-size: 1.2rem;
-      font-weight: 600;
+      font-weight: 400;
       margin: 15px 0;
     }
 
@@ -181,31 +263,31 @@
     .choice-btn {
       padding: 20px;
       background: white;
-      border: 3px solid #c4b5a0;
+      border: 2px solid #e8d5dd;
       border-radius: 12px;
       font-size: 1.3rem;
-      font-weight: 600;
-      color: #5c4a3a;
+      font-weight: 400;
+      color: #b08ba4;
       cursor: pointer;
       transition: all 0.3s;
     }
 
     .choice-btn:hover {
-      background: #f0e8d8;
-      border-color: #8b7355;
+      background: #fef8fa;
+      border-color: #c97c9d;
       transform: scale(1.05);
     }
 
     .choice-btn.correct {
-      background: #7a9b6f;
+      background: #a8d5a3;
       color: white;
-      border-color: #5d7a52;
+      border-color: #8bc985;
     }
 
     .choice-btn.incorrect {
-      background: #c47a6f;
+      background: #f5b3b3;
       color: white;
-      border-color: #a65d52;
+      border-color: #f09d9d;
     }
 
     .feedback {
@@ -223,15 +305,15 @@
     }
 
     .feedback.correct {
-      background: #e8f5e4;
-      color: #5d7a52;
-      border: 2px solid #7a9b6f;
+      background: #f0f9ef;
+      color: #6fa869;
+      border: 2px solid #a8d5a3;
     }
 
     .feedback.incorrect {
-      background: #f5e4e4;
-      color: #a65d52;
-      border: 2px solid #c47a6f;
+      background: #fef5f5;
+      color: #d88888;
+      border: 2px solid #f5b3b3;
     }
 
     .level-select {
@@ -244,24 +326,24 @@
     .level-btn {
       padding: 15px;
       background: white;
-      border: 2px solid #c4b5a0;
+      border: 2px solid #e8d5dd;
       border-radius: 10px;
       font-size: 1rem;
-      font-weight: 600;
-      color: #5c4a3a;
+      font-weight: 400;
+      color: #b08ba4;
       cursor: pointer;
       transition: all 0.3s;
     }
 
     .level-btn:hover {
-      background: #f0e8d8;
+      background: #fef8fa;
       transform: scale(1.05);
     }
 
     .level-btn.completed {
-      background: #7a9b6f;
+      background: #a8d5a3;
       color: white;
-      border-color: #5d7a52;
+      border-color: #8bc985;
     }
 
     .hidden {
@@ -275,7 +357,7 @@
     }
 
     .leaderboard-table th {
-      background: #8b7355;
+      background: #d4a5b8;
       color: white;
       padding: 12px;
       text-align: left;
@@ -284,15 +366,15 @@
 
     .leaderboard-table td {
       padding: 10px 12px;
-      border-bottom: 1px solid #c4b5a0;
+      border-bottom: 1px solid #e8d5dd;
     }
 
     .leaderboard-table tr:nth-child(even) {
-      background: #f9f6f0;
+      background: #fffbfc;
     }
 
     .leaderboard-table tr:hover {
-      background: #f0e8d8;
+      background: #fef8fa;
     }
 
     .modal-backdrop {
@@ -313,27 +395,28 @@
     }
 
     .modal {
-      background: #f5ede0;
+      background: linear-gradient(135deg, #ffffff 0%, #fffbfc 100%);
       border-radius: 20px;
+      border: 2px solid #e8d5dd;
       padding: 30px;
       max-width: 500px;
       width: 90%;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+      box-shadow: 0 12px 40px rgba(201, 124, 157, 0.3);
     }
 
     .modal h2 {
-      color: #5c4a3a;
+      color: #c97c9d;
       margin-top: 0;
     }
 
     .timer-display {
       font-size: 2rem;
-      font-weight: bold;
-      color: #5c4a3a;
+      font-weight: 600;
+      color: #c97c9d;
     }
 
     .timer-display.warning {
-      color: #c47a6f;
+      color: #f5b3b3;
       animation: pulse 1s infinite;
     }
 
@@ -346,7 +429,7 @@
       position: fixed;
       top: 20px;
       left: 20px;
-      background: rgba(139, 115, 85, 0.9);
+      background: rgba(212, 165, 184, 0.9);
       color: white;
       border: none;
       border-radius: 50%;
@@ -354,14 +437,103 @@
       height: 50px;
       font-size: 1.5rem;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(201, 124, 157, 0.3);
       transition: all 0.3s;
       z-index: 100;
     }
 
     .back-btn:hover {
-      background: rgba(109, 90, 69, 0.9);
+      background: rgba(201, 124, 157, 0.9);
       transform: scale(1.1);
+    }
+
+    .matching-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin: 20px 0;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .matching-card {
+      aspect-ratio: 1;
+      background: white;
+      border: 2px solid #e8d5dd;
+      border-radius: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #b08ba4;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .matching-card:hover {
+      transform: scale(1.05);
+      border-color: #c97c9d;
+      box-shadow: 0 4px 12px rgba(201, 124, 157, 0.3);
+    }
+
+    .matching-card.flipped {
+      background: linear-gradient(135deg, #fef8fa 0%, #ffffff 100%);
+    }
+
+    .matching-card.matched {
+      background: linear-gradient(135deg, #a8d5a3 0%, #8bc985 100%);
+      color: white;
+      border-color: #8bc985;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .matching-card.wrong {
+      background: linear-gradient(135deg, #f5b3b3 0%, #f09d9d 100%);
+      color: white;
+      border-color: #f09d9d;
+      animation: shake 0.5s;
+    }
+
+    .matching-card .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+
+    .matching-card .card-front {
+      display: none;
+    }
+
+    .matching-card.flipped .card-back {
+      display: none;
+    }
+
+    .matching-card.flipped .card-front {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .matching-card svg {
+      max-width: 90%;
+      max-height: 90%;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
     }
 
     @media (max-width: 768px) {
@@ -387,6 +559,19 @@
       .choices-grid {
         grid-template-columns: 1fr 1fr;
       }
+
+      .landing-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .mode-card {
+        padding: 15px;
+      }
+
+      .mode-icon {
+        font-size: 2rem;
+      }
     }
   </style>
   <style>@view-transition { navigation: auto; }</style>
@@ -395,24 +580,61 @@
  <body>
   <div class="app-container"><!-- Landing Page -->
    <div id="landingPage" class="card">
-    <h1 id="appTitle">Kimi-wa-Melody</h1>
+    <h1 id="appTitle">🌸 Kimi-wa-Melody 🌸</h1>
     <div class="mascot-tag" id="mascotTag">
      🐱 MelodyCat 🎵
     </div>
-    <div class="form-group"><label for="studentName">Name (or Group Name)</label> <input type="text" id="studentName" placeholder="Enter your name" required>
+    <div class="landing-container"><!-- Left Side - Mode Selection (1x3) -->
+     <div class="landing-left">
+      <h2 style="text-align: center;">เลือกโหมด</h2>
+      <div class="mode-grid"><button class="mode-card selected" id="modeBtn-practice" onclick="selectMode('practice')">
+        <div class="mode-icon">
+         📚
+        </div>
+        <div class="mode-title">
+         Practice Mode
+        </div>
+        <div class="mode-desc">
+         ฝึกฝนแบบไม่จำกัดเวลา
+        </div></button> <button class="mode-card" id="modeBtn-time_challenge" onclick="selectMode('time_challenge')">
+        <div class="mode-icon">
+         ⏱️
+        </div>
+        <div class="mode-title">
+         Time Challenge
+        </div>
+        <div class="mode-desc">
+         ท้าทายเวลา 60 วินาที
+        </div></button> <button class="mode-card" id="modeBtn-matching" onclick="selectMode('matching')">
+        <div class="mode-icon">
+         🎴
+        </div>
+        <div class="mode-title">
+         Matching Mode
+        </div>
+        <div class="mode-desc">
+         เกมจับคู่โน้ตเพลง
+        </div></button>
+      </div>
+     </div><!-- Right Side - Student Info Form -->
+     <div class="landing-right">
+      <h2 style="text-align: center;">Student Information</h2>
+      <div class="form-group"><label for="studentName">Name (or Group Name)</label> <input type="text" id="studentName" placeholder="Enter name" required>
+      </div>
+      <div class="form-group"><label for="studentNo">Number</label> <input type="text" id="studentNo" placeholder="Enter number" required>
+      </div>
+      <div class="form-group"><label for="studentClass">Class</label> <input type="text" id="studentClass" placeholder="Enter class" required>
+      </div>
+      <div class="controls" style="margin-top: 20px; justify-content: stretch;"><button class="btn btn-primary" onclick="startGame()" style="width: 100%; font-size: 1.2rem;">Start Game 🎮</button>
+      </div>
+     </div>
     </div>
-    <div class="form-group"><label for="studentNo">Student Number</label> <input type="text" id="studentNo" placeholder="Enter student number" required>
-    </div>
-    <div class="form-group"><label for="studentClass">Class</label> <input type="text" id="studentClass" placeholder="Enter class" required>
-    </div>
-    <div class="form-group"><label for="gameMode">Select Mode</label> <select id="gameMode"> <option value="practice">Practice Mode</option> <option value="time_challenge">Time Challenge Mode (60 seconds)</option> </select>
-    </div>
-    <div class="controls"><button class="btn btn-primary" onclick="startGame()">Start Game</button> <button class="btn btn-info" onclick="showLeaderboard()">View Leaderboard</button> <button class="btn btn-warning" onclick="showExportModal()">Export Data (Teacher)</button>
+    <div class="controls" style="margin-top: 20px;"><button class="btn btn-info" onclick="showLeaderboard()">View Leaderboard</button> <button class="btn btn-warning" onclick="showExportModal()">Export Data (Teacher)</button>
     </div>
    </div><!-- Level Selection Page -->
    <div id="levelPage" class="card hidden"><button class="back-btn" onclick="backToLanding()">←</button>
     <h1>Select Level</h1>
-    <p style="text-align: center; color: #5c4a3a; font-size: 1.1rem;" id="instructionText">Listen to the notes and choose the correct answer</p>
+    <p style="text-align: center; color: #d81b60; font-size: 1.1rem;" id="instructionText">Listen to the notes and choose the correct answer</p>
     <div class="level-select" id="levelSelect"></div>
    </div><!-- Game Page -->
    <div id="gamePage" class="card hidden"><button class="back-btn" onclick="backToLevelSelect()">←</button>
@@ -433,11 +655,28 @@
      <svg id="musicStaff" viewbox="0 0 900 250" xmlns="http://www.w3.org/2000/svg"><!-- Staff and notes will be drawn here -->
      </svg>
     </div>
-    <div class="controls"><button class="btn btn-info" onclick="playQuestion()" id="playBtn">🔊 ฟัง</button> <button class="btn btn-warning" onclick="showAnswer()" id="answerBtn">👁️ ดูคำตอบ</button> <button class="btn btn-success hidden" onclick="nextQuestion()" id="nextBtn">➡️ ต่อไป</button>
+    <div class="controls"><button class="btn btn-info" onclick="playQuestion()" id="playBtn">🔊 Play</button> <button class="btn btn-warning" onclick="showAnswer()" id="answerBtn">👁️ Show Answer</button> <button class="btn btn-success hidden" onclick="nextQuestion()" id="nextBtn">➡️ Next</button>
     </div>
     <div id="feedback" class="feedback"></div>
     <div id="choicesContainer" class="choices-grid"></div>
-    <div class="controls"><button class="btn btn-primary" onclick="saveScore()" id="saveScoreBtn">💾 บันทึกคะแนน</button>
+    <div class="controls"><button class="btn btn-primary" onclick="saveScore()" id="saveScoreBtn">💾 Save Score</button>
+    </div>
+   </div><!-- Matching Game Page -->
+   <div id="matchingPage" class="card hidden"><button class="back-btn" onclick="backToLanding()">←</button>
+    <h1>🌸 Matching Mode 🌸</h1>
+    <div class="info-bar">
+     <div>
+      <span id="matchingMoves">Moves: 0</span>
+     </div>
+     <div>
+      <span id="matchingMatched">Matched: 0/8</span>
+     </div>
+     <div id="matchingTimerContainer"><span class="timer-display" id="matchingTimer">0:00</span>
+     </div>
+    </div>
+    <p style="text-align: center; color: #d81b60; font-size: 1.1rem; margin: 15px 0;">Match note names with their positions on the staff! 🎵</p>
+    <div class="matching-grid" id="matchingGrid"></div>
+    <div class="controls"><button class="btn btn-warning" onclick="resetMatching()">🔄 Reset Game</button> <button class="btn btn-primary hidden" onclick="saveMatchingScore()" id="saveMatchingBtn">💾 Save Score</button>
     </div>
    </div><!-- Leaderboard Page -->
    <div id="leaderboardPage" class="card hidden"><button class="back-btn" onclick="backToLanding()">←</button>
@@ -461,13 +700,13 @@
   </div><!-- PIN Modal -->
   <div id="pinModal" class="modal-backdrop">
    <div class="modal">
-    <h2>🔒 กรอกรหัส PIN ครู</h2>
-    <div class="form-group"><label for="pinInput">รหัส PIN</label> <input type="password" id="pinInput" placeholder="กรอกรหัส PIN">
+    <h2>🔒 Enter Teacher PIN</h2>
+    <div class="form-group"><label for="pinInput">PIN Code</label> <input type="password" id="pinInput" placeholder="Enter PIN">
     </div>
-    <div class="controls"><button class="btn btn-primary" onclick="verifyPIN()">ยืนยัน</button> <button class="btn btn-secondary" onclick="closePINModal()">ยกเลิก</button>
+    <div class="controls"><button class="btn btn-primary" onclick="verifyPIN()">Confirm</button> <button class="btn btn-secondary" onclick="closePINModal()">Cancel</button>
     </div>
-    <div id="pinError" style="color: #c47a6f; text-align: center; margin-top: 10px; display: none;">
-     รหัส PIN ไม่ถูกต้อง
+    <div id="pinError" style="color: #ef5350; text-align: center; margin-top: 10px; display: none;">
+     Incorrect PIN
     </div>
    </div>
   </div>
@@ -536,6 +775,17 @@
     let timerInterval = null;
     let timeRemaining = 60;
     let dataSdkReady = false;
+    
+    // Matching mode state
+    let matchingMoves = 0;
+    let matchingMatched = 0;
+    let matchingStartTime = 0;
+    let matchingTimerInterval = null;
+    let matchingFlippedCards = [];
+    let matchingCards = [];
+
+    // Selected mode on landing page
+    let selectedMode = 'practice';
 
     // ========== Audio Context ==========
     function initAudio() {
@@ -591,7 +841,7 @@
         legerLine.setAttribute('y1', y);
         legerLine.setAttribute('x2', x + 24);
         legerLine.setAttribute('y2', y);
-        legerLine.setAttribute('stroke', '#5c4a3a');
+        legerLine.setAttribute('stroke', '#c97c9d');
         legerLine.setAttribute('stroke-width', STAFF_CONFIG.strokeWidth);
         legerLine.setAttribute('stroke-linecap', 'round');
         svg.appendChild(legerLine);
@@ -603,7 +853,7 @@
       noteHead.setAttribute('cy', y);
       noteHead.setAttribute('rx', NOTE_CONFIG.headRx);
       noteHead.setAttribute('ry', NOTE_CONFIG.headRy);
-      noteHead.setAttribute('fill', '#5c4a3a');
+      noteHead.setAttribute('fill', '#c97c9d');
       noteHead.setAttribute('transform', `rotate(-12 ${x} ${y})`);
       svg.appendChild(noteHead);
       
@@ -613,7 +863,7 @@
       stem.setAttribute('y', y - NOTE_CONFIG.stemHeight);
       stem.setAttribute('width', NOTE_CONFIG.stemWidth);
       stem.setAttribute('height', NOTE_CONFIG.stemHeight);
-      stem.setAttribute('fill', '#5c4a3a');
+      stem.setAttribute('fill', '#c97c9d');
       svg.appendChild(stem);
     }
 
@@ -630,7 +880,7 @@
         line.setAttribute('y1', y);
         line.setAttribute('x2', STAFF_CONFIG.right);
         line.setAttribute('y2', y);
-        line.setAttribute('stroke', '#5c4a3a');
+        line.setAttribute('stroke', '#c97c9d');
         line.setAttribute('stroke-width', STAFF_CONFIG.strokeWidth);
         line.setAttribute('stroke-linecap', 'round');
         svg.appendChild(line);
@@ -640,7 +890,7 @@
       const clefText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       clefText.setAttribute('x', '450');
       clefText.setAttribute('y', '30');
-      clefText.setAttribute('fill', '#5c4a3a');
+      clefText.setAttribute('fill', '#c97c9d');
       clefText.setAttribute('font-size', '18');
       clefText.setAttribute('font-weight', '600');
       clefText.setAttribute('text-anchor', 'middle');
@@ -780,7 +1030,7 @@
         playCorrect();
       } else {
         btn.classList.add('incorrect');
-        feedback.textContent = `❌ ผิด! คำตอบที่ถูกต้องคือ: ${seqToLabel(currentSequence)}`;
+        feedback.textContent = `❌ Wrong! Correct Answer: ${seqToLabel(currentSequence)}`;
         feedback.className = 'feedback show incorrect';
         playWrong();
         
@@ -898,7 +1148,7 @@
         no: currentStudent.no,
         score: currentScore,
         total: totalAnswered,
-        date: new Date().toLocaleDateString('th-TH')
+        date: new Date().toLocaleDateString('en-US')
       });
       
       // Sort by score (descending) and keep top 50
@@ -926,11 +1176,23 @@
     }
 
     // ========== Navigation Functions ==========
+    function selectMode(mode) {
+      selectedMode = mode;
+      
+      // Remove selected class from all mode cards
+      document.querySelectorAll('.mode-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      // Add selected class to clicked card
+      document.getElementById(`modeBtn-${mode}`).classList.add('selected');
+    }
+
     function startGame() {
       const name = document.getElementById('studentName').value.trim();
       const no = document.getElementById('studentNo').value.trim();
       const classRoom = document.getElementById('studentClass').value.trim();
-      const mode = document.getElementById('gameMode').value;
+      const mode = selectedMode;
       
       if (!name || !no || !classRoom) {
         const msg = document.createElement('div');
@@ -945,7 +1207,12 @@
       currentMode = mode;
       localStorage.setItem('kimi_student', JSON.stringify(currentStudent));
       
-      if (mode === 'time_challenge') {
+      if (mode === 'matching') {
+        // Start matching mode
+        document.getElementById('landingPage').classList.add('hidden');
+        document.getElementById('matchingPage').classList.remove('hidden');
+        initMatchingGame();
+      } else if (mode === 'time_challenge') {
         // Go directly to game
         currentLevel = 1;
         currentQuestion = 1;
@@ -965,6 +1232,316 @@
         document.getElementById('landingPage').classList.add('hidden');
         document.getElementById('levelPage').classList.remove('hidden');
         renderLevelSelect();
+      }
+    }
+
+    // ========== Matching Mode Functions ==========
+    function initMatchingGame() {
+      matchingMoves = 0;
+      matchingMatched = 0;
+      matchingFlippedCards = [];
+      matchingStartTime = Date.now();
+      
+      // Start timer
+      if (matchingTimerInterval) clearInterval(matchingTimerInterval);
+      matchingTimerInterval = setInterval(updateMatchingTimer, 1000);
+      
+      // Create card pairs - 8 pairs = 16 cards
+      const notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C'];
+      matchingCards = [];
+      
+      notes.forEach((note, index) => {
+        // Text card
+        matchingCards.push({
+          id: `text-${index}`,
+          type: 'text',
+          note: note,
+          matched: false
+        });
+        
+        // Visual card (staff notation)
+        matchingCards.push({
+          id: `visual-${index}`,
+          type: 'visual',
+          note: note,
+          matched: false
+        });
+      });
+      
+      // Shuffle cards
+      matchingCards = shuffleArray(matchingCards);
+      
+      renderMatchingGrid();
+      updateMatchingStats();
+      document.getElementById('saveMatchingBtn').classList.add('hidden');
+    }
+
+    function renderMatchingGrid() {
+      const grid = document.getElementById('matchingGrid');
+      grid.innerHTML = '';
+      
+      matchingCards.forEach((card, index) => {
+        const cardElement = document.createElement('div');
+        cardElement.className = 'matching-card';
+        cardElement.dataset.index = index;
+        
+        if (card.matched) {
+          cardElement.classList.add('matched');
+        }
+        
+        // Card back (flower emoji)
+        const cardBack = document.createElement('div');
+        cardBack.className = 'card-back';
+        cardBack.textContent = '🌸';
+        cardElement.appendChild(cardBack);
+        
+        // Card front (content)
+        const cardFront = document.createElement('div');
+        cardFront.className = 'card-front';
+        
+        if (card.type === 'text') {
+          // Show note name with Thai name
+          cardFront.innerHTML = `<div style="text-align: center;"><div style="font-size: 2rem;">${card.note}</div><div style="font-size: 1rem;">(${NOTE_NAMES_TH[card.note]})</div></div>`;
+        } else {
+          // Show staff notation
+          const svg = createMiniStaff(card.note);
+          cardFront.appendChild(svg);
+        }
+        
+        cardElement.appendChild(cardFront);
+        
+        if (!card.matched) {
+          cardElement.onclick = () => flipCard(index);
+        }
+        
+        grid.appendChild(cardElement);
+      });
+    }
+
+    function createMiniStaff(note) {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', '0 0 120 100');
+      svg.setAttribute('width', '100%');
+      svg.setAttribute('height', '100%');
+      
+      // Draw staff lines
+      for (let i = 0; i < 5; i++) {
+        const y = 70 - (i * 10);
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', '10');
+        line.setAttribute('y1', y);
+        line.setAttribute('x2', '110');
+        line.setAttribute('y2', y);
+        line.setAttribute('stroke', '#c97c9d');
+        line.setAttribute('stroke-width', '2');
+        svg.appendChild(line);
+      }
+      
+      // Draw leger line for Middle C if needed
+      const noteY = getNoteYPosition(note);
+      if (note === 'C') {
+        const legerLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        legerLine.setAttribute('x1', '40');
+        legerLine.setAttribute('y1', noteY);
+        legerLine.setAttribute('x2', '80');
+        legerLine.setAttribute('y2', noteY);
+        legerLine.setAttribute('stroke', '#c97c9d');
+        legerLine.setAttribute('stroke-width', '2');
+        svg.appendChild(legerLine);
+      }
+      
+      // Draw note
+      const noteHead = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+      noteHead.setAttribute('cx', '60');
+      noteHead.setAttribute('cy', noteY);
+      noteHead.setAttribute('rx', '8');
+      noteHead.setAttribute('ry', '6');
+      noteHead.setAttribute('fill', '#c97c9d');
+      noteHead.setAttribute('transform', `rotate(-12 60 ${noteY})`);
+      svg.appendChild(noteHead);
+      
+      // Draw stem
+      const stem = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      stem.setAttribute('x', '67');
+      stem.setAttribute('y', noteY - 30);
+      stem.setAttribute('width', '2');
+      stem.setAttribute('height', '30');
+      stem.setAttribute('fill', '#c97c9d');
+      svg.appendChild(stem);
+      
+      return svg;
+    }
+
+    function getNoteYPosition(note) {
+      const positions = {
+        'C': 80,  // Below staff
+        'D': 75,  // Below line 1
+        'E': 70,  // On line 1
+        'F': 65,  // Space
+        'G': 60,  // On line 2
+        'A': 55,  // Space
+        'B': 50   // On line 3
+      };
+      return positions[note];
+    }
+
+    function flipCard(index) {
+      const card = matchingCards[index];
+      
+      if (card.matched || matchingFlippedCards.length >= 2) return;
+      
+      // Check if card is already flipped
+      if (matchingFlippedCards.some(fc => fc.index === index)) return;
+      
+      // Flip the card
+      const cardElement = document.querySelector(`.matching-card[data-index="${index}"]`);
+      cardElement.classList.add('flipped');
+      
+      matchingFlippedCards.push({ index, card });
+      
+      if (matchingFlippedCards.length === 2) {
+        matchingMoves++;
+        updateMatchingStats();
+        
+        setTimeout(() => checkMatch(), 800);
+      }
+    }
+
+    function checkMatch() {
+      const [first, second] = matchingFlippedCards;
+      
+      if (first.card.note === second.card.note && first.card.type !== second.card.type) {
+        // Match!
+        matchingCards[first.index].matched = true;
+        matchingCards[second.index].matched = true;
+        matchingMatched++;
+        
+        const firstElement = document.querySelector(`.matching-card[data-index="${first.index}"]`);
+        const secondElement = document.querySelector(`.matching-card[data-index="${second.index}"]`);
+        
+        firstElement.classList.add('matched');
+        secondElement.classList.add('matched');
+        firstElement.onclick = null;
+        secondElement.onclick = null;
+        
+        playCorrect();
+        
+        // Check if game complete
+        if (matchingMatched === 8) {
+          setTimeout(() => {
+            clearInterval(matchingTimerInterval);
+            const elapsed = Math.floor((Date.now() - matchingStartTime) / 1000);
+            
+            const msg = document.createElement('div');
+            msg.className = 'feedback show correct';
+            msg.textContent = `🎉 Congratulations! Completed in ${matchingMoves} moves and ${formatTime(elapsed)}! 🌸`;
+            document.getElementById('matchingPage').insertBefore(msg, document.getElementById('matchingGrid'));
+            
+            document.getElementById('saveMatchingBtn').classList.remove('hidden');
+          }, 500);
+        }
+      } else {
+        // No match
+        const firstElement = document.querySelector(`.matching-card[data-index="${first.index}"]`);
+        const secondElement = document.querySelector(`.matching-card[data-index="${second.index}"]`);
+        
+        firstElement.classList.add('wrong');
+        secondElement.classList.add('wrong');
+        
+        playWrong();
+        
+        setTimeout(() => {
+          firstElement.classList.remove('flipped', 'wrong');
+          secondElement.classList.remove('flipped', 'wrong');
+        }, 1000);
+      }
+      
+      matchingFlippedCards = [];
+      updateMatchingStats();
+    }
+
+    function updateMatchingStats() {
+      document.getElementById('matchingMoves').textContent = `Moves: ${matchingMoves}`;
+      document.getElementById('matchingMatched').textContent = `Matched: ${matchingMatched}/8`;
+    }
+
+    function updateMatchingTimer() {
+      const elapsed = Math.floor((Date.now() - matchingStartTime) / 1000);
+      document.getElementById('matchingTimer').textContent = formatTime(elapsed);
+    }
+
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function resetMatching() {
+      if (matchingTimerInterval) clearInterval(matchingTimerInterval);
+      
+      // Remove any feedback messages
+      document.querySelectorAll('#matchingPage .feedback').forEach(el => el.remove());
+      
+      initMatchingGame();
+    }
+
+    async function saveMatchingScore() {
+      if (!currentStudent) {
+        showFeedbackMessage('Student information not found', false);
+        return;
+      }
+
+      if (!dataSdkReady) {
+        const msg = document.createElement('div');
+        msg.className = 'feedback show incorrect';
+        msg.textContent = '❌ System not ready, please wait';
+        document.getElementById('matchingPage').appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
+        return;
+      }
+
+      const saveBtn = document.getElementById('saveMatchingBtn');
+      saveBtn.disabled = true;
+      saveBtn.textContent = '⏳ Saving...';
+
+      try {
+        const elapsed = Math.floor((Date.now() - matchingStartTime) / 1000);
+        
+        const record = {
+          student_name: currentStudent.name,
+          class_room: currentStudent.class,
+          student_no: currentStudent.no,
+          mode: 'matching',
+          level: matchingMoves,
+          score: elapsed,
+          total: 8,
+          timestamp: new Date().toISOString()
+        };
+
+        const result = await window.dataSdk.create(record);
+
+        if (result.isOk) {
+          const msg = document.createElement('div');
+          msg.className = 'feedback show correct';
+          msg.textContent = '✅ Score saved successfully!';
+          document.getElementById('matchingPage').appendChild(msg);
+          setTimeout(() => msg.remove(), 3000);
+        } else {
+          const msg = document.createElement('div');
+          msg.className = 'feedback show incorrect';
+          msg.textContent = `❌ Error: ${result.error?.message || 'Could not save'}`;
+          document.getElementById('matchingPage').appendChild(msg);
+          setTimeout(() => msg.remove(), 3000);
+        }
+      } catch (error) {
+        const msg = document.createElement('div');
+        msg.className = 'feedback show incorrect';
+        msg.textContent = `❌ Error: ${error.message}`;
+        document.getElementById('matchingPage').appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = '💾 Save Score';
       }
     }
 
@@ -1003,8 +1580,10 @@
 
     function backToLanding() {
       stopTimer();
+      if (matchingTimerInterval) clearInterval(matchingTimerInterval);
       document.getElementById('levelPage').classList.add('hidden');
       document.getElementById('gamePage').classList.add('hidden');
+      document.getElementById('matchingPage').classList.add('hidden');
       document.getElementById('leaderboardPage').classList.add('hidden');
       document.getElementById('landingPage').classList.remove('hidden');
     }
@@ -1030,7 +1609,7 @@
         cell.colSpan = 6;
         cell.textContent = 'No scores yet';
         cell.style.textAlign = 'center';
-        cell.style.color = '#8b7355';
+        cell.style.color = '#ec407a';
         return;
       }
       
@@ -1046,72 +1625,47 @@
     }
 
     // ========== Data Persistence ==========
-async function saveScore() {
-  // If student data missing -> warn
-  if (!currentStudent) {
-    showFeedbackMessage('Student information not found', false);
-    return;
-  }
-
-  const saveBtn = document.getElementById('saveScoreBtn');
-  saveBtn.disabled = true;
-  const origText = saveBtn.textContent;
-  saveBtn.textContent = '⏳ Saving...';
-
-  // Build record
-  const record = {
-    student_name: currentStudent.name,
-    class_room: currentStudent.class,
-    student_no: currentStudent.no,
-    mode: currentMode,
-    level: currentLevel,
-    score: currentScore,
-    total: totalAnswered,
-    timestamp: new Date().toISOString()
-  };
-
-  try {
-    // Prefer server Data SDK if available & ready
-    if (window.dataSdk && typeof window.dataSdk.create === 'function' && (typeof dataSdkReady === 'undefined' || dataSdkReady)) {
-      const result = await window.dataSdk.create(record);
-      if (result && result.isOk) {
-        showFeedbackMessage('✅ Score saved successfully!', true);
-        // also append to local export store for safety
-        const store = JSON.parse(localStorage.getItem('kimi_records_all') || '[]');
-        store.push(record);
-        localStorage.setItem('kimi_records_all', JSON.stringify(store));
-      } else {
-        // If Data SDK returned an error, fallback to local store
-        const errMsg = (result && result.error && result.error.message) ? result.error.message : 'Unable to save to server';
-        console.warn('Data SDK error, falling back to local store:', errMsg);
-        const store = JSON.parse(localStorage.getItem('kimi_records_all') || '[]');
-        store.push(record);
-        localStorage.setItem('kimi_records_all', JSON.stringify(store));
-        showFeedbackMessage('⚠️ Saved locally (server failed).', false);
+    async function saveScore() {
+      if (!currentStudent) {
+        showFeedbackMessage('Student information not found', false);
+        return;
       }
-    } else {
-      // No Data SDK or not ready -> save locally
-      const store = JSON.parse(localStorage.getItem('kimi_records_all') || '[]');
-      store.push(record);
-      localStorage.setItem('kimi_records_all', JSON.stringify(store));
-      showFeedbackMessage('✅ Score saved locally!', true);
+
+      if (!dataSdkReady) {
+        showFeedbackMessage('❌ System not ready, please wait', false);
+        return;
+      }
+
+      const saveBtn = document.getElementById('saveScoreBtn');
+      saveBtn.disabled = true;
+      saveBtn.textContent = '⏳ Saving...';
+
+      try {
+        const record = {
+          student_name: currentStudent.name,
+          class_room: currentStudent.class,
+          student_no: currentStudent.no,
+          mode: currentMode,
+          level: currentLevel,
+          score: currentScore,
+          total: totalAnswered,
+          timestamp: new Date().toISOString()
+        };
+
+        const result = await window.dataSdk.create(record);
+
+        if (result.isOk) {
+          showFeedbackMessage('✅ Score saved successfully!', true);
+        } else {
+          showFeedbackMessage(`❌ Error: ${result.error?.message || 'Could not save'}`, false);
+        }
+      } catch (error) {
+        showFeedbackMessage(`❌ Error: ${error.message}`, false);
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = '💾 Save Score';
+      }
     }
-  } catch (err) {
-    console.error('saveScore error:', err);
-    // Ensure local fallback
-    try {
-      const store = JSON.parse(localStorage.getItem('kimi_records_all') || '[]');
-      store.push(record);
-      localStorage.setItem('kimi_records_all', JSON.stringify(store));
-      showFeedbackMessage('⚠️ Error saving to server — saved locally.', false);
-    } catch (e) {
-      showFeedbackMessage('❌ Failed to save score.', false);
-    }
-  } finally {
-    saveBtn.disabled = false;
-    saveBtn.textContent = origText;
-  }
-}
 
     // ========== Export Functions ==========
     function showExportModal() {
@@ -1138,67 +1692,57 @@ async function saveScore() {
     }
 
     function exportToCSV() {
-  // Prefer records from window.kimiRecords (Data SDK) then local storage
-  let records = window.kimiRecords;
-  if (!records || !Array.isArray(records) || records.length === 0) {
-    // fallback to local store
-    records = JSON.parse(localStorage.getItem('kimi_records_all') || '[]');
-  }
-  if (!records || records.length === 0) {
-    const msg = document.createElement('div');
-    msg.className = 'feedback show incorrect';
-    msg.textContent = 'No data to export';
-    document.getElementById('landingPage').appendChild(msg);
-    setTimeout(() => msg.remove(), 3000);
-    return;
-  }
-
-  // Build CSV (escape quotes)
-  let csv = 'Name,Class,Number,Mode,Level,Score,Total,Date\n';
-  records.forEach(record => {
-    const date = record.timestamp ? new Date(record.timestamp).toLocaleString('en-US') : '';
-    const name = (record.student_name || '').replace(/"/g, '""');
-    const classRoom = (record.class_room || '').replace(/"/g, '""');
-    const studentNo = (record.student_no || '').replace(/"/g, '""');
-    const mode = (record.mode || '').replace(/"/g, '""');
-    csv += `"${name}","${classRoom}","${studentNo}","${mode}",${record.level || ''},${record.score || 0},${record.total || 0},"${date}"\n`;
-  });
-
-  // Add BOM for Excel UTF-8 compatibility
-  const BOM = '\uFEFF';
-  const blob = new Blob([BOM + csv], { type: 'text/csv;charset=utf-8;' });
-
-  // Create download link and click it in a user-gesture-safe way
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = `kimi-melody-records-${new Date().toISOString().split('T')[0]}.csv`;
-  // ensure it's not visible and added to DOM
-  link.style.display = 'none';
-  document.body.appendChild(link);
-
-  // Try to trigger click; use MouseEvent for compatibility
-  try {
-    const evt = new MouseEvent('click', { view: window, bubbles: true, cancelable: true });
-    link.dispatchEvent(evt);
-  } catch (e) {
-    // fallback
-    link.click();
-  }
-
-  // cleanup after a short delay to ensure download started
-  setTimeout(() => {
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  }, 500);
-
-  // show success message in UI
-  const msg = document.createElement('div');
-  msg.className = 'feedback show correct';
-  msg.textContent = '✅ Data exported successfully!';
-  document.getElementById('landingPage').appendChild(msg);
-  setTimeout(() => msg.remove(), 3000);
-}
+      const records = window.kimiRecords || [];
+      
+      if (records.length === 0) {
+        const msg = document.createElement('div');
+        msg.className = 'feedback show incorrect';
+        msg.textContent = 'No data to export';
+        document.getElementById('landingPage').appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
+        return;
+      }
+      
+      // Create CSV with proper headers
+      let csv = 'Name,Class,Number,Mode,Level,Score,Total,Date\n';
+      
+      records.forEach(record => {
+        const date = new Date(record.timestamp).toLocaleDateString('en-US');
+        const name = (record.student_name || '').replace(/"/g, '""');
+        const classRoom = (record.class_room || '').replace(/"/g, '""');
+        const studentNo = (record.student_no || '').replace(/"/g, '""');
+        const mode = (record.mode || '').replace(/"/g, '""');
+        csv += `"${name}","${classRoom}","${studentNo}","${mode}",${record.level},${record.score},${record.total},"${date}"\n`;
+      });
+      
+      // Add BOM for UTF-8 Excel compatibility
+      const BOM = '\uFEFF';
+      const blob = new Blob([BOM + csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      
+      // Create download link
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `kimi-melody-records-${new Date().toISOString().split('T')[0]}.csv`);
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      
+      // Trigger download
+      link.click();
+      
+      // Cleanup
+      setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }, 100);
+      
+      // Show success message
+      const msg = document.createElement('div');
+      msg.className = 'feedback show correct';
+      msg.textContent = '✅ Data exported successfully!';
+      document.getElementById('landingPage').appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
+    }
 
     // ========== Data SDK Integration ==========
     const dataHandler = {
@@ -1213,7 +1757,7 @@ async function saveScore() {
       const mascotName = config.mascot_name || defaultConfig.mascot_name;
       const instructionText = config.instruction_text || defaultConfig.instruction_text;
 
-      document.getElementById('appTitle').textContent = appTitle;
+      document.getElementById('appTitle').textContent = `🌸 ${appTitle} 🌸`;
       document.getElementById('mascotTag').textContent = `🐱 ${mascotName} 🎵`;
       document.getElementById('instructionText').textContent = instructionText;
     }
@@ -1260,10 +1804,13 @@ async function saveScore() {
         document.getElementById('studentNo').value = student.no;
         document.getElementById('studentClass').value = student.class;
       }
+
+      // Set default mode selection
+      selectMode('practice');
     }
 
     // Start initialization
     init();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a526d1f2035d02f',t:'MTc2NDI1NDkwNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a82ab2a02fc7b40',t:'MTc2NDc2MDc2Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
