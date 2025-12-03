@@ -14,7 +14,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Montserrat', sans-serif;
-      background: linear-gradient(135deg, #f8f3f0 0%, #fef5f7 50%, #f0f4f8 100%);
+      background: linear-gradient(135deg, #ffc9d9 0%, #ffe5b8 35%, #fff9cc 50%, #e8f5d8 70%, #c8f0d8 100%);
       min-height: 100%;
       width: 100%;
     }
@@ -1103,7 +1103,7 @@
   </div><!-- PIN Modal -->
   <div id="pinModal" class="modal-backdrop">
    <div class="modal">
-    <h2>🔒 Enter Teacher PIN</h2>
+    <h2>�� Enter Teacher PIN</h2>
     <div class="form-group"><label for="pinInput">PIN Code</label> <input type="password" id="pinInput" placeholder="Enter PIN">
     </div>
     <div class="controls"><button class="btn btn-primary" onclick="verifyPIN()">Confirm</button> <button class="btn btn-secondary" onclick="closePINModal()">Cancel</button>
@@ -2222,5 +2222,5 @@
     // Start initialization
     init();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a832ca5f2aad326',t:'MTc2NDc2NjA2NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a833fa02312d036',t:'MTc2NDc2Njg0My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
