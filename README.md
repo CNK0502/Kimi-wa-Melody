@@ -3,7 +3,6 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kimi-wa-Melody - MelodyCat</title>
   <script src="/_sdk/data_sdk.js"></script>
   <script src="/_sdk/element_sdk.js"></script>
   <style>
